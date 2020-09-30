@@ -1,0 +1,8 @@
+<?php declare(strict_types=1);
+
+namespace LDL\Framework\Base\Contracts;
+
+interface PriorityInterface
+{
+    public function getPriority() : int;
+}

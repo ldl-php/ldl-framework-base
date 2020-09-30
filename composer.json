@@ -1,0 +1,17 @@
+{
+    "name": "ldl-framework/framework-base",
+    "description": "LDL Framework base contracts and exceptions",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Federico Stange",
+            "email": "jpfstange@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "LDL\\Framework\\Base\\": "src/LDL/Framework/Base/"
+        }
+    }
+}
