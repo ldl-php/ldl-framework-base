@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Contracts;
 
-use LDL\Framework\Exception\LockingException;
+use LDL\Framework\Base\Exception\LockingException;
 
 interface LockableObjectInterface{
     /**
