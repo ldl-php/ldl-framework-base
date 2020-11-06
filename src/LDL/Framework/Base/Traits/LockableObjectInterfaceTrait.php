@@ -11,11 +11,7 @@ use LDL\Framework\Base\Exception\LockingException;
 
 trait LockableObjectInterfaceTrait
 {
-    /**
-     * This is intentionally left uninitialized to force initialization when this trait is used in a class
-     * @var bool
-     */
-    private $_tLocked;
+    private $_tLocked = false;
 
     public function isLocked(): bool
     {
