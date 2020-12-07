@@ -2,11 +2,10 @@
 
 namespace LDL\Framework\Base\Contracts;
 
-interface NamespaceInterface extends NameableInterface
+interface NameableInterface
 {
     /**
      * @return string
      */
-    public function getNamespace() : string;
-
+    public function getName() : string;
 }
