@@ -13,5 +13,8 @@
         "psr-4": {
             "LDL\\Framework\\Base\\": "src/LDL/Framework/Base/"
         }
+    },
+    "require": {
+        "symfony/var-dumper": "^5.2"
     }
 }
