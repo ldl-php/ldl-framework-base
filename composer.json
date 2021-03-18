@@ -11,7 +11,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "LDL\\Framework\\Base\\": "src/LDL/Framework/Base/"
+            "LDL\\Framework\\Base\\": "src/LDL/Framework/Base/",
+            "LDL\\Framework\\Helper\\": "src/LDL/Framework/Helper/"
         }
     },
     "require": {
