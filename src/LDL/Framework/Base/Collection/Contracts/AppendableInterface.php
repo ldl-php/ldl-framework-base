@@ -5,6 +5,12 @@ namespace LDL\Framework\Base\Collection\Contracts;
 interface AppendableInterface
 {
     /**
+     * @param $item
+     * @param null $key
+     */
+    public function onBeforeAppend($item, $key = null): void;
+
+    /**
      * Append an element to the collection
      *
      * @param mixed $item

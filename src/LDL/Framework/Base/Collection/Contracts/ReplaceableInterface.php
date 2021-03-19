@@ -5,6 +5,12 @@ namespace LDL\Framework\Base\Collection\Contracts;
 interface ReplaceableInterface
 {
     /**
+     * @param $item
+     * @param $key
+     */
+    public function onBeforeReplace($item, $key): void;
+
+    /**
      * If the key already exists, it will be replaced, if the key does not exists
      * it will throw and Exception
      *

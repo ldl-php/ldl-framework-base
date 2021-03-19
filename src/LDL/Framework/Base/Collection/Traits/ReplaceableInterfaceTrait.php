@@ -11,9 +11,25 @@ use LDL\Framework\Base\Collection\Exception\ReplaceException;
 
 trait ReplaceableInterfaceTrait
 {
+    /**
+     * @var callable|null
+     */
+    private $_tBeforeReplaceCallback;
+
     //<editor-fold desc="ReplaceableInterface methods">
+    public function onBeforeReplace($item, $key): void
+    {
+        if(null === $this->_tBeforeReplaceCallback){
+            return;
+        }
+
+        ($this->_tBeforeReplaceCallback)($this, $item, $key);
+    }
+
     public function replace($item, $key) : CollectionInterface
     {
+        $this->onBeforeReplace($item, $key);
+
         if(false === array_key_exists($key, $this->items)){
             throw new ReplaceException("Item with key: $key does not exists");
         }

@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1200082912582321 - Add Collection of Exceptions
 - feature/1200082912582317 - Add Collection interfaces and traits
 - feature/1200075065093231 - Add RegexHelper
 - feature/1200030326491309 - Add ToArray and ArrayFactoryExceptions

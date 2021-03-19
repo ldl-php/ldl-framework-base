@@ -5,6 +5,12 @@ namespace LDL\Framework\Base\Collection\Contracts;
 interface RemovableInterface
 {
     /**
+     * @param $item
+     * @param $key
+     */
+    public function onBeforeRemove($item, $key): void;
+
+    /**
      * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
      *
      * @param $key
