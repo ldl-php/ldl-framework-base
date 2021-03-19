@@ -11,12 +11,35 @@ use LDL\Framework\Base\Collection\Exception\RemoveException;
 
 trait RemovableInterfaceTrait
 {
+    /**
+     * @var iterable|callable|null
+     */
+    private $_tBeforeRemoveCallback;
+
     //<editor-fold desc="RemovableInterface methods">
+    public function onBeforeRemove($item, $key): void
+    {
+        if(null === $this->_tBeforeRemoveCallback){
+            return;
+        }
+
+        array_map(function($callback) use ($item, $key){
+            if(is_callable($callback)) {
+                $callback($this, $item, $key);
+            }
+        }, is_iterable($this->_tBeforeRemoveCallback) ? $this->_tBeforeRemoveCallback : [$this->_tBeforeRemoveCallback]);
+    }
+
     public function remove($key): CollectionInterface
     {
-        if(array_key_exists($this->items, $key)){
+        $exists = array_key_exists($key, $this->items);
+
+        $this->onBeforeRemove($exists ? $this->items[$key] : null, $key);
+
+        if($exists){
             unset($this->items[$key]);
             $this->count--;
+            return $this;
         }
 
         throw new RemoveException("Item with key: $key does not exists");

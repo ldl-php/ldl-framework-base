@@ -17,6 +17,7 @@ use LDL\Framework\Base\Collection\Traits\ReplaceableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\TruncateInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
 use LDL\Framework\Base\Collection\Exception\ReplaceException;
+use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 
 interface MyCollectionInterface extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, TruncateInterface, UnshiftInterface
 {
@@ -27,6 +28,7 @@ class MyCollection implements MyCollectionInterface
 {
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
+    use AppendManyTrait;
     use KeyFilterInterfaceTrait;
     use RemovableInterfaceTrait;
     use ReplaceableInterfaceTrait;

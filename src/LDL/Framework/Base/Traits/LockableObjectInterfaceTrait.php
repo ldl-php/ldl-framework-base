@@ -13,6 +13,15 @@ trait LockableObjectInterfaceTrait
 {
     private $_tLocked = false;
 
+    //<editor-fold desc="LockableObjectInterface Methods">
+    public function checkLock() : void
+    {
+        if($this->isLocked()){
+            $msg = sprintf('Class %s is locked and may not be modified', __CLASS__);
+            throw new LockingException($msg);
+        }
+    }
+
     public function isLocked(): bool
     {
         return $this->_tLocked;
@@ -32,4 +41,5 @@ trait LockableObjectInterfaceTrait
         $this->_tLocked = true;
         return $this;
     }
+    //</editor-fold>
 }

@@ -10,10 +10,30 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 
 trait AppendableInterfaceTrait
 {
+    /**
+     * @var iterable|callable|null
+     */
+    private $_tBeforeAppendCallback;
+
     //<editor-fold desc="AppendableInterface methods">
+    public function onBeforeAppend($item, $key = null): void
+    {
+        if(null === $this->_tBeforeAppendCallback){
+            return;
+        }
+
+        array_map(function($callback) use ($item, $key){
+            if(is_callable($callback)) {
+                $callback($this, $item, $key);
+            }
+        }, is_iterable($this->_tBeforeAppendCallback) ? $this->_tBeforeAppendCallback : [$this->_tBeforeAppendCallback]);
+    }
+
     public function append($item, $key = null): CollectionInterface
     {
         $key = $key ?? $this->count;
+
+        $this->onBeforeAppend($item, $key);
 
         if(null === $this->first){
             $this->first = $key;
@@ -23,15 +43,6 @@ trait AppendableInterfaceTrait
 
         $this->items[$key] = $item;
         $this->count++;
-
-        return $this;
-    }
-
-    public function appendMany(iterable $items, bool $useKey=false) : CollectionInterface
-    {
-        foreach ($items as $key => $value) {
-            $this->append($value, $useKey ? $key : null);
-        }
 
         return $this;
     }
