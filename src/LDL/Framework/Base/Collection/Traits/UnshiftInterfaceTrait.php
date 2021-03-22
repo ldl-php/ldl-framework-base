@@ -7,13 +7,25 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 
 trait UnshiftInterfaceTrait
 {
     //<editor-fold desc="UnshiftInterface methods">
     public function unshift($item, $key = null): CollectionInterface
     {
+        if($this instanceof LockableObjectInterface){
+            $this->checkLock();
+        }
+
+        if($this instanceof LockAppendInterface){
+            $this->checkLockAppend();
+        }
+
         $key = $key ?? 0;
+
+        $this->onBeforeAppend($item, $key);
 
         $this->first = $key;
 

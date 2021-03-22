@@ -7,6 +7,8 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 
 trait AppendableInterfaceTrait
 {
@@ -31,6 +33,14 @@ trait AppendableInterfaceTrait
 
     public function append($item, $key = null): CollectionInterface
     {
+        if($this instanceof LockableObjectInterface){
+            $this->checkLock();
+        }
+
+        if($this instanceof LockAppendInterface){
+            $this->checkLockAppend();
+        }
+
         $key = $key ?? $this->count;
 
         $this->onBeforeAppend($item, $key);

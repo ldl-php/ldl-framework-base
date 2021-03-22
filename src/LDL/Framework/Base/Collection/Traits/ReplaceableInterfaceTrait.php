@@ -7,7 +7,9 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
 use LDL\Framework\Base\Collection\Exception\ReplaceException;
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 
 trait ReplaceableInterfaceTrait
 {
@@ -28,6 +30,14 @@ trait ReplaceableInterfaceTrait
 
     public function replace($item, $key) : CollectionInterface
     {
+        if($this instanceof LockableObjectInterface){
+            $this->checkLock();
+        }
+
+        if($this instanceof LockReplaceInterface){
+            $this->checkLockReplace();
+        }
+
         $this->onBeforeReplace($item, $key);
 
         if(false === array_key_exists($key, $this->items)){
