@@ -33,12 +33,6 @@ class CombinedException extends LDLException implements CombinedExceptionInterfa
         $this->items = $exceptions;
 
         $this->_tBeforeAppendCallback = function($collection, $item, $key){
-            if(true === $this->isLockAppend()){
-                $msg = 'Collection append is locked, can not add elements';
-
-                throw new LockAppendException($msg);
-            }
-
             if(false === is_object($item)){
                 throw new \LogicException('Item to be added is not an object');
             }
@@ -51,14 +45,6 @@ class CombinedException extends LDLException implements CombinedExceptionInterfa
                 );
 
                 throw new \LogicException($msg);
-            }
-        };
-
-        $this->_tBeforeRemoveCallback = function($collection, $item, $key){
-            if(true === $this->isRemoveLock()){
-                $msg = 'Collection remove is locked, can not remove elements';
-
-                throw new LockRemoveException($msg);
             }
         };
     }
