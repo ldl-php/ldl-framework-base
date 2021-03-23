@@ -2,6 +2,9 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
+use LDL\Framework\Base\Exception\LockingException;
+
 interface AppendableInterface
 {
     /**
@@ -16,7 +19,8 @@ interface AppendableInterface
      * @param mixed $item
      * @param mixed $key
      *
-     * @throws \Exception
+     * @throws LockingException
+     * @throws InvalidKeyException
      *
      * @return CollectionInterface
      */
@@ -27,7 +31,10 @@ interface AppendableInterface
      *
      * @param iterable $items
      * @param bool $useKey (use key when appending, false by default)
-     * @throws \Exception
+     *
+     * @throws LockingException
+     * @throws InvalidKeyException
+     *
      * @return CollectionInterface
      */
     public function appendMany(iterable $items, bool $useKey=false) : CollectionInterface;

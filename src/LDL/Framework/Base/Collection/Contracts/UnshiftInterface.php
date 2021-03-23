@@ -2,6 +2,9 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
+use LDL\Framework\Base\Exception\LockingException;
+
 interface UnshiftInterface
 {
 
@@ -14,8 +17,11 @@ interface UnshiftInterface
      *
      * @param mixed $item
      * @param string|int $key
+     *
+     * @throws LockingException
+     * @throws InvalidKeyException
+     *
      * @return CollectionInterface
-     * @throws \Exception
      */
     public function unshift($item, $key = null): CollectionInterface;
 }

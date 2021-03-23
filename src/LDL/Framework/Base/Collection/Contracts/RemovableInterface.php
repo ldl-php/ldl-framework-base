@@ -2,6 +2,10 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
+use LDL\Framework\Base\Collection\Exception\RemoveException;
+use LDL\Framework\Base\Exception\LockingException;
+
 interface RemovableInterface
 {
     /**
@@ -14,7 +18,11 @@ interface RemovableInterface
      * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
      *
      * @param $key
-     * @throws \Exception
+     *
+     * @throws LockingException
+     * @throws RemoveException
+     * @throws InvalidKeyException
+     *
      * @return CollectionInterface
      */
     public function remove($key) : CollectionInterface;
@@ -22,7 +30,8 @@ interface RemovableInterface
     /**
      * Remove last appended item
      *
-     * @throws \Exception
+     * @throws LockingException
+     * @throws RemoveException
      * @return CollectionInterface
      */
     public function removeLast() : CollectionInterface;
@@ -32,6 +41,8 @@ interface RemovableInterface
      *
      * @param $value
      * @param bool $strict
+     * @throws LockingException
+     * @throws RemoveException
      * @return int Amount of removed elements
      */
     public function removeByValue($value, bool $strict = true) : int;

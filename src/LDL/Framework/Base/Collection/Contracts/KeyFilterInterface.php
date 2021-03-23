@@ -2,10 +2,15 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\Exception\CollectionException;
+
 interface KeyFilterInterface
 {
     /**
      * @param string $key
+     *
+     * @throws CollectionException
+     *
      * @return mixed
      */
     public function filterByKey(string $key);
