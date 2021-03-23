@@ -8,8 +8,10 @@ namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
+use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
+use LDL\Framework\Helper\ArrayHelper;
 
 trait RemovableInterfaceTrait
 {
@@ -42,17 +44,38 @@ trait RemovableInterfaceTrait
             $this->checkLockRemove();
         }
 
+        if(false === ArrayHelper::isValidKey($key)){
+            $msg = sprintf(
+                'Key must be of type scalar, "%s" given',
+                gettype($key)
+            );
+
+            throw new InvalidKeyException($msg);
+        }
+
         $exists = array_key_exists($key, $this->items);
 
         $this->onBeforeRemove($exists ? $this->items[$key] : null, $key);
 
-        if($exists){
-            unset($this->items[$key]);
-            $this->count--;
+        if(false === $exists){
+            throw new RemoveException("Item with key: $key does not exists");
+        }
+
+        unset($this->items[$key]);
+        $this->count--;
+
+        $keys = $this->keys();
+        $lastKey = count($keys);
+
+        if(0 === $lastKey) {
+            $this->first = null;
+            $this->last = null;
             return $this;
         }
 
-        throw new RemoveException("Item with key: $key does not exists");
+        $this->first = $keys[0];
+        $this->last = $keys[$lastKey - 1];
+        return $this;
     }
 
     public function removeLast() : CollectionInterface
