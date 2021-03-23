@@ -6,6 +6,7 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
@@ -36,7 +37,9 @@ trait UnshiftInterfaceTrait
 
         $key = $key ?? 0;
 
-        $this->onBeforeAppend($item,  $key);
+        if($this instanceof BeforeAppendInterface){
+            $this->getBeforeAppend()->call($this, $item, $key);
+        }
 
         $this->first = $key;
 

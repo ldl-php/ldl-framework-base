@@ -6,6 +6,7 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Contracts\BeforeReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
 use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
@@ -15,21 +16,6 @@ use LDL\Framework\Helper\ArrayHelper;
 
 trait ReplaceableInterfaceTrait
 {
-    /**
-     * @var callable|null
-     */
-    private $_tBeforeReplaceCallback;
-
-    //<editor-fold desc="ReplaceableInterface methods">
-    public function onBeforeReplace($item, $key): void
-    {
-        if(null === $this->_tBeforeReplaceCallback){
-            return;
-        }
-
-        ($this->_tBeforeReplaceCallback)($this, $item, $key);
-    }
-
     public function replace($item, $key) : CollectionInterface
     {
         if($this instanceof LockableObjectInterface){
@@ -49,13 +35,16 @@ trait ReplaceableInterfaceTrait
             throw new InvalidKeyException($msg);
         }
 
-        $this->onBeforeReplace($item, $key);
+        if($this instanceof BeforeReplaceInterface){
+            $this->getBeforeReplace()->call($this, $item, $key);
+        }
 
         if(false === array_key_exists($key, $this->items)){
             throw new ReplaceException("Item with key: $key does not exists");
         }
 
         $this->items[$key] = $item;
+
         return $this;
     }
     //</editor-fold>

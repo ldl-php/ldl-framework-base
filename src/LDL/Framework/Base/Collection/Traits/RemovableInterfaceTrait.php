@@ -6,6 +6,7 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
@@ -15,25 +16,7 @@ use LDL\Framework\Helper\ArrayHelper;
 
 trait RemovableInterfaceTrait
 {
-    /**
-     * @var iterable|callable|null
-     */
-    private $_tBeforeRemoveCallback;
-
     //<editor-fold desc="RemovableInterface methods">
-    public function onBeforeRemove($item, $key): void
-    {
-        if(null === $this->_tBeforeRemoveCallback){
-            return;
-        }
-
-        array_map(function($callback) use ($item, $key){
-            if(is_callable($callback)) {
-                $callback($this, $item, $key);
-            }
-        }, is_iterable($this->_tBeforeRemoveCallback) ? $this->_tBeforeRemoveCallback : [$this->_tBeforeRemoveCallback]);
-    }
-
     public function remove($key): CollectionInterface
     {
         if($this instanceof LockableObjectInterface){
@@ -55,7 +38,9 @@ trait RemovableInterfaceTrait
 
         $exists = array_key_exists($key, $this->items);
 
-        $this->onBeforeRemove($exists ? $this->items[$key] : null, $key);
+        if($this instanceof BeforeRemoveInterface){
+            $this->onBeforeRemove($exists ? $this->items[$key] : null, $key);
+        }
 
         if(false === $exists){
             throw new RemoveException("Item with key: $key does not exists");

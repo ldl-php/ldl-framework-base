@@ -6,6 +6,7 @@ use LDL\Framework\Base\Collection\Exception\LockAppendException;
 use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Collection\Traits\BeforeAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
@@ -16,8 +17,9 @@ use Throwable;
 class CombinedException extends LDLException implements CombinedExceptionInterface
 {
     use CollectionInterfaceTrait;
-    use AppendManyTrait;
+    use BeforeAppendInterfaceTrait;
     use AppendableInterfaceTrait;
+    use AppendManyTrait;
     use RemovableInterfaceTrait;
     use LockAppendInterfaceTrait;
     use LockRemoveInterfaceTrait;
@@ -30,23 +32,28 @@ class CombinedException extends LDLException implements CombinedExceptionInterfa
     )
     {
         parent::__construct($message, $code, $previous);
-        $this->items = $exceptions;
 
-        $this->_tBeforeAppendCallback = function($collection, $item, $key){
+        $this->getBeforeAppend()->append(static function($collection, $item, $key){
             if(false === is_object($item)){
-                throw new \LogicException('Item to be added is not an object');
+                throw new \InvalidArgumentException('Item to be added is not an object');
             }
 
-            if(false === $item instanceof \Throwable){
-                $msg = sprintf(
-                    'Item to be added is not an instanceof class: "%s", class: "%s" was given',
-                    \Throwable::class,
-                    get_class($item)
-                );
-
-                throw new \LogicException($msg);
+            if($item instanceof \Throwable){
+                return;
             }
-        };
+
+            $msg = sprintf(
+                'Item to be added is not an instanceof class: "%s", class: "%s" was given',
+                \Throwable::class,
+                get_class($item)
+            );
+
+            throw new \InvalidArgumentException($msg);
+        });
+
+        if(null !== $exceptions){
+            $this->appendMany($exceptions);
+        }
     }
 
     /**

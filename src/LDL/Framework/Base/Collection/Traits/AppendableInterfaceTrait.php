@@ -6,6 +6,9 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\CallableCollection;
+use LDL\Framework\Base\Collection\CallableCollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
@@ -14,25 +17,7 @@ use LDL\Framework\Helper\ArrayHelper;
 
 trait AppendableInterfaceTrait
 {
-    /**
-     * @var iterable|callable|null
-     */
-    private $_tBeforeAppendCallback;
-
     //<editor-fold desc="AppendableInterface methods">
-    public function onBeforeAppend($item, $key = null): void
-    {
-        if(null === $this->_tBeforeAppendCallback){
-            return;
-        }
-
-        array_map(function($callback) use ($item, $key){
-            if(is_callable($callback)) {
-                $callback($this, $item, $key);
-            }
-        }, is_iterable($this->_tBeforeAppendCallback) ? $this->_tBeforeAppendCallback : [$this->_tBeforeAppendCallback]);
-    }
-
     public function append($item, $key = null): CollectionInterface
     {
         if($this instanceof LockableObjectInterface){
@@ -54,7 +39,9 @@ trait AppendableInterfaceTrait
 
         $key = $key ?? $this->count;
 
-        $this->onBeforeAppend($item, $key);
+        if($this instanceof BeforeAppendInterface){
+            $this->getBeforeAppend()->call($this, $item, $key);
+        }
 
         if(null === $this->first){
             $this->first = $key;

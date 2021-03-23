@@ -2,17 +2,12 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
 use LDL\Framework\Base\Exception\LockingException;
 
 interface AppendableInterface
 {
-    /**
-     * @param $item
-     * @param null $key
-     */
-    public function onBeforeAppend($item, $key = null): void;
-
     /**
      * Append an element to the collection
      *

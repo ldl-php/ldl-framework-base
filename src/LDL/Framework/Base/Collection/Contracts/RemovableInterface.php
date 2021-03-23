@@ -2,18 +2,13 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Exception\LockingException;
 
 interface RemovableInterface
 {
-    /**
-     * @param $item
-     * @param $key
-     */
-    public function onBeforeRemove($item, $key): void;
-
     /**
      * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
      *
