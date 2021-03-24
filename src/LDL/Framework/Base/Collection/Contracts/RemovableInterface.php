@@ -3,7 +3,7 @@
 namespace LDL\Framework\Base\Collection\Contracts;
 
 use LDL\Framework\Base\Collection\CallableCollectionInterface;
-use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
+use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Exception\LockingException;
 

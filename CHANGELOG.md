@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1200103380811883 - Add \ArrayAccess to CollectionInterface
 - feature/1200102901436033 - Create separate interfaces and traits for before append/replace/remove
 - feature/1200094772219228 - Add locking condition checks to trait interfaces
 - feature/1200082912582321 - Add Collection of Exceptions

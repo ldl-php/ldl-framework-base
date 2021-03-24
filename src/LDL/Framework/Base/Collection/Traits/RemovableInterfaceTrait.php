@@ -9,31 +9,23 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
-use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
-use LDL\Framework\Helper\ArrayHelper;
+use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 
 trait RemovableInterfaceTrait
 {
     //<editor-fold desc="RemovableInterface methods">
     public function remove($key): CollectionInterface
     {
+        ArrayHelper::validateKey($key);
+
         if($this instanceof LockableObjectInterface){
             $this->checkLock();
         }
 
         if($this instanceof LockRemoveInterface){
             $this->checkLockRemove();
-        }
-
-        if(false === ArrayHelper::isValidKey($key)){
-            $msg = sprintf(
-                'Key must be of type scalar, "%s" given',
-                gettype($key)
-            );
-
-            throw new InvalidKeyException($msg);
         }
 
         $exists = array_key_exists($key, $this->items);

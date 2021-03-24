@@ -6,14 +6,11 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\CallableCollection;
-use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
-use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
-use LDL\Framework\Helper\ArrayHelper;
+use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 
 trait AppendableInterfaceTrait
 {
@@ -28,13 +25,8 @@ trait AppendableInterfaceTrait
             $this->checkLockAppend();
         }
 
-        if(null !== $key && false === ArrayHelper::isValidKey($key)){
-            $msg = sprintf(
-                'Key must be of type scalar, "%s" given',
-                gettype($key)
-            );
-
-            throw new InvalidKeyException($msg);
+        if(null !== $key){
+            ArrayHelper::validateKey($key);
         }
 
         $key = $key ?? $this->count;

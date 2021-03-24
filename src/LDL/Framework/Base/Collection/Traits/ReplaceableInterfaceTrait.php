@@ -9,10 +9,9 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Collection\Contracts\BeforeReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
-use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\ReplaceException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
-use LDL\Framework\Helper\ArrayHelper;
+use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 
 trait ReplaceableInterfaceTrait
 {
@@ -26,13 +25,8 @@ trait ReplaceableInterfaceTrait
             $this->checkLockReplace();
         }
 
-        if(false === ArrayHelper::isValidKey($key)){
-            $msg = sprintf(
-                'Key must be of type scalar, "%s" given',
-                gettype($key)
-            );
-
-            throw new InvalidKeyException($msg);
+        if(null !== $key){
+            ArrayHelper::validateKey($key);
         }
 
         if($this instanceof BeforeReplaceInterface){

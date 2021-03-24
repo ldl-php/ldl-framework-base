@@ -2,12 +2,11 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
+use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Exception\LockingException;
 
 interface UnshiftInterface
 {
-
     /**
      * Prepends an element to the collection if the collection has numeric keys the
      * keys will be reordered, for example [0 => 'test', 1=>'test2'] then "unshifting" a value 'test3' will result in:
