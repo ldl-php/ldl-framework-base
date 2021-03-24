@@ -7,6 +7,8 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
+use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
+use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
@@ -40,6 +42,14 @@ trait ReplaceableInterfaceTrait
             }
 
             throw new ReplaceException("Item with key: $key does not exists");
+        }
+
+        if($this instanceof BeforeRemoveInterface){
+            $this->getBeforeRemove()->call($this, $item, $key);
+        }
+
+        if($this instanceof BeforeAppendInterface){
+            $this->getBeforeAppend()->call($this, $item, $key);
         }
 
         $this->items[$key] = $item;
