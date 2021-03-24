@@ -44,6 +44,10 @@ echo "Append single item: 'hello'\n";
 
 $collection->append('hello');
 
+echo "Get value at offset 0\n";
+
+var_dump($collection[0]);
+
 echo "Append many items: 'LDL', 'World'\n";
 
 $collection->appendMany(['LDL', 'World']);

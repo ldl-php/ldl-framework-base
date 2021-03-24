@@ -5,7 +5,7 @@ namespace LDL\Framework\Base\Collection\Contracts;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Base\Contracts\ToArrayInterface;
 
-interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
+interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArrayInterface
 {
     /**
      * Return associated indices

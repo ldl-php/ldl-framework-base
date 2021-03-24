@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Collection\Exception\InvalidKeyException;
+use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\ReplaceException;
 use LDL\Framework\Base\Exception\LockingException;
 

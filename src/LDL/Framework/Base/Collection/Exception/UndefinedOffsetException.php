@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Collection\Exception;
 
-class InvalidKeyException extends CollectionException
+class UndefinedOffsetException extends CollectionException
 {
 
 }

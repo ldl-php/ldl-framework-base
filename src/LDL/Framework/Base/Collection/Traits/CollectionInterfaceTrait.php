@@ -6,8 +6,10 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Exception\UndefinedOffsetException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
+use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 
 trait CollectionInterfaceTrait
 {
@@ -142,4 +144,34 @@ trait CollectionInterfaceTrait
         return current($this->items);
     }
     //<editor-fold>
+
+    //<editor-fold desc="\ArrayAccess methods">
+    public function offsetExists($offset) : bool
+    {
+        ArrayHelper::validateKey($offset);
+        return array_key_exists($offset, $this->items);
+    }
+
+    public function offsetGet($offset)
+    {
+        ArrayHelper::validateKey($offset);
+
+        if(!$this->offsetExists($offset)){
+            $msg = "Offset \"$offset\" does not exist";
+            throw new UndefinedOffsetException($msg);
+        }
+
+        return $this->items[$offset];
+    }
+
+    public function offsetSet($offset, $value) : void
+    {
+        $this->replace($value, $offset);
+    }
+
+    public function offsetUnset($offset) : void
+    {
+        $this->remove($offset);
+    }
+    //</editor-fold>
 }
