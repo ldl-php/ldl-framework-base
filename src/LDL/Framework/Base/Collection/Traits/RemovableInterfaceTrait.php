@@ -30,15 +30,16 @@ trait RemovableInterfaceTrait
 
         $exists = array_key_exists($key, $this->items);
 
-        if($this instanceof BeforeRemoveInterface){
-            $this->getBeforeRemove()->call($exists ? $this->items[$key] : null, $key);
-        }
-
         if(false === $exists){
             throw new RemoveException("Item with key: $key does not exists");
         }
 
+        if($this instanceof BeforeRemoveInterface){
+            $this->getBeforeRemove()->call($this, $exists ? $this->items[$key] : null, $key);
+        }
+
         unset($this->items[$key]);
+
         $this->count--;
 
         $keys = $this->keys();

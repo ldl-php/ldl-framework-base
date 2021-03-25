@@ -2,7 +2,6 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Exception\LockingException;
 
