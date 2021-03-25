@@ -13,6 +13,8 @@ use LDL\Framework\Base\Contracts\LockableObjectInterface;
 
 trait TruncateInterfaceTrait
 {
+    use ResetCollectionTrait;
+
     //<editor-fold desc="TruncateInterface methods">
     public function truncate() : CollectionInterface
     {
@@ -31,13 +33,7 @@ trait TruncateInterfaceTrait
             }
         }
 
-        $collection = clone $this;
-        $collection->items = [];
-        $collection->first = null;
-        $collection->last = null;
-        $collection->count = 0;
-
-        return $collection;
+        return $this->_reset();
     }
     //</editor-fold>
 }
