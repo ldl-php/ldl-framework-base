@@ -20,4 +20,10 @@ interface FilterByClassInterface
      */
     public function filterByClasses(iterable $classes, bool $strict=true) : CollectionInterface;
 
+    /**
+     * @param string $className
+     * @return CollectionInterface
+     */
+    public function filterByClassRecursive(string $className) : CollectionInterface;
+
 }

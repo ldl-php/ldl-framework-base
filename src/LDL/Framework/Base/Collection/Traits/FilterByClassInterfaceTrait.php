@@ -62,5 +62,36 @@ trait FilterByClassInterfaceTrait
 
         return $collection;
     }
+
+    public function filterByClassRecursive(string $className) : CollectionInterface
+    {
+        $collection = clone($this);
+        $collection->truncate();
+
+        $filter = static function($item, $offset) use (&$filter, $collection, $className){
+            if(is_object($item) && get_class($item) === $className){
+
+                if($collection instanceof AppendableInterface){
+                    return $collection->append($item, $offset);
+                }
+
+                $collection->items[$offset] = $item;
+            }
+
+            if($item instanceof \Traversable){
+                foreach($item as $o => $i){
+                    $filter($i, $o);
+                }
+            }
+
+            return null;
+        };
+
+        foreach($this as $offset => $item){
+            $filter($item, $offset);
+        }
+
+        return $collection;
+    }
     //</editor-fold>
 }
