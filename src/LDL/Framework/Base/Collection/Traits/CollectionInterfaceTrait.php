@@ -6,6 +6,7 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Exception\UndefinedOffsetException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
@@ -108,6 +109,39 @@ trait CollectionInterfaceTrait
 
         return $items;
     }
+
+    protected function setCount(int $count): CollectionInterface
+    {
+        $this->count = $count;
+        return $this;
+    }
+
+    protected function setItems(iterable $items): CollectionInterface
+    {
+        $this->items = is_array($items) ? $items : \iterator_to_array($items, true);
+        return $this;
+    }
+
+    protected function setFirst($first): CollectionInterface
+    {
+        if(null !== $first){
+            ArrayHelper::validateKey($first);
+        }
+
+        $this->first = $first;
+        return $this;
+    }
+
+    protected function setLast($last): CollectionInterface
+    {
+        if(null !== $last){
+            ArrayHelper::validateKey($last);
+        }
+
+        $this->last = $last;
+        return $this;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="\Countable Methods">

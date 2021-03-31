@@ -9,16 +9,15 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 
 trait ResetCollectionTrait
 {
-    private function _reset() : CollectionInterface
+    private function _reset(CollectionInterface $collection) : CollectionInterface
     {
         /**
          * @var CollectionInterface $collection
          */
-        $collection = clone $this;
-        $collection->items = [];
-        $collection->first = null;
-        $collection->last = null;
-        $collection->count = 0;
+        $collection->setItems([]);
+        $collection->setFirst(null);
+        $collection->setLast(null);
+        $collection->setCount(0);
 
         return $collection;
     }

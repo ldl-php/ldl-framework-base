@@ -20,10 +20,12 @@ trait FilterByClassInterfaceTrait
 
     public function filterByClasses(iterable $classes, bool $strict=true) : CollectionInterface
     {
+        $classes = is_array($classes) ? $classes : \iterator_to_array($classes, true);
+
         /**
          * @var CollectionInterface $collection
          */
-        $collection = $this->_reset();
+        $collection = $this->_reset(clone($this));
 
         /**
          * Validate Classes
@@ -32,7 +34,7 @@ trait FilterByClassInterfaceTrait
             if(!is_string($class) || false === class_exists($class)){
                 throw new \InvalidArgumentException("Class '$class' does not exists");
             }
-        }, is_array($classes) ? $classes : \iterator_to_array($classes));
+        }, $classes);
 
         $values = array_filter(
             \iterator_to_array($this, true),

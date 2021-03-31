@@ -33,7 +33,7 @@ trait TruncateInterfaceTrait
             }
         }
 
-        return $this->_reset();
+        return $this->_reset($this);
     }
     //</editor-fold>
 }

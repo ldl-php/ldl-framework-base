@@ -64,6 +64,8 @@ echo "Create collection\n";
 
 $collection = new FilterByClassCollection();
 
+echo "Append Foo, Bar, Bar, FooBar, ExtendsFoo and ExtendsBar classes\n";
+
 $collection->append(new Foo)
     ->append(new Bar)
     ->append(new Bar)
