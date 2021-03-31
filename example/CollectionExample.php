@@ -16,7 +16,6 @@ use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\ReplaceableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\TruncateInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
-use LDL\Framework\Base\Collection\Exception\ReplaceException;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 
 interface MyCollectionInterface extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, TruncateInterface, UnshiftInterface
@@ -68,12 +67,13 @@ foreach($collection as $value){
     echo "Item: $value\n";
 }
 
-echo "Replace item with key 'lol' (not exists), exception must be thrown\n";
+echo "Replace item with key 'lol' (not exists), it has append to the collection\n";
+$collection->replace('something', 'lol');
 
-try{
-    $collection->replace('something', 'lol');
-}catch(ReplaceException $e){
-    echo "EXCEPTION: {$e->getMessage()}\n";
+echo "Check items in the collection\n";
+
+foreach($collection as $value){
+    echo "Item: $value\n";
 }
 
 echo "Add item: 'first' at the beginning\n";

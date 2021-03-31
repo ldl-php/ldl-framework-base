@@ -75,7 +75,7 @@ foreach($collection->filterByInterfaces([A::class, B::class], false) as $item){
     var_dump(get_class($item));
 }
 
-echo "Filter by interface A and B (Foobar must be shown)\n";
+echo "Filter by interface A and B (FooBar must be shown)\n";
 foreach($collection->filterByInterfaces([A::class, B::class], true) as $item){
     var_dump(get_class($item));
 }

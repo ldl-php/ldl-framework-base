@@ -23,7 +23,7 @@ trait FilterByInterfaceTrait
         /**
          * @var CollectionInterface $collection
          */
-        $collection = $this->_reset();
+        $collection = $this->_reset(clone($this));
 
         /**
          * Validate interfaces
