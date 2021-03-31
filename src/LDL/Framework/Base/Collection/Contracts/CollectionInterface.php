@@ -2,6 +2,7 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\ArrayKeyCollectionInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Base\Contracts\ToArrayInterface;
 
@@ -10,9 +11,9 @@ interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArr
     /**
      * Return associated indices
      *
-     * @return array
+     * @return ArrayKeyCollectionInterface
      */
-    public function keys() : array;
+    public function keys() : ArrayKeyCollectionInterface;
 
     /**
      * Check if a key exists

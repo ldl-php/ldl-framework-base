@@ -10,15 +10,28 @@ trait BeforeAppendInterfaceTrait
     /**
      * @var CallableCollectionInterface
      */
-    private $_tBeforeAppend;
+    private $_tBeforeAppendValue;
 
-    public function getBeforeAppend() : CallableCollectionInterface
+    /**
+     * @var CallableCollectionInterface
+     */
+    private $_tBeforeAppendKey;
+
+    public function getBeforeAppendValue() : CallableCollectionInterface
     {
-        if(null === $this->_tBeforeAppend){
-            $this->_tBeforeAppend = new CallableCollection();
+        if(null === $this->_tBeforeAppendValue){
+            $this->_tBeforeAppendValue = new CallableCollection();
         }
 
-        return $this->_tBeforeAppend;
+        return $this->_tBeforeAppendValue;
     }
 
+    public function getBeforeAppendKey() : CallableCollectionInterface
+    {
+        if(null === $this->_tBeforeAppendKey){
+            $this->_tBeforeAppendKey = new CallableCollection();
+        }
+
+        return $this->_tBeforeAppendKey;
+    }
 }

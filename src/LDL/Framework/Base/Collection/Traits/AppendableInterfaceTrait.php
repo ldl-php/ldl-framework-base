@@ -32,7 +32,8 @@ trait AppendableInterfaceTrait
         $key = $key ?? $this->count;
 
         if($this instanceof BeforeAppendInterface){
-            $this->getBeforeAppend()->call($this, $item, $key);
+            $this->getBeforeAppendValue()->call($this, $item, $key);
+            $this->getBeforeAppendKey()->call($this, $item, $key);
         }
 
         if(null === $this->first){

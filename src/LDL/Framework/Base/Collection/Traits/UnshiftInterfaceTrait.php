@@ -32,7 +32,8 @@ trait UnshiftInterfaceTrait
         $key = $key ?? 0;
 
         if($this instanceof BeforeAppendInterface){
-            $this->getBeforeAppend()->call($this, $item, $key);
+            $this->getBeforeAppendValue()->call($this, $item, $key);
+            $this->getBeforeAppendKey()->call($this, $item, $key);
         }
 
         $this->first = $key;

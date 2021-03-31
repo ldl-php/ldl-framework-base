@@ -39,13 +39,9 @@ echo "Create collection\n";
 
 $collection = new MyCollection();
 
-echo "Append single item: 'hello'\n";
+echo "Append single item: 'hello' with key 'test'\n";
 
-$collection->append('hello');
-
-echo "Get value at offset 0\n";
-
-var_dump($collection[0]);
+$collection->append('hello', 'test');
 
 echo "Append many items: 'LDL', 'World'\n";
 
@@ -57,40 +53,8 @@ foreach($collection as $value){
     echo "Item: $value\n";
 }
 
-echo "Replace item 'LDL' with 'crazy'\n";
-
-$collection->replace('crazy', 1);
-
-echo "Check items in the collection\n";
-
-foreach($collection as $value){
-    echo "Item: $value\n";
-}
-
-echo "Replace item with key 'lol' (not exists), it has append to the collection\n";
-$collection->replace('something', 'lol');
-
-echo "Check items in the collection\n";
-
-foreach($collection as $value){
-    echo "Item: $value\n";
-}
-
-echo "Add item: 'first' at the beginning\n";
-
-//$collection->unshift('first');
-
-echo "Get first item: {$collection->getFirst()}\n";
-
 echo "Get collection keys\n";
 
 foreach($collection->keys() as $key){
     echo "Key: $key\n";
 }
-
-echo "Truncate collection\n";
-
-$truncated = $collection->truncate();
-$count = count($truncated);
-
-echo "Count items after truncate: $count\n";

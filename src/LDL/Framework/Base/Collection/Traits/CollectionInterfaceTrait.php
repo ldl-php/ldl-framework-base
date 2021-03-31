@@ -6,6 +6,8 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\ArrayKeyCollection;
+use LDL\Framework\Base\Collection\ArrayKeyCollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Exception\UndefinedOffsetException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
@@ -79,9 +81,15 @@ trait CollectionInterfaceTrait
         return array_key_exists($this->items, $key);
     }
 
-    public function keys() : array
+    public function keys() : ArrayKeyCollectionInterface
     {
-        return array_keys($this->items);
+        $collection = new ArrayKeyCollection();
+
+        foreach($this->items as $key => $value){
+            $collection->append($key);
+        }
+        
+        return $collection;
     }
 
     public function hasValue($value) : bool

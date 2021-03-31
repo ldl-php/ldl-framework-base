@@ -12,6 +12,8 @@ interface BeforeAppendInterface
      *
      * @return CallableCollectionInterface
      */
-    public function getBeforeAppend() : CallableCollectionInterface;
+    public function getBeforeAppendValue() : CallableCollectionInterface;
+
+    public function getBeforeAppendKey() : CallableCollectionInterface;
 }
 
