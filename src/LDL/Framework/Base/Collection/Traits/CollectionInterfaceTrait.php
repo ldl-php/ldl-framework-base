@@ -118,7 +118,29 @@ trait CollectionInterfaceTrait
 
     protected function setItems(iterable $items): CollectionInterface
     {
+        $this->first = null;
+        $this->last = null;
+
         $this->items = is_array($items) ? $items : \iterator_to_array($items, true);
+
+        $keys = array_keys($this->items);
+        $keyCount = count($keys);
+        $this->count = $keyCount;
+
+        if(0 === $keyCount){
+            return $this;
+        }
+
+        if($keyCount === 1) {
+            $this->first = $keys[0];
+            $this->last = $this->first;
+
+            return $this;
+        }
+
+        $this->first = $keys[0];
+        $this->last = $keys[count($keys)-1];
+
         return $this;
     }
 

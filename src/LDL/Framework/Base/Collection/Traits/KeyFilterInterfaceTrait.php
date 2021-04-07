@@ -7,40 +7,51 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Exception\CollectionException;
+use LDL\Framework\Helper\RegexHelper;
 
 trait KeyFilterInterfaceTrait
 {
+    use ResetCollectionTrait;
+
     //<editor-fold desc="KeyFilterInterface methods">
     public function filterByKeys(iterable $keys) : CollectionInterface
     {
         /**
          * @var CollectionInterface $self
          */
-        $self = clone($this);
+        $self = $this->_reset(clone($this));
 
         $keys = is_array($keys) ? $keys : \iterator_to_array($keys);
 
-        $self->items = array_filter($this->items, static function($key) use ($keys){
+        $self->setItems(array_filter(\iterator_to_array($this, true), static function($key) use ($keys){
             return in_array($key, $keys, true);
-        }, \ARRAY_FILTER_USE_KEY);
+        }, \ARRAY_FILTER_USE_KEY));
 
         return $self;
     }
 
     public function filterByKey(string $key)
     {
-        return $this->filterByKeys([$key])->getFirst();
+        try{
+            return $this->filterByKeys([$key])->getFirst();
+        }catch(CollectionException $e){
+            throw new CollectionException("Could not filter by key: \"$key\", key does not exists");
+        }
     }
 
     public function filterByKeyRegex(string $regex) : CollectionInterface
     {
-        $regex = preg_quote($regex, '#');
+        RegexHelper::validate($regex);
 
-        $self = clone($this);
+        /**
+         * @var CollectionInterface $self
+         */
+        $self = $this->_reset(clone($this));
 
-        $self->items = array_filter($this->items, static function($key) use ($regex){
-            return false !== preg_match($key, $regex);
-        }, \ARRAY_FILTER_USE_KEY);
+        $self->setItems(array_filter(\iterator_to_array($this), static function($key) use ($regex){
+            return (bool) preg_match($regex, $key);
+        }, \ARRAY_FILTER_USE_KEY));
 
         return $self;
     }
