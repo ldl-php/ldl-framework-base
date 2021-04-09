@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1200175553157833 - Add iterable helper
 - feature/1200136743167505 - Add properties modifiers to CollectionInterfaceTrait and fix ResetCollectionTrait
 - feature/1200117701811978 - Add FilterByClassRecursive
 - feature/1200099491334044 - Add FilterByInterfaceTrait and FilterByClassInterfaceTrait
