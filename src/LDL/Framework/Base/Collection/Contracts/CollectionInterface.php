@@ -83,4 +83,11 @@ interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArr
      * @return CollectionInterface
      */
     public function filter(callable $callback, int $mode=0) : CollectionInterface;
+
+    /**
+     * @param string $separator
+     * @param bool $considerToStringObjects
+     * @return string
+     */
+    public function implode(string $separator, bool $considerToStringObjects=true) : string;
 }

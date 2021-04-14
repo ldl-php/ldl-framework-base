@@ -127,6 +127,37 @@ trait CollectionInterfaceTrait
         return $collection;
     }
 
+    public function implode(string $separator, bool $considerToStringObjects=true) : string
+    {
+        return implode(
+            $this->filter(static function($item) use ($considerToStringObjects){
+                if(is_string($item)){
+                    return true;
+                }
+
+                if(is_numeric($item)){
+                    return (string) $item;
+                }
+
+                if(
+                    $considerToStringObjects &&
+                    is_object($item) &&
+                    in_array('__toString', get_class_methods($item), true)
+                )
+                {
+                    return true;
+                }
+
+                return false;
+            })
+            ->map(static function ($item){
+                return sprintf('%s', $item);
+            })
+            ->toArray(),
+            $separator
+        );
+    }
+
     public function toArray(): array
     {
         if(false === $this instanceof LockableObjectInterface){
