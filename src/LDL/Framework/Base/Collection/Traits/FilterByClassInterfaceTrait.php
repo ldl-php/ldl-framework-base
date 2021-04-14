@@ -7,62 +7,59 @@ namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Helper\IterableHelper;
 
 trait FilterByClassInterfaceTrait
 {
     use ResetCollectionTrait;
 
     //<editor-fold desc="FilterByClassInterface methods">
-    public function filterByClass(string $class) : CollectionInterface
+    public function filterByClass(string $class, bool $strict=true) : CollectionInterface
     {
-        return $this->filterByClasses([$class]);
+        return $this->filterByClasses([$class], $strict);
     }
 
     public function filterByClasses(iterable $classes, bool $strict=true) : CollectionInterface
     {
-        $classes = is_array($classes) ? $classes : \iterator_to_array($classes, true);
-
-        /**
-         * @var CollectionInterface $collection
-         */
-        $collection = $this->_reset(clone($this));
-
         /**
          * Validate Classes
          */
-        array_map(static function($class){
-            if(!is_string($class) || false === class_exists($class)){
+        $classes = IterableHelper::map($classes, static function($class){
+            if(!is_string($class)){
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Given item in class collection is not of type string, "%s" given',
+                        gettype($class)
+                    )
+                );
+            }
+
+            if(!class_exists($class)){
                 throw new \InvalidArgumentException("Class '$class' does not exists");
             }
-        }, $classes);
 
-        $values = array_filter(
-            \iterator_to_array($this, true),
-            static function($v, $k) use ($collection, $classes, $strict){
-                if(false === $strict) {
-                    return array_filter($classes, static function ($class) use ($v) {
-                        return get_class($v) === $class || is_subclass_of($v, $class);
-                    });
-                }
+            return $class;
+        });
 
-                foreach($classes as $class){
-                    if(get_class($v) === $class){
-                        return true;
-                    }
-                }
-
+        return $this->filter(static function($v) use ($classes, $strict){
+            if(!is_object($v)){
                 return false;
-            },
-            \ARRAY_FILTER_USE_BOTH
-        );
+            }
 
-        if($collection instanceof AppendableInterface){
-            return $collection->appendMany($values, true);
-        }
+            if(false === $strict) {
+                return array_filter($classes, static function ($class) use ($v) {
+                    return get_class($v) === $class || is_subclass_of($v, $class);
+                });
+            }
 
-        $collection->items = $values;
+            foreach($classes as $class){
+                if(get_class($v) === $class){
+                    return true;
+                }
+            }
 
-        return $collection;
+            return false;
+        });
     }
 
     public function filterByClassRecursive(string $className) : CollectionInterface

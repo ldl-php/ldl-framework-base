@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
-- feature/1199522418295938 - Add extra methods to iterable helper (toArray, map and filter)
+- feature/1200195368152391 - Add toArray, map and filter to IterableHelper, add map and filter to CollectionInterface
 - feature/1200175553157833 - Add iterable helper
 - feature/1200136743167505 - Add properties modifiers to CollectionInterfaceTrait and fix ResetCollectionTrait
 - feature/1200117701811978 - Add FilterByClassRecursive

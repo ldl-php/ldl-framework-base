@@ -24,15 +24,15 @@ abstract class IterableHelper
      */
     public static function toArray(iterable $items) : array
     {
-       if(is_array($items)){
-          return $items;
-       }
+        if(is_array($items)){
+            return $items;
+        }
 
-       if($items instanceof \Traversable){
-          return \iterator_to_array($items, true);
-       }
+        if($items instanceof \Traversable){
+            return \iterator_to_array($items, true);
+        }
 
-       return [];
+        return [];
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class IterableHelper
      */
     public static function map(iterable $items, callable $func) : array
     {
-       return array_map($func, self::toArray($items));    
+        return array_map($func, self::toArray($items));
     }
 
     /**
@@ -55,7 +55,7 @@ abstract class IterableHelper
      */
     public static function filter(iterable $items, callable $func, int $mode=0) : array
     {
-       return array_filter(self::toArray($items), $func, $mode);
+        return array_filter(self::toArray($items), $func, $mode);
     }
 
 }

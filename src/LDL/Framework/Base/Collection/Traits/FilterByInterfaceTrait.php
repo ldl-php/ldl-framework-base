@@ -5,8 +5,8 @@
  */
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Helper\IterableHelper;
 
 trait FilterByInterfaceTrait
 {
@@ -21,46 +21,40 @@ trait FilterByInterfaceTrait
     public function filterByInterfaces(iterable $interfaces, bool $strict=true) : CollectionInterface
     {
         /**
-         * @var CollectionInterface $collection
-         */
-        $collection = $this->_reset(clone($this));
-
-        /**
          * Validate interfaces
          */
-        array_map(static function($interface){
-            if(!is_string($interface) || false === interface_exists($interface)){
+        IterableHelper::map($interfaces, static function($interface){
+            if(!is_string($interface)){
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Given item in interface collection is not of type string, "%s" given',
+                        gettype($interface)
+                    )
+                );
+            }
+
+            if(!interface_exists($interface)){
                 throw new \InvalidArgumentException("Interface '$interface' does not exists");
             }
-        }, is_array($interfaces) ? $interfaces : \iterator_to_array($interfaces));
+        });
 
-        $values = array_filter(
-            \iterator_to_array($this, true),
-            static function($v, $k) use ($collection, $interfaces, $strict){
-                if(false === $strict) {
-                    return array_filter($interfaces, static function ($interface) use ($v) {
-                        return $v instanceof $interface;
-                    });
+        $interfaces = IterableHelper::toArray($interfaces);
+
+        return $this->filter(static function($v) use ($interfaces, $strict){
+            if(false === $strict) {
+                return array_filter($interfaces, static function ($interface) use ($v) {
+                    return $v instanceof $interface;
+                });
+            }
+
+            foreach($interfaces as $interface){
+                if(!$v instanceof $interface){
+                    return false;
                 }
+            }
 
-                foreach($interfaces as $interface){
-                    if(!$v instanceof $interface){
-                        return false;
-                    }
-                }
-
-                return true;
-            },
-            \ARRAY_FILTER_USE_BOTH
-        );
-
-        if($collection instanceof AppendableInterface){
-            return $collection->appendMany($values, true);
-        }
-
-        $collection->items = $values;
-
-        return $collection;
+            return true;
+        });
     }
     //</editor-fold>
 }
