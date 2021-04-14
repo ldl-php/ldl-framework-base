@@ -6,14 +6,18 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Exception\UndefinedOffsetException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
+use LDL\Framework\Helper\IterableHelper;
 
 trait CollectionInterfaceTrait
 {
+    use ResetCollectionTrait;
+
     /**
      * Maintains the count of elements inside the collection
      * @var int
@@ -95,6 +99,34 @@ trait CollectionInterfaceTrait
         return false;
     }
 
+    public function map(callable $func) : CollectionInterface
+    {
+        /**
+         * @var CollectionInterface $collection
+         */
+        $collection = clone($this);
+        $map = IterableHelper::map($collection, $func);
+        $collection->setItems([]);
+
+        if($collection instanceof AppendableInterface){
+            return $collection->appendMany($map);
+        }
+
+        $collection->setItems($map);
+
+        return $collection;
+    }
+
+    public function filter(callable $func, int $mode=0) : CollectionInterface
+    {
+        /**
+         * @var CollectionInterface $collection
+         */
+        $collection = clone($this);
+        $collection->setItems(IterableHelper::filter($this, $func, $mode));
+        return $collection;
+    }
+
     public function toArray(): array
     {
         if(false === $this instanceof LockableObjectInterface){
@@ -109,7 +141,10 @@ trait CollectionInterfaceTrait
 
         return $items;
     }
+    //</editor-fold>
 
+
+    //<editor-fold desc="Protected methods which are used to manipulate private properties when using this trait">
     protected function setCount(int $count): CollectionInterface
     {
         $this->count = $count;
@@ -121,7 +156,7 @@ trait CollectionInterfaceTrait
         $this->first = null;
         $this->last = null;
 
-        $this->items = is_array($items) ? $items : \iterator_to_array($items, true);
+        $this->items = IterableHelper::toArray($items);
 
         $keys = array_keys($this->items);
         $keyCount = count($keys);
@@ -139,7 +174,7 @@ trait CollectionInterfaceTrait
         }
 
         $this->first = $keys[0];
-        $this->last = $keys[count($keys)-1];
+        $this->last = $keys[$keyCount-1];
 
         return $this;
     }
@@ -163,7 +198,6 @@ trait CollectionInterfaceTrait
         $this->last = $last;
         return $this;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="\Countable Methods">

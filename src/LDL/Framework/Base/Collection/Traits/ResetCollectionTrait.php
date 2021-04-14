@@ -15,9 +15,6 @@ trait ResetCollectionTrait
          * @var CollectionInterface $collection
          */
         $collection->setItems([]);
-        $collection->setFirst(null);
-        $collection->setLast(null);
-        $collection->setCount(0);
 
         return $collection;
     }

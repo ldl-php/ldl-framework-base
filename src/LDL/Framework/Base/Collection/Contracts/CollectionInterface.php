@@ -66,4 +66,21 @@ interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArr
      * @return bool
      */
     public function isEmpty() : bool;
+
+    /**
+     * Use a callable function on each item of the collection
+     *
+     * @param callable $callback
+     * @return CollectionInterface
+     */
+    public function map(callable $callback) : CollectionInterface;
+
+    /**
+     * Use array_filter on each item of the collection, returns a new collection instance
+     *
+     * @param callable $callback
+     * @param int $mode
+     * @return CollectionInterface
+     */
+    public function filter(callable $callback, int $mode=0) : CollectionInterface;
 }
