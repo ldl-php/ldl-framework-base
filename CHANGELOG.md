@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1200260135645241 - Add more collection contracts and traits
 - feature/1200240987751220 - Add comparison operator helper (with constant names, etc)
 - feature/1200197097272268 - Add implode method
 - feature/1200195368152391 - Add toArray, map and filter to IterableHelper, add map and filter to CollectionInterface

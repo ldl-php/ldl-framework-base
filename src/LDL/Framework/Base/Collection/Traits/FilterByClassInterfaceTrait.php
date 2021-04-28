@@ -11,8 +11,6 @@ use LDL\Framework\Helper\IterableHelper;
 
 trait FilterByClassInterfaceTrait
 {
-    use ResetCollectionTrait;
-
     //<editor-fold desc="FilterByClassInterface methods">
     public function filterByClass(string $class, bool $strict=true) : CollectionInterface
     {
@@ -64,8 +62,7 @@ trait FilterByClassInterfaceTrait
 
     public function filterByClassRecursive(string $className) : CollectionInterface
     {
-        $collection = clone($this);
-        $collection->truncate();
+        $collection = $this->getEmptyInstance();
 
         $filter = static function($item, $offset) use (&$filter, $collection, $className){
             if(is_object($item) && get_class($item) === $className){

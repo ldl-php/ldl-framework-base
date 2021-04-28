@@ -13,8 +13,6 @@ use LDL\Framework\Helper\RegexHelper;
 
 trait KeyFilterInterfaceTrait
 {
-    use ResetCollectionTrait;
-
     //<editor-fold desc="KeyFilterInterface methods">
     public function filterByKeys(iterable $keys) : CollectionInterface
     {

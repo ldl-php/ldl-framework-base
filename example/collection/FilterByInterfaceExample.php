@@ -1,26 +1,24 @@
 <?php declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
 use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceableInterface;
-use LDL\Framework\Base\Collection\Contracts\TruncateInterface;
 use LDL\Framework\Base\Collection\Contracts\UnshiftInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\KeyFilterInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\ReplaceableInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\TruncateInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\FilterByInterface;
 use LDL\Framework\Base\Collection\Traits\FilterByInterfaceTrait;
 
-interface FilterByInterfaceExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, TruncateInterface, UnshiftInterface, FilterByInterface
+interface FilterByInterfaceExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, UnshiftInterface, FilterByInterface
 {
 
 }
@@ -33,15 +31,15 @@ interface B{
 
 }
 
-class Foo implements A{
+class FooLDL implements A{
 
 }
 
-class Bar implements B{
+class BarLDL implements B{
 
 }
 
-class FooBar implements A, B
+class FooBarLDL implements A, B
 {
 
 }
@@ -54,7 +52,6 @@ class FilterByInterfaceCollection implements FilterByInterfaceExample
     use KeyFilterInterfaceTrait;
     use RemovableInterfaceTrait;
     use ReplaceableInterfaceTrait;
-    use TruncateInterfaceTrait;
     use UnshiftInterfaceTrait;
     use FilterByInterfaceTrait;
 }
@@ -62,9 +59,9 @@ class FilterByInterfaceCollection implements FilterByInterfaceExample
 echo "Create collection\n";
 
 $collection = new FilterByInterfaceCollection();
-$collection->append(new Foo)
-    ->append(new Bar)
-    ->append(new FooBar);
+$collection->append(new FooLDL())
+    ->append(new BarLDL())
+    ->append(new FooBarLDL());
 
 echo "Filter by Interface A: (Foo must be shown)\n";
 var_dump(get_class($collection->filterByInterface(A::class)[0]));
