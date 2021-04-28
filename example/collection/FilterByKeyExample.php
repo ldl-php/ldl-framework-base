@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
@@ -30,20 +30,15 @@ $items = [
     'test1' => 'a',
     'test2' => 'b',
     'test3' => 'c',
-    'test4' => 'd'
+    'test4' => 'd',
+    'testAR' => 'e'
 ];
 
 echo var_export($items, true)."\n\n";
 
 $collection = new FilterByKeyExample();
 
-$collection->appendMany([
-    'test1' => 'a',
-    'test2' => 'b',
-    'test3' => 'c',
-    'test4' => 'd',
-    'testAR' => 'e'
-], true);
+$collection->appendMany($items, true);
 
 
 echo "Filter by keys test1 and test2:\n\n";

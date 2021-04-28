@@ -90,4 +90,27 @@ interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArr
      * @return string
      */
     public function implode(string $separator, bool $considerToStringObjects=true) : string;
+
+    /**
+     * Returns an instance of the collection which contains no items.
+     *
+     * @return CollectionInterface
+     */
+    public function getEmptyInstance() : CollectionInterface;
+
+    /**
+     * Returns a new instance, sorted by value through an anonymous comparison function
+     *
+     * @param callable $fn
+     * @return CollectionInterface
+     */
+    public function sort(callable $fn) : CollectionInterface;
+
+    /**
+     * Returns a new instance, sorted by keys through an anonymous comparison function
+     *
+     * @param callable $fn
+     * @return CollectionInterface
+     */
+    public function ksort(callable $fn) : CollectionInterface;
 }

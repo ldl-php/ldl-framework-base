@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
@@ -13,7 +13,7 @@ use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 
-class MyCollection implements CollectionInterface, AppendableInterface, RemovableInterface, LockRemoveInterface
+class MyLDLCollection implements CollectionInterface, AppendableInterface, RemovableInterface, LockRemoveInterface
 {
     use CollectionInterfaceTrait;
     use AppendManyTrait;
@@ -24,7 +24,7 @@ class MyCollection implements CollectionInterface, AppendableInterface, Removabl
 
 echo "Create collection\n";
 
-$collection = new MyCollection();
+$collection = new MyLDLCollection();
 
 echo "Append 'Hello World'\n";
 

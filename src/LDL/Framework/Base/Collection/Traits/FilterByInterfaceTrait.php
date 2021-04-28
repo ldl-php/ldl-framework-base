@@ -10,8 +10,6 @@ use LDL\Framework\Helper\IterableHelper;
 
 trait FilterByInterfaceTrait
 {
-    use ResetCollectionTrait;
-
     //<editor-fold desc="FilterByInterface methods">
     public function filterByInterface(string $interface) : CollectionInterface
     {

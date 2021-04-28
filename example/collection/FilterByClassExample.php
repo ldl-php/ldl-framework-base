@@ -1,26 +1,24 @@
 <?php declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
 use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceableInterface;
-use LDL\Framework\Base\Collection\Contracts\TruncateInterface;
 use LDL\Framework\Base\Collection\Contracts\UnshiftInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\KeyFilterInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\ReplaceableInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\TruncateInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\FilterByClassInterface;
 use LDL\Framework\Base\Collection\Traits\FilterByClassInterfaceTrait;
 
-interface FilterByClassExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, TruncateInterface, UnshiftInterface, FilterByClassInterface
+interface FilterByClassExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, UnshiftInterface, FilterByClassInterface
 {
 
 }
@@ -55,7 +53,6 @@ class FilterByClassCollection implements FilterByClassExample
     use KeyFilterInterfaceTrait;
     use RemovableInterfaceTrait;
     use ReplaceableInterfaceTrait;
-    use TruncateInterfaceTrait;
     use UnshiftInterfaceTrait;
     use FilterByClassInterfaceTrait;
 }

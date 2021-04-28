@@ -16,8 +16,6 @@ use LDL\Framework\Helper\IterableHelper;
 
 trait CollectionInterfaceTrait
 {
-    use ResetCollectionTrait;
-
     /**
      * Maintains the count of elements inside the collection
      * @var int
@@ -160,10 +158,18 @@ trait CollectionInterfaceTrait
 
     public function toArray(): array
     {
-        if(false === $this instanceof LockableObjectInterface){
+        /**
+         * If the current class does not implements LockableObjectInterface, modification on it's
+         * children is allowed (in a collection which contains or may contain objects for example)
+         */
+        if(!$this instanceof LockableObjectInterface){
             return $this->items;
         }
 
+        /**
+         * In the case that the current class implements LockableObjectInterface we need to clone each object reference
+         * so they can not be modified externally, this maintaining consistency within the class.
+         */
         $items = [];
 
         foreach($this as $key => $item){
@@ -172,17 +178,49 @@ trait CollectionInterfaceTrait
 
         return $items;
     }
+
+    public function sort(callable $fn) : CollectionInterface
+    {
+        $items = $this->items;
+        uasort($items, $fn);
+        $instance = $this->getEmptyInstance();
+        $instance->items = $items;
+        return $instance;
+    }
+
+    public function ksort(callable $fn) : CollectionInterface
+    {
+        $items = $this->items;
+        uksort($items, $fn);
+        $instance = $this->getEmptyInstance();
+        $instance->items = $items;
+        return $instance;
+    }
+
+    public function getEmptyInstance() : CollectionInterface
+    {
+        /**
+         * @var CollectionInterface $self
+         */
+        $self = clone($this);
+        $self->first = null;
+        $self->last = null;
+        $self->count = 0;
+        $self->items = [];
+
+        return $self;
+    }
     //</editor-fold>
 
 
-    //<editor-fold desc="Protected methods which are used to manipulate private properties when using this trait">
-    protected function setCount(int $count): CollectionInterface
+    //<editor-fold desc="Private methods which are used to manipulate private properties when using this trait">
+    private function setCount(int $count): CollectionInterface
     {
         $this->count = $count;
         return $this;
     }
 
-    protected function setItems(iterable $items): CollectionInterface
+    private function setItems(iterable $items): CollectionInterface
     {
         $this->first = null;
         $this->last = null;
@@ -210,7 +248,7 @@ trait CollectionInterfaceTrait
         return $this;
     }
 
-    protected function setFirst($first): CollectionInterface
+    private function setFirst($first): CollectionInterface
     {
         if(null !== $first){
             ArrayHelper::validateKey($first);
@@ -220,7 +258,7 @@ trait CollectionInterfaceTrait
         return $this;
     }
 
-    protected function setLast($last): CollectionInterface
+    private function setLast($last): CollectionInterface
     {
         if(null !== $last){
             ArrayHelper::validateKey($last);
