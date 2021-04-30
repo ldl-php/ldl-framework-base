@@ -6,10 +6,14 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByInterface;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 
 trait FilterByInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     //<editor-fold desc="FilterByInterface methods">
     public function filterByInterface(string $interface) : CollectionInterface
     {
@@ -18,6 +22,8 @@ trait FilterByInterfaceTrait
 
     public function filterByInterfaces(iterable $interfaces, bool $strict=true) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByInterface::class]);
+
         /**
          * Validate interfaces
          */

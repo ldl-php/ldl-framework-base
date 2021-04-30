@@ -9,16 +9,25 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
+use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
 trait RemovableInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     //<editor-fold desc="RemovableInterface methods">
     public function remove($key): CollectionInterface
     {
-        ArrayHelper::validateKey($key);
+        $this->requireImplements([
+            CollectionInterface::class,
+            RemovableInterface::class
+        ]);
+
+        $this->requireTraits([CollectionInterfaceTrait::class]);
 
         if($this instanceof LockableObjectInterface){
             $this->checkLock();
@@ -28,42 +37,49 @@ trait RemovableInterfaceTrait
             $this->checkLockRemove();
         }
 
-        $exists = array_key_exists($key, $this->items);
+        $exists = $this->hasKey($key);
 
-        if(false === $exists){
+        if(!$exists){
             throw new RemoveException("Item with key: $key does not exists");
         }
 
         if($this instanceof BeforeRemoveInterface){
-            $this->getBeforeRemove()->call($this, $exists ? $this->items[$key] : null, $key);
+            $this->getBeforeRemove()->call($this, $exists ? $this->get($key) : null, $key);
         }
 
-        unset($this->items[$key]);
-
-        $this->count--;
+        $this->removeItem($key);
+        $this->setCount($this->count() - 1);
 
         $keys = $this->keys();
         $lastKey = count($keys);
 
         if(0 === $lastKey) {
-            $this->first = null;
-            $this->last = null;
+            $this->setFirstKey(null);
+            $this->setLastKey(null);
             return $this;
         }
 
-        $this->first = $keys[0];
-        $this->last = $keys[$lastKey - 1];
+        $this->setFirstKey($keys[0]);
+        $this->setLastKey($keys[$lastKey - 1]);
+
         return $this;
     }
 
     public function removeLast() : CollectionInterface
     {
-        $this->remove($this->last);
+        $this->remove($this->getLastKey());
         return $this;
     }
 
     public function removeByValue($value, bool $strict = true) : int
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            RemovableInterface::class
+        ]);
+
+        $this->requireTraits([CollectionInterfaceTrait::class]);
+
         $removed = 0;
 
         foreach($this as $key => $val){

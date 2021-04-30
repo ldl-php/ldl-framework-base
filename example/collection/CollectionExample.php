@@ -16,25 +16,34 @@ use LDL\Framework\Base\Collection\Traits\ReplaceableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 
-interface MyCollectionInterface extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, UnshiftInterface
+interface MyCollectionInterface extends CollectionInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, UnshiftInterface
 {
 
 }
 
-class MyCollection implements MyCollectionInterface
+abstract class MyCollection implements MyCollectionInterface
 {
     use CollectionInterfaceTrait;
-    use AppendableInterfaceTrait;
-    use AppendManyTrait;
     use KeyFilterInterfaceTrait;
     use RemovableInterfaceTrait;
     use ReplaceableInterfaceTrait;
     use UnshiftInterfaceTrait;
 }
 
+abstract class MyChildCollection extends MyCollection implements AppendableInterface
+{
+    use AppendableInterfaceTrait;
+    use AppendManyTrait;
+}
+
+class MyAppendableCollection extends MyChildCollection
+{
+
+}
+
 echo "Create collection\n";
 
-$collection = new MyCollection();
+$collection = new MyAppendableCollection();
 
 echo "Append single item: 'hello'\n";
 
@@ -42,7 +51,7 @@ $collection->append('hello');
 
 echo "Get value at offset 0\n";
 
-var_dump($collection[0]);
+var_dump($collection->get(0));
 
 echo "Append many items: 'LDL', 'World'\n";
 
@@ -64,7 +73,7 @@ foreach($collection as $value){
     echo "Item: $value\n";
 }
 
-echo "Replace item with key 'lol' (not exists), it has append to the collection\n";
+echo "Replace item with key: 'lol' (not exists) and value: 'something', it has append to the collection\n";
 $collection->replace('something', 'lol');
 
 echo "Check items in the collection\n";

@@ -38,8 +38,16 @@ class FilterByActiveStateCollection implements CollectionInterface, AppendableIn
 echo "Create Active State Collection instance\n";
 
 $collection = new FilterByActiveStateCollection();
+
+echo "Append class ActiveStateFilterExampleTest1 with active: true\n";
+
 $collection->append(new ActiveStateFilterExampleTest1());
+
+echo "Append class ActiveStateFilterExampleTest2 with active: false\n";
+
 $collection->append(new ActiveStateFilterExampleTest2());
+
+echo "Filter class by active state\n";
 
 foreach($collection->filterByActiveState() as $item){
     echo get_class($item)."\n";

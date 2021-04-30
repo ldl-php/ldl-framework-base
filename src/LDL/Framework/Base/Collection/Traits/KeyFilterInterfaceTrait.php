@@ -7,15 +7,21 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
 trait KeyFilterInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     //<editor-fold desc="KeyFilterInterface methods">
     public function filterByKeys(iterable $keys) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, KeyFilterInterface::class]);
+
         $keys = IterableHelper::toArray($keys);
 
         return $this->filter(static function($key) use ($keys){
@@ -34,6 +40,8 @@ trait KeyFilterInterfaceTrait
 
     public function filterByKeyRegex(string $regex) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, KeyFilterInterface::class]);
+
         RegexHelper::validate($regex);
 
         return $this->filter(static function($key) use ($regex){

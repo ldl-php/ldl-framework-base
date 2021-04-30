@@ -5,7 +5,7 @@ namespace LDL\Framework\Base\Collection\Contracts;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Base\Contracts\ToArrayInterface;
 
-interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArrayInterface
+interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
 {
     /**
      * Return associated indices
@@ -18,6 +18,7 @@ interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArr
      * Check if a key exists
      *
      * @param number|string $key
+     * @throws \Exception
      * @return bool
      */
     public function hasKey($key) : bool;
@@ -30,6 +31,15 @@ interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArr
      * @return bool
      */
     public function hasValue($value) : bool;
+
+    /**
+     * Obtain an element in the collection
+     *
+     * @param $key
+     * @throws \Exception
+     * @return mixed
+     */
+    public function get($key);
 
     /**
      * Obtains the first element in the collection
@@ -94,9 +104,10 @@ interface CollectionInterface extends \ArrayAccess, \Countable, \Iterator, ToArr
     /**
      * Returns an instance of the collection which contains no items.
      *
+     * @param mixed ...$params
      * @return CollectionInterface
      */
-    public function getEmptyInstance() : CollectionInterface;
+    public function getEmptyInstance(...$params) : CollectionInterface;
 
     /**
      * Returns a new instance, sorted by value through an anonymous comparison function

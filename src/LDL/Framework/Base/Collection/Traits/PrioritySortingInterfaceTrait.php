@@ -3,14 +3,23 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\PrioritySortingInterface;
 use LDL\Framework\Base\Collection\Contracts\SortInterface;
 use LDL\Framework\Base\Contracts\PriorityInterface;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
 trait PrioritySortingInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     //<editor-fold desc="PrioritySortingInterface methods">
     public function sortByPriority(string $sort=SortInterface::SORT_ASCENDING): CollectionInterface
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            PrioritySortingInterface::class
+        ]);
+
         /**
          * @var CollectionInterface $this
          */

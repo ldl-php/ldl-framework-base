@@ -3,12 +3,16 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByNameInterface;
 use LDL\Framework\Base\Contracts\NameableInterface;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
 trait FilterByNameInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     //<editor-fold desc="FilterByNameInterface methods">
     public function filterByNameAuto($mixed) : CollectionInterface
     {
@@ -30,24 +34,30 @@ trait FilterByNameInterfaceTrait
 
     public function filterByNames(iterable $names) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByNameInterface::class]);
+
         $names = IterableHelper::toArray($names);
 
         return $this->filter(static function($v) use ($names){
-            /**
-             * @var NameableInterface $v
-             */
+            if(!$v instanceof NameableInterface){
+                return false;
+            }
+
             return in_array($v->getName(), $names, true);
         });
     }
 
     public function filterByNameRegex(string $regex) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByNameInterface::class]);
+
         RegexHelper::validate($regex);
 
         return $this->filter(static function($v) use ($regex){
-            /**
-             * @var NameableInterface $v
-             */
+            if(!$v instanceof NameableInterface){
+                return false;
+            }
+
             return preg_match($regex, $v->getName());
         });
     }

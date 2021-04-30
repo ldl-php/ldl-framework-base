@@ -7,10 +7,14 @@ namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByClassInterface;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 
 trait FilterByClassInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     //<editor-fold desc="FilterByClassInterface methods">
     public function filterByClass(string $class, bool $strict=true) : CollectionInterface
     {
@@ -19,6 +23,9 @@ trait FilterByClassInterfaceTrait
 
     public function filterByClasses(iterable $classes, bool $strict=true) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByClassInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
         /**
          * Validate Classes
          */
@@ -62,6 +69,9 @@ trait FilterByClassInterfaceTrait
 
     public function filterByClassRecursive(string $className) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByClassInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
         $collection = $this->getEmptyInstance();
 
         $filter = static function($item, $offset) use (&$filter, $collection, $className){
@@ -71,7 +81,7 @@ trait FilterByClassInterfaceTrait
                     return $collection->append($item, $offset);
                 }
 
-                $collection->items[$offset] = $item;
+                $collection->setItem($item, $offset);
             }
 
             if($item instanceof \Traversable){

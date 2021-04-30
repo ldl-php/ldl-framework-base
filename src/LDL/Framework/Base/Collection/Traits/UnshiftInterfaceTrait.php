@@ -9,14 +9,21 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
+use LDL\Framework\Base\Collection\Contracts\UnshiftInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
 trait UnshiftInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     //<editor-fold desc="UnshiftInterface methods">
     public function unshift($item, $key = null): CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, UnshiftInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
         if($this instanceof LockableObjectInterface){
             $this->checkLock();
         }
@@ -35,20 +42,21 @@ trait UnshiftInterfaceTrait
             $this->getBeforeAppend()->call($this, $item, $key);
         }
 
-        $this->first = $key;
+        $this->setFirstKey($key);
 
-        if(null === $this->last) {
-            $this->last = $key;
+        if(null === $this->getLastKey()) {
+            $this->setLastKey($key);
         }
 
         if(is_string($key)){
-            $this->items = [$key => $item] + $this->items;
+            $this->setItems([[$key => $item] + $this->items]);
             return $this;
         }
 
         $result = [$key=>$item];
+        $items = $this->toArray();
 
-        array_walk($this->items, static function($v, $k) use ($result){
+        array_walk( $items, static function($v, $k) use ($result){
             if(is_int($k)){
                 ++$k;
             }
@@ -56,7 +64,7 @@ trait UnshiftInterfaceTrait
             $result[$k] = $v;
         });
 
-        $this->items = $result;
+        $this->setItems($result);
 
         return $this;
     }

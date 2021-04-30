@@ -30,4 +30,34 @@ abstract class ArrayHelper
             )
         );
     }
+
+    /**
+     * @param array $array
+     * @param $key
+     * @return bool
+     * @throws Exception\InvalidKeyException
+     */
+    public static function hasKey(array $array, $key): bool
+    {
+        self::validateKey($key);
+        return array_key_exists($key, $array);
+    }
+
+    /**
+     * @param array $array
+     * @param $key
+     * @throws Exception\InvalidKeyException
+     * @throws \RuntimeException
+     */
+    public static function mustHaveKey(array $array, $key): void
+    {
+        $hasKey = self::hasKey($array, $key);
+
+        if($hasKey){
+            return;
+        }
+
+        $msg = sprintf("Key: %s does not exist", $key);
+        throw new \RuntimeException($msg);
+    }
 }
