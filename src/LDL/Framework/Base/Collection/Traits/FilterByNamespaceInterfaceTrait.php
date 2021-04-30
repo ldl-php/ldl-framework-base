@@ -7,9 +7,9 @@ use LDL\Framework\Base\Contracts\NamespaceInterface;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
-trait FilterByNamespaceTrait
+trait FilterByNamespaceInterfaceTrait
 {
-    use FilterByNameTrait;
+    use FilterByNameInterfaceTrait;
 
     //<editor-fold desc="FilterByNamespaceInterface methods">
     public function filterByNamespaceAuto($mixed) : CollectionInterface

@@ -7,7 +7,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\FilterByActiveStateInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\FilterByActiveStateTrait;
+use LDL\Framework\Base\Collection\Traits\FilterByActiveStateInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Contracts\IsActiveInterface;
 
@@ -32,7 +32,7 @@ class FilterByActiveStateCollection implements CollectionInterface, AppendableIn
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use FilterByActiveStateTrait;
+    use FilterByActiveStateInterfaceTrait;
 }
 
 echo "Create Active State Collection instance\n";

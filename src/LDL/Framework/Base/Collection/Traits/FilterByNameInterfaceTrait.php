@@ -7,7 +7,7 @@ use LDL\Framework\Base\Contracts\NameableInterface;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
-trait FilterByNameTrait
+trait FilterByNameInterfaceTrait
 {
     //<editor-fold desc="FilterByNameInterface methods">
     public function filterByNameAuto($mixed) : CollectionInterface

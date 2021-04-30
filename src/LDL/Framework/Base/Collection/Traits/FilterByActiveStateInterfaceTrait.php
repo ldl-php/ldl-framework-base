@@ -13,7 +13,7 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Contracts\IsActiveInterface;
 
-trait FilterByActiveStateTrait
+trait FilterByActiveStateInterfaceTrait
 {
     //<editor-fold desc="FilterByActiveStateInterface methods">
     public function filterByActiveState(): CollectionInterface

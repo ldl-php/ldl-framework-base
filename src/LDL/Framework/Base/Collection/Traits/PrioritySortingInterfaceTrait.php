@@ -6,7 +6,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\SortInterface;
 use LDL\Framework\Base\Contracts\PriorityInterface;
 
-trait PrioritySortingTrait
+trait PrioritySortingInterfaceTrait
 {
     //<editor-fold desc="PrioritySortingInterface methods">
     public function sortByPriority(string $sort=SortInterface::SORT_ASCENDING): CollectionInterface

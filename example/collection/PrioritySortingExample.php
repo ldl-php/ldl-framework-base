@@ -7,7 +7,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\PrioritySortingInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\PrioritySortingTrait;
+use LDL\Framework\Base\Collection\Traits\PrioritySortingInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Contracts\PriorityInterface;
 
@@ -40,7 +40,7 @@ class PriorityCollection implements CollectionInterface, AppendableInterface, Pr
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use PrioritySortingTrait;
+    use PrioritySortingInterfaceTrait;
 }
 
 echo "Create new PriorityCollection class instance\n";
