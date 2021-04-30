@@ -8,11 +8,11 @@ namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Exception\UndefinedOffsetException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
 trait CollectionInterfaceTrait
 {
@@ -41,9 +41,15 @@ trait CollectionInterfaceTrait
     private $first;
 
     //<editor-fold desc="CollectionInterface methods">
+    public function get($key)
+    {
+        ArrayHelper::mustHaveKey($this->items, $key);
+        return $this->items[$key];
+    }
+
     public function getFirst()
     {
-        if(null === $this->last) {
+        if(null === $this->first) {
             $msg = 'Could not obtain first item since this collection is empty';
             throw new CollectionException($msg);
         }
@@ -78,7 +84,7 @@ trait CollectionInterfaceTrait
 
     public function hasKey($key) : bool
     {
-        return array_key_exists($this->items, $key);
+        return ArrayHelper::hasKey($this->items, $key);
     }
 
     public function keys() : array
@@ -197,30 +203,29 @@ trait CollectionInterfaceTrait
         return $instance;
     }
 
-    public function getEmptyInstance() : CollectionInterface
+    public function getEmptyInstance(...$params) : CollectionInterface
     {
-        /**
-         * @var CollectionInterface $self
-         */
-        $self = clone($this);
-        $self->first = null;
-        $self->last = null;
-        $self->count = 0;
-        $self->items = [];
-
-        return $self;
+        return new static(...$params);
     }
     //</editor-fold>
 
 
-    //<editor-fold desc="Private methods which are used to manipulate private properties when using this trait">
-    private function setCount(int $count): CollectionInterface
+    //<editor-fold desc="Protected methods which are used to manipulate private properties when using this trait">
+    protected function setCount(int $count): CollectionInterface
     {
         $this->count = $count;
         return $this;
     }
 
-    private function setItems(iterable $items): CollectionInterface
+    protected function setItem($item, $key = null): CollectionInterface
+    {
+        $key = $key ?? $this->count;
+        $this->items[$key] = $item;
+
+        return $this;
+    }
+
+    protected function setItems(iterable $items): CollectionInterface
     {
         $this->first = null;
         $this->last = null;
@@ -248,7 +253,12 @@ trait CollectionInterfaceTrait
         return $this;
     }
 
-    private function setFirst($first): CollectionInterface
+    /**
+     * @param $first
+     * @return CollectionInterface
+     * @throws InvalidKeyException
+     */
+    protected function setFirstKey($first): CollectionInterface
     {
         if(null !== $first){
             ArrayHelper::validateKey($first);
@@ -258,13 +268,25 @@ trait CollectionInterfaceTrait
         return $this;
     }
 
-    private function setLast($last): CollectionInterface
+    /**
+     * @param $last
+     * @return CollectionInterface
+     * @throws InvalidKeyException
+     */
+    protected function setLastKey($last): CollectionInterface
     {
         if(null !== $last){
             ArrayHelper::validateKey($last);
         }
 
         $this->last = $last;
+        return $this;
+    }
+
+    protected function removeItem($key): CollectionInterface
+    {
+        unset($this->items[$key]);
+
         return $this;
     }
     //</editor-fold>
@@ -303,34 +325,4 @@ trait CollectionInterfaceTrait
         return current($this->items);
     }
     //<editor-fold>
-
-    //<editor-fold desc="\ArrayAccess methods">
-    public function offsetExists($offset) : bool
-    {
-        ArrayHelper::validateKey($offset);
-        return array_key_exists($offset, $this->items);
-    }
-
-    public function offsetGet($offset)
-    {
-        ArrayHelper::validateKey($offset);
-
-        if(!$this->offsetExists($offset)){
-            $msg = "Offset \"$offset\" does not exist";
-            throw new UndefinedOffsetException($msg);
-        }
-
-        return $this->items[$offset];
-    }
-
-    public function offsetSet($offset, $value) : void
-    {
-        $this->replace($value, $offset);
-    }
-
-    public function offsetUnset($offset) : void
-    {
-        $this->remove($offset);
-    }
-    //</editor-fold>
 }

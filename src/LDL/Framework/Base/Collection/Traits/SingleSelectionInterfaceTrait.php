@@ -12,9 +12,12 @@ use LDL\Framework\Base\Collection\Contracts\SelectionLockingInterface;
 use LDL\Framework\Base\Collection\Contracts\SingleSelectionInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
 trait SingleSelectionInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     /**
      * @var number|string|null
      */
@@ -47,7 +50,7 @@ trait SingleSelectionInterfaceTrait
         /**
          * If offset does not exists, it will throw an UndefinedOffsetException
          */
-        $this->offsetGet($key);
+        $this->get($key);
 
         $this->_tSelectedKey = $key;
 
@@ -56,21 +59,41 @@ trait SingleSelectionInterfaceTrait
 
     public function getSelectedItem()
     {
-        return $this->offsetGet($this->_tSelectedKey);
+        $this->requireImplements([
+            CollectionInterface::class,
+            SingleSelectionInterface::class
+        ]);
+
+        return $this->get($this->_tSelectedKey);
     }
 
     public function getSelectedKey()
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            SingleSelectionInterface::class
+        ]);
+
         return $this->_tSelectedKey;
     }
 
     public function hasSelection() : bool
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            SingleSelectionInterface::class
+        ]);
+
         return $this->_tSelectedKey !== null;
     }
 
     private function _validateLockedSelection() : void
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            SingleSelectionInterface::class
+        ]);
+
         if(false === $this->_tSelectionLocked) {
             return;
         }
@@ -89,6 +112,11 @@ trait SingleSelectionInterfaceTrait
 
     public function isSelectionLocked() : bool
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            SingleSelectionInterface::class
+        ]);
+
         return $this->_tSelectionLocked;
     }
     //</editor-fold>

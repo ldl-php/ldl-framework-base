@@ -6,16 +6,22 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Exception\LockAppendException;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
 trait LockAppendInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     /**
      * @var bool
      */
     private $_tIsAppendLock = false;
 
+    //<editor-fold desc="LockAppendInterface methods">
     public function checkLockAppend(): void
     {
         if(true === $this->isLockAppend()){
@@ -25,15 +31,25 @@ trait LockAppendInterfaceTrait
         }
     }
 
-    //<editor-fold desc="LockAppendInterface methods">
     public function lockAppend(): CollectionInterface
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            LockAppendInterface::class
+        ]);
+
         $this->_tIsAppendLock = true;
+
         return $this;
     }
 
     public function isLockAppend() : bool
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            LockAppendInterface::class
+        ]);
+
         return $this->_tIsAppendLock;
     }
     //</editor-fold>

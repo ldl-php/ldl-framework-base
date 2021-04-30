@@ -13,8 +13,8 @@ use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 
 class CallableCollection implements CallableCollectionInterface
 {
-    use CollectionInterfaceTrait;
     use AppendableInterfaceTrait {append as private _append;}
+    use CollectionInterfaceTrait;
     use AppendManyTrait;
     use LockAppendInterfaceTrait;
     use RemovableInterfaceTrait;

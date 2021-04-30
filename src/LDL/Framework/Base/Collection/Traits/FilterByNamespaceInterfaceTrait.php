@@ -3,13 +3,16 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByNamespaceInterface;
 use LDL\Framework\Base\Contracts\NamespaceInterface;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
 trait FilterByNamespaceInterfaceTrait
 {
     use FilterByNameInterfaceTrait;
+    use ClassRequirementHelperTrait;
 
     //<editor-fold desc="FilterByNamespaceInterface methods">
     public function filterByNamespaceAuto($mixed) : CollectionInterface
@@ -31,9 +34,15 @@ trait FilterByNamespaceInterfaceTrait
 
     public function filterByNamespaces(iterable $namespaces) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByNamespaceInterface::class]);
+
         $namespaces = IterableHelper::toArray($namespaces);
 
         return $this->filter(static function($v) use ($namespaces){
+            if(!$v instanceof NamespaceInterface){
+                return false;
+            }
+
             /**
              * @var NamespaceInterface $v
              */
@@ -48,9 +57,15 @@ trait FilterByNamespaceInterfaceTrait
 
     public function filterByNamespaceRegex(string $regex) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByNamespaceInterface::class]);
+
         RegexHelper::validate($regex);
 
         return $this->filter(static function($v) use ($regex){
+            if(!$v instanceof NamespaceInterface){
+                return false;
+            }
+
             /**
              * @var NamespaceInterface $v
              */
@@ -60,7 +75,13 @@ trait FilterByNamespaceInterfaceTrait
 
     public function filterByNamespaceAndName(string $namespace, string $name) : CollectionInterface
     {
+        $this->requireImplements([CollectionInterface::class, FilterByNamespaceInterface::class]);
+
         return $this->filter(static function($v) use ($namespace, $name){
+            if(!$v instanceof NamespaceInterface){
+                return false;
+            }
+
             /**
              * @var NamespaceInterface $v
              */

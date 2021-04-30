@@ -21,8 +21,8 @@ class ScalarCollection implements CollectionInterface, AppendableInterface, Sort
 echo "Create new PriorityCollection class instance\n";
 $collection = new ScalarCollection();
 
-echo "Append [1,2,3,4,5,'a','b','c','d','e']\n";
-$collection->appendMany([1,2,3,4,5,'a','b','c','d','e']);
+echo "Append [2,'a','e',1,5,'b','d',3,'c',4]\n";
+$collection->appendMany([2,'a','e',1,5,'b','d',3,'c',4]);
 
 echo "Sort ascending:\n";
 

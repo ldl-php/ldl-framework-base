@@ -71,7 +71,7 @@ $collection->append(new Foo)
     ->append(new ExtendsBar);
 
 echo "Filter by class Foo: (Foo must be shown)\n";
-var_dump(get_class($collection->filterByClass(Foo::class)[0]));
+var_dump(get_class($collection->filterByClass(Foo::class)->getFirst()));
 
 echo "Filter by classes, Foo and Bar with strict mode set to false (Foo, Bar, ExtendsFoo and ExtendsBar must be shown)\n";
 

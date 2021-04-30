@@ -7,15 +7,20 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Exception\LockRemoveException;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
 trait LockRemoveInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     /**
      * @var bool
      */
     private $_tIsRemoveLock = false;
 
+    //<editor-fold desc="LockRemoveInterface methods">
     public function checkLockRemove(): void
     {
         if(true === $this->isRemoveLock()){
@@ -25,15 +30,25 @@ trait LockRemoveInterfaceTrait
         }
     }
 
-    //<editor-fold desc="LockRemoveInterface methods">
     public function lockRemove(): CollectionInterface
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            LockRemoveInterface::class
+        ]);
+
         $this->_tIsRemoveLock = true;
+
         return $this;
     }
 
     public function isRemoveLock() : bool
     {
+        $this->requireImplements([
+            CollectionInterface::class,
+            LockRemoveInterface::class
+        ]);
+
         return $this->_tIsRemoveLock;
     }
     //</editor-fold>
