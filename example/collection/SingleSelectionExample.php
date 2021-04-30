@@ -7,7 +7,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\SingleSelectionInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\SingleSelectionTrait;
+use LDL\Framework\Base\Collection\Traits\SingleSelectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Exception\LockingException;
 
@@ -16,7 +16,7 @@ class SingleSelectionCollection implements CollectionInterface, AppendableInterf
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use SingleSelectionTrait;
+    use SingleSelectionInterfaceTrait;
 }
 
 echo "Create collection instance\n";

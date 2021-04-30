@@ -7,7 +7,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\SortableScalarInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\SortableScalarTrait;
+use LDL\Framework\Base\Collection\Traits\SortableScalarInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 
 class ScalarCollection implements CollectionInterface, AppendableInterface, SortableScalarInterface
@@ -15,7 +15,7 @@ class ScalarCollection implements CollectionInterface, AppendableInterface, Sort
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use SortableScalarTrait;
+    use SortableScalarInterfaceTrait;
 }
 
 echo "Create new PriorityCollection class instance\n";

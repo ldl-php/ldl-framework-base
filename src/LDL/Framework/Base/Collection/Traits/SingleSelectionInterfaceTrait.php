@@ -13,7 +13,7 @@ use LDL\Framework\Base\Collection\Contracts\SingleSelectionInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Base\Exception\LockingException;
 
-trait SingleSelectionTrait
+trait SingleSelectionInterfaceTrait
 {
     /**
      * @var number|string|null

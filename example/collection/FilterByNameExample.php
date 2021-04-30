@@ -7,7 +7,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\FilterByNameInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\FilterByNameTrait;
+use LDL\Framework\Base\Collection\Traits\FilterByNameInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Contracts\NameableInterface;
 
@@ -32,7 +32,7 @@ class FilterByNameCollection implements CollectionInterface, AppendableInterface
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use FilterByNameTrait;
+    use FilterByNameInterfaceTrait;
 }
 
 echo "Create new Nameable collection class instance\n";
