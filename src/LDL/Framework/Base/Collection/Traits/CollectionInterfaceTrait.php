@@ -40,6 +40,12 @@ trait CollectionInterfaceTrait
      */
     private $first;
 
+    /**
+     * Holds the autoincrement key
+     * @var number
+     */
+    private $autoincrementKey = 0;
+
     //<editor-fold desc="CollectionInterface methods">
     public function get($key)
     {
@@ -75,6 +81,11 @@ trait CollectionInterfaceTrait
     public function getLastKey()
     {
         return $this->last;
+    }
+
+    public function getAutoincrementKey()
+    {
+        return $this->autoincrementKey;
     }
 
     public function isEmpty() : bool
@@ -286,6 +297,13 @@ trait CollectionInterfaceTrait
     protected function removeItem($key): CollectionInterface
     {
         unset($this->items[$key]);
+
+        return $this;
+    }
+
+    protected function setAutoincrementKey($key): CollectionInterface
+    {
+        $this->autoincrementKey = $key;
 
         return $this;
     }

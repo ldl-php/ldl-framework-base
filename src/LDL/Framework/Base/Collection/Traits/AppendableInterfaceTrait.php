@@ -10,6 +10,7 @@ use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
+use LDL\Framework\Base\Collection\Contracts\ReplaceableInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
@@ -32,23 +33,37 @@ trait AppendableInterfaceTrait
             $this->checkLockAppend();
         }
 
+        $gKey = $this->getAutoincrementKey();
+
         if(null !== $key){
             ArrayHelper::validateKey($key);
+            $gKey = $key;
+
+            if($this->hasKey($gKey)){
+                $msg = sprintf(
+                    'Item with key: %s already exists, if you want to replace an item use %s',
+                    $gKey,
+                    ReplaceableInterface::class
+                );
+                throw new \LogicException($msg);
+            }
         }
 
-        $key = $key ?? $this->count();
-
         if($this instanceof BeforeAppendInterface){
-            $this->getBeforeAppend()->call($this, $item, $key);
+            $this->getBeforeAppend()->call($this, $item, $gKey);
         }
 
         if(null === $this->getFirstKey()){
-            $this->setFirstKey($key);
+            $this->setFirstKey($gKey);
         }
 
-        $this->setLastKey($key);
+        $this->setLastKey($gKey);
+        $this->setItem($item, $gKey);
 
-        $this->setItem($item, $key);
+        if(!$key){
+            $this->setAutoincrementKey($gKey + 1);
+        }
+
         $this->setCount($this->count() + 1);
 
         return $this;
