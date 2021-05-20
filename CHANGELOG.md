@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- fix/1200360444683565 - Remove extra brackets on UnshiftInterfaceTrait
 - fix/1200327936147993 - Fix AppendableInterfaceTrait
 - fix/1200271511926649 - Change collection traits names to comply with their contracts
 - fix/1200099491334042 - Fix remove on RemovableInterfaceTrait - Add remove example - Add ArrayHelper

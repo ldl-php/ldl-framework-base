@@ -49,7 +49,7 @@ trait UnshiftInterfaceTrait
         }
 
         if(is_string($key)){
-            $this->setItems([[$key => $item] + $this->items]);
+            $this->setItems([$key => $item] + $this->items);
             return $this;
         }
 
