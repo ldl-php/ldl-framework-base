@@ -22,4 +22,16 @@ interface FilterByInterface
      * @return CollectionInterface
      */
     public function filterByInterfaces(iterable $interfaces, bool $strict=true) : CollectionInterface;
+
+    /**
+     * @param string $interface
+     * @return CollectionInterface
+     */
+    public function filterByInterfaceRecursive(string $interface) : CollectionInterface;
+
+    /**
+     * @param iterable $interfaces
+     * @return CollectionInterface
+     */
+    public function filterByInterfacesRecursive(iterable $interfaces) : CollectionInterface;
 }

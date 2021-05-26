@@ -26,4 +26,9 @@ interface FilterByClassInterface
      */
     public function filterByClassRecursive(string $className) : CollectionInterface;
 
+    /**
+     * @param iterable $classes
+     * @return CollectionInterface
+     */
+    public function filterByClassesRecursive(iterable $classes) : CollectionInterface;
 }
