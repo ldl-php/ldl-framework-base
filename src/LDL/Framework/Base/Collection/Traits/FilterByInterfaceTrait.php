@@ -5,6 +5,7 @@
  */
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\FilterByInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
@@ -59,6 +60,49 @@ trait FilterByInterfaceTrait
 
             return true;
         });
+    }
+
+    public function filterByInterfaceRecursive(string $interface) : CollectionInterface
+    {
+        return $this->filterByInterfacesRecursive([$interface]);
+    }
+
+    public function filterByInterfacesRecursive(iterable $interfaces) : CollectionInterface
+    {
+        $this->requireImplements([CollectionInterface::class, FilterByInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
+        $collection = $this->getEmptyInstance();
+
+        $interfaces = IterableHelper::toArray($interfaces);
+
+        $filter = static function($item, $offset) use (&$filter, $collection, $interfaces){
+            foreach($interfaces as $interface){
+                if(!$item instanceof $interface){
+                    continue;
+                }
+
+                if($collection instanceof AppendableInterface){
+                    return $collection->append($item, $offset);
+                }
+
+                $collection->setItem($item, $offset);
+            }
+
+            if($item instanceof \Traversable){
+                foreach($item as $o => $i){
+                    $filter($i, $o);
+                }
+            }
+
+            return null;
+        };
+
+        foreach($this as $offset => $item){
+            $filter($item, $offset);
+        }
+
+        return $collection;
     }
     //</editor-fold>
 }

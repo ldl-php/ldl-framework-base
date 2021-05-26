@@ -85,3 +85,9 @@ foreach($collection->filterByClasses([Bar::class], true) as $item){
     var_dump(get_class($item));
 }
 
+echo "Filter by class Foo recursive\n";
+
+foreach($collection->filterByClassRecursive(Foo::class) as $item){
+    var_dump(get_class($item));
+}
+

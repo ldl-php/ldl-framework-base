@@ -69,19 +69,28 @@ trait FilterByClassInterfaceTrait
 
     public function filterByClassRecursive(string $className) : CollectionInterface
     {
+        return $this->filterByClassesRecursive([$className]);
+    }
+
+    public function filterByClassesRecursive(iterable $classes) : CollectionInterface
+    {
         $this->requireImplements([CollectionInterface::class, FilterByClassInterface::class]);
         $this->requireTraits(CollectionInterfaceTrait::class);
 
         $collection = $this->getEmptyInstance();
 
-        $filter = static function($item, $offset) use (&$filter, $collection, $className){
-            if(is_object($item) && get_class($item) === $className){
+        $classes = IterableHelper::toArray($classes);
 
-                if($collection instanceof AppendableInterface){
-                    return $collection->append($item, $offset);
+        $filter = static function($item, $offset) use (&$filter, $collection, $classes){
+            foreach($classes as $className){
+                if(is_object($item) && get_class($item) === $className){
+
+                    if($collection instanceof AppendableInterface){
+                        return $collection->append($item, $offset);
+                    }
+
+                    $collection->setItem($item, $offset);
                 }
-
-                $collection->setItem($item, $offset);
             }
 
             if($item instanceof \Traversable){

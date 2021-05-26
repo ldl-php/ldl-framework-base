@@ -78,13 +78,13 @@ echo "Remove last item\n";
 
 $collection->removeLast();
 
+echo "Remove item with key 2\n";
+
+$collection->remove(2);
+
 echo "Remove item with key 3\n";
 
 $collection->remove(3);
-
-echo "Remove item with key 4\n";
-
-$collection->remove(4);
 
 echo "First and Last must be the same\n";
 
