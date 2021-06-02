@@ -49,14 +49,14 @@ trait UnshiftInterfaceTrait
         }
 
         if(is_string($key)){
-            $this->setItems([$key => $item] + $this->items);
+            $this->setItems([$key => $item] + $this->toArray());
             return $this;
         }
 
         $result = [$key=>$item];
         $items = $this->toArray();
 
-        array_walk( $items, static function($v, $k) use ($result){
+        array_walk( $items, static function($v, $k) use(&$result){
             if(is_int($k)){
                 ++$k;
             }

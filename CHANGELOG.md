@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- fix/1200415270891779 - Fix array_walk from UnshiftInterfaceTrait
 - fix/1200360444683565 - Remove extra brackets on UnshiftInterfaceTrait
 - fix/1200327936147993 - Fix AppendableInterfaceTrait
 - fix/1200271511926649 - Change collection traits names to comply with their contracts
