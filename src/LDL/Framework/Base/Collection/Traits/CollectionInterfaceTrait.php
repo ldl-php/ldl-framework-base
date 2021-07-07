@@ -228,6 +228,9 @@ trait CollectionInterfaceTrait
         return $this;
     }
 
+    /**
+     * $this->count is not directly manipulated in this code, it must be done externally!
+     */
     protected function setItem($item, $key = null): CollectionInterface
     {
         $key = $key ?? $this->count;
@@ -294,6 +297,9 @@ trait CollectionInterfaceTrait
         return $this;
     }
 
+    /**
+     * $this->count is not directly manipulated in this code, it must be done externally!
+     */
     protected function removeItem($key): CollectionInterface
     {
         unset($this->items[$key]);
