@@ -5,11 +5,10 @@
  */
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\FilterByClassInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
-use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Helper\Iterable\Filter\ClassFilter;
 
 trait FilterByClassInterfaceTrait
 {
@@ -25,46 +24,15 @@ trait FilterByClassInterfaceTrait
     {
         $this->requireImplements([CollectionInterface::class, FilterByClassInterface::class]);
         $this->requireTraits(CollectionInterfaceTrait::class);
+        $collection = clone($this);
 
-        /**
-         * Validate Classes
-         */
-        $classes = IterableHelper::map($classes, static function($class){
-            if(!is_string($class)){
-                throw new \InvalidArgumentException(
-                    sprintf(
-                        'Given item in class collection is not of type string, "%s" given',
-                        gettype($class)
-                    )
-                );
-            }
-
-            if(!class_exists($class)){
-                throw new \InvalidArgumentException("Class '$class' does not exists");
-            }
-
-            return $class;
-        });
-
-        return $this->filter(static function($v) use ($classes, $strict){
-            if(!is_object($v)){
-                return false;
-            }
-
-            if(false === $strict) {
-                return array_filter($classes, static function ($class) use ($v) {
-                    return get_class($v) === $class || is_subclass_of($v, $class);
-                });
-            }
-
-            foreach($classes as $class){
-                if(get_class($v) === $class){
-                    return true;
-                }
-            }
-
-            return false;
-        });
+        return $collection->setItems(
+            ClassFilter::filterByClasses(
+                $classes,
+                $collection,
+                $strict
+            )
+        );
     }
 
     public function filterByClassRecursive(string $className) : CollectionInterface
@@ -77,36 +45,11 @@ trait FilterByClassInterfaceTrait
         $this->requireImplements([CollectionInterface::class, FilterByClassInterface::class]);
         $this->requireTraits(CollectionInterfaceTrait::class);
 
-        $collection = $this->getEmptyInstance();
+        $collection = clone($this);
 
-        $classes = IterableHelper::toArray($classes);
-
-        $filter = static function($item, $offset) use (&$filter, $collection, $classes){
-            foreach($classes as $className){
-                if(is_object($item) && get_class($item) === $className){
-
-                    if($collection instanceof AppendableInterface){
-                        return $collection->append($item, $offset);
-                    }
-
-                    $collection->setItem($item, $offset);
-                }
-            }
-
-            if($item instanceof \Traversable){
-                foreach($item as $o => $i){
-                    $filter($i, $o);
-                }
-            }
-
-            return null;
-        };
-
-        foreach($this as $offset => $item){
-            $filter($item, $offset);
-        }
-
-        return $collection;
+        return $collection->setItems(
+          ClassFilter::filterByClassesRecursive($classes, $collection)
+        );
     }
     //</editor-fold>
 }

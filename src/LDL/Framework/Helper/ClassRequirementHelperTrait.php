@@ -12,6 +12,7 @@ trait ClassRequirementHelperTrait
      *
      * @param string|iterable $traits
      * @param string|null $class
+     * @throws \RuntimeException
      */
     protected function requireTraits($traits, string $class=null): void
     {
@@ -43,6 +44,7 @@ trait ClassRequirementHelperTrait
      *
      * @param string|iterable $interfaces
      * @param string|null $class
+     * @throws \RuntimeException
      */
     protected function requireImplements($interfaces, string $class=null) : void
     {
