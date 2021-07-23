@@ -4,6 +4,12 @@ namespace LDL\Framework\Helper;
 
 abstract class ClassHelper
 {
+    /**
+     * Obtains all traits which are implemented inside of a class
+     *
+     * @param string $class
+     * @return array
+     */
     public static function getAllTraits(string $class): array
     {
         $traits = array_flip(class_uses($class));
@@ -97,6 +103,11 @@ abstract class ClassHelper
         return $notIn;
     }
 
+    /**
+     * @param string $class
+     * @param iterable $traits
+     * @throws \RuntimeException
+     */
     public static function mustHaveTraits(string $class, iterable $traits) : void
     {
         $notIn = self::hasTraits($class, $traits);
@@ -109,6 +120,11 @@ abstract class ClassHelper
         throw new \RuntimeException($msg);
     }
 
+    /**
+     * @param string $class
+     * @param iterable $interfaces
+     * @throws \RuntimeException
+     */
     public static function mustHaveInterfaces(string $class, iterable $interfaces) : void
     {
         $notIn = self::hasInterfaces($class, $interfaces);
