@@ -44,6 +44,10 @@ class FooBarLDL implements A, B
 
 }
 
+class FooBarExtended extends FooLDL{
+
+}
+
 class FilterByInterfaceCollection implements FilterByInterfaceExample
 {
     use CollectionInterfaceTrait;
@@ -61,10 +65,13 @@ echo "Create collection\n";
 $collection = new FilterByInterfaceCollection();
 $collection->append(new FooLDL())
     ->append(new BarLDL())
-    ->append(new FooBarLDL());
+    ->append(new FooBarLDL())
+    ->append(new FooBarExtended());
 
 echo "Filter by Interface A: (FooLDL must be shown)\n";
-var_dump(get_class($collection->filterByInterface(A::class)->getFirst()));
+foreach($collection->filterByInterface(A::class) as $item){
+    var_dump(get_class($item));
+}
 
 echo "Filter by interfaces, A and B with strict mode set to false (FooLDL, BarLDL and FooBarLDL must be shown)\n";
 
@@ -77,3 +84,7 @@ foreach($collection->filterByInterfaces([A::class, B::class], true) as $item){
     var_dump(get_class($item));
 }
 
+echo "Filter by Interface A recursive: (FooLDL, FooBarLDL and FooBarExtended must be shown)\n";
+foreach($collection->filterByInterfaceRecursive(A::class) as $item){
+    var_dump(get_class($item));
+}
