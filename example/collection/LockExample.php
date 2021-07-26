@@ -33,21 +33,43 @@ $collection->appendMany([
     new \stdClass,
 ]);
 
-foreach($collection as $key => $item){
-    echo sprintf('%s: %s%s', $key, spl_object_hash($item),"\n");
-}
-
 echo "\nModify each collection item with a random number:\n\n";
 
+$nums = [];
 foreach($collection as $key => $item){
     $item->number = random_int(1, 1000);
-    echo "Instance $key: has ->number = {$item->number}\n";
+    $nums[] = $item->number;
+    echo sprintf('%s: %s%s',  spl_object_hash($item),$item->number, "\n");
 }
 
-echo "Lock the collection ...\n\n";
+echo "\nLock the collection ...\n\n";
 
 $collection->lock();
 
+/**
+ * Trigger hash persistence internally so objects don't get destroyed by the PHP engine
+ * In this way we achieve different hashes, showing that the internal cloning works
+ * when the object is locked
+ */
+
+echo "Attempt to change numbers through iteration:\n\n";
+
+$items = [];
+
 foreach($collection as $key => $item){
-    echo sprintf('%s: %s%s', $key, spl_object_hash($item),"\n");
+    $item->number = random_int(1001, 9999);
+    echo sprintf('%s: %s%s',  spl_object_hash($item),$item->number, "\n");
+    $items[] = $item;
 }
+
+echo sprintf(
+    '%sCollection is locked, numbers must be the same: %s%s',
+    "\n",
+    implode(',', $nums),
+    "\n\n"
+);
+
+foreach($collection as $key => $item){
+    echo sprintf('%s: %s%s',  spl_object_hash($item),$item->number, "\n");
+}
+

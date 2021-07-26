@@ -37,3 +37,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fix/1200271511926649 - Change collection traits names to comply with their contracts
 - fix/1200099491334042 - Fix remove on RemovableInterfaceTrait - Add remove example - Add ArrayHelper
 - fix/1200161406794549 - Fix KeyFilterInterface (and trait)
+- fix/1200661351133647 - Clone objects when collection is locked
