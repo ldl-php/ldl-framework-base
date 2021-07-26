@@ -46,6 +46,11 @@ trait CollectionInterfaceTrait
      */
     private $autoincrementKey = 0;
 
+    /**
+     * @var ?bool
+     */
+    private $_locked;
+
     //<editor-fold desc="CollectionInterface methods">
     public function get($key)
     {
@@ -184,13 +189,16 @@ trait CollectionInterfaceTrait
         }
 
         /**
-         * In the case that the current class implements LockableObjectInterface we need to clone each object reference
-         * so they can not be modified externally, this maintaining consistency within the class.
+         * In the case that the current class implements LockableObjectInterface
+         * and being the object in a locked state, we need to clone each object
+         * reference so they can not be modified externally.
          */
         $items = [];
 
+        $isLocked = $this->isLocked();
+
         foreach($this as $key => $item){
-            $items[$key] = is_object($item) ? clone($item) : $item;
+            $items[$key] = is_object($item) && $isLocked ? clone($item) : $item;
         }
 
         return $items;
@@ -199,6 +207,14 @@ trait CollectionInterfaceTrait
     public function sort(callable $fn) : CollectionInterface
     {
         $items = $this->items;
+
+        if($this->isLocked()){
+            $items = [];
+            foreach($this as $item){
+                $items[] = is_object($item) ? clone($item) : $item;
+            }
+        }
+
         uasort($items, $fn);
         $instance = $this->getEmptyInstance();
         $instance->items = $items;
@@ -208,6 +224,14 @@ trait CollectionInterfaceTrait
     public function ksort(callable $fn) : CollectionInterface
     {
         $items = $this->items;
+
+        if($this->isLocked()){
+            $items = [];
+            foreach($this as $item){
+                $items[] = is_object($item) ? clone($item) : $item;
+            }
+        }
+
         uksort($items, $fn);
         $instance = $this->getEmptyInstance();
         $instance->items = $items;
@@ -335,18 +359,35 @@ trait CollectionInterfaceTrait
 
     public function next()
     {
-        return next($this->items);
+        $next = next($this->items);
+        return $this->_isLocked() && is_object($next) ? clone($next) : $next;
     }
 
     public function valid() : bool
     {
         $key = key($this->items);
-        return ($key !== null && $key !== false);
+        return $key !== null && $key !== false;
     }
 
     public function current()
     {
-        return current($this->items);
+        $current = current($this->items);
+        return $this->_isLocked() && is_object($current) ? clone($current) : $current;
+    }
+    //<editor-fold>
+
+    //<editor-fold desc="Private methods">
+    private function _isLocked() : bool
+    {
+        if(null !== $this->_locked){
+            return $this->_locked;
+        }
+
+        if(!$this instanceof LockableObjectInterface){
+            return $this->_locked = false;
+        }
+
+        return $this->_locked = $this->isLocked();
     }
     //<editor-fold>
 }
