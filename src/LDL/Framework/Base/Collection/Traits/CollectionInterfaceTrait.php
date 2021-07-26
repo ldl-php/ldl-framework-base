@@ -46,11 +46,6 @@ trait CollectionInterfaceTrait
      */
     private $autoincrementKey = 0;
 
-    /**
-     * @var ?bool
-     */
-    private $_locked;
-
     //<editor-fold desc="CollectionInterface methods">
     public function get($key)
     {
@@ -65,7 +60,13 @@ trait CollectionInterfaceTrait
             throw new CollectionException($msg);
         }
 
-        return $this->items[$this->first];
+        $first = $this->items[$this->first];
+
+        if(!is_object($first)){
+            return $first;
+        }
+
+        return $this->isLocked() ? clone($first) : $first;
     }
 
     public function getFirstKey()
@@ -80,7 +81,13 @@ trait CollectionInterfaceTrait
             throw new CollectionException($msg);
         }
 
-        return $this->items[$this->last];
+        $last = $this->items[$this->last];
+
+        if(!is_object($last)){
+            return $last;
+        }
+
+        return $this->isLocked() ? clone($last) : $last;
     }
 
     public function getLastKey()
@@ -180,11 +187,13 @@ trait CollectionInterfaceTrait
 
     public function toArray(): array
     {
+        $isLocked = $this->isLocked();
+
         /**
          * If the current class does not implements LockableObjectInterface, modification on it's
          * children is allowed (in a collection which contains or may contain objects for example)
          */
-        if(!$this instanceof LockableObjectInterface){
+        if(!$isLocked){
             return $this->items;
         }
 
@@ -194,8 +203,6 @@ trait CollectionInterfaceTrait
          * reference so they can not be modified externally.
          */
         $items = [];
-
-        $isLocked = $this->isLocked();
 
         foreach($this as $key => $item){
             $items[$key] = is_object($item) && $isLocked ? clone($item) : $item;
@@ -209,10 +216,7 @@ trait CollectionInterfaceTrait
         $items = $this->items;
 
         if($this->isLocked()){
-            $items = [];
-            foreach($this as $item){
-                $items[] = is_object($item) ? clone($item) : $item;
-            }
+            $items = \iterator_to_array($this, true);
         }
 
         uasort($items, $fn);
@@ -226,10 +230,7 @@ trait CollectionInterfaceTrait
         $items = $this->items;
 
         if($this->isLocked()){
-            $items = [];
-            foreach($this as $item){
-                $items[] = is_object($item) ? clone($item) : $item;
-            }
+            $items = \iterator_to_array($this);
         }
 
         uksort($items, $fn);
@@ -379,15 +380,11 @@ trait CollectionInterfaceTrait
     //<editor-fold desc="Private methods">
     private function _isLocked() : bool
     {
-        if(null !== $this->_locked){
-            return $this->_locked;
-        }
-
         if(!$this instanceof LockableObjectInterface){
-            return $this->_locked = false;
+            return false;
         }
 
-        return $this->_locked = $this->isLocked();
+        return $this->isLocked();
     }
     //<editor-fold>
 }
