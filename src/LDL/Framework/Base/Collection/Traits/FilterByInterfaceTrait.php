@@ -55,5 +55,47 @@ trait FilterByInterfaceTrait
             )
         );
     }
+
+    public function filterByInterfaceAndCallMethod(
+        string $interface,
+        string $method,
+        ...$params
+    ) : CollectionInterface
+    {
+        $this->requireImplements([CollectionInterface::class, FilterByInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
+        $collection = clone($this);
+
+        return $collection->setItems(
+            InterfaceFilter::filterByInterfaceAndCallMethod(
+                $interface,
+                $collection,
+                $method,
+                ...$params
+            )
+        );
+    }
+
+    public function filterByInterfaceRecursiveAndCallMethod(
+        string $interface,
+        string $method,
+        ...$params
+    ) : CollectionInterface
+    {
+        $this->requireImplements([CollectionInterface::class, FilterByInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
+        $collection = clone($this);
+
+        return $collection->setItems(
+            InterfaceFilter::filterByInterfaceRecursiveAndCallMethod(
+                $interface,
+                $collection,
+                $method,
+                ...$params
+            )
+        );
+    }
     //</editor-fold>
 }

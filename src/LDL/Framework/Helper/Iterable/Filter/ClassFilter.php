@@ -8,14 +8,14 @@ namespace LDL\Framework\Helper\Iterable\Filter;
 
 use LDL\Framework\Helper\IterableHelper;
 
-abstract class ClassFilter
+final class ClassFilter
 {
 
     public static function filterByClass(
         string $class,
         iterable $values,
-        bool $strict=true
-    ) : array
+        bool $strict = true
+    ): array
     {
         return self::filterByClasses([$class], $values, $strict);
     }
@@ -23,14 +23,14 @@ abstract class ClassFilter
     public static function filterByClasses(
         iterable $classes,
         iterable $values,
-        bool $strict=true
-    ) : array
+        bool $strict = true
+    ): array
     {
         /**
          * Validate Classes
          */
-        $classes = IterableHelper::map($classes, static function($class){
-            if(!is_string($class)){
+        $classes = IterableHelper::map($classes, static function ($class) {
+            if (!is_string($class)) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         'Given item in class collection is not of type string, "%s" given',
@@ -39,26 +39,26 @@ abstract class ClassFilter
                 );
             }
 
-            if(!class_exists($class)){
+            if (!class_exists($class)) {
                 throw new \InvalidArgumentException("Class '$class' does not exists");
             }
 
             return $class;
         });
 
-        return IterableHelper::filter($values, static function($v) use ($classes, $strict){
-            if(!is_object($v)){
+        return IterableHelper::filter($values, static function ($v) use ($classes, $strict) {
+            if (!is_object($v)) {
                 return false;
             }
 
-            if(false === $strict) {
+            if (false === $strict) {
                 return array_filter($classes, static function ($class) use ($v) {
                     return get_class($v) === $class || is_subclass_of($v, $class);
                 });
             }
 
-            foreach($classes as $class){
-                if(get_class($v) === $class){
+            foreach ($classes as $class) {
+                if (get_class($v) === $class) {
                     return true;
                 }
             }
@@ -67,26 +67,26 @@ abstract class ClassFilter
         });
     }
 
-    public static function filterByClassRecursive(string $className, iterable $values) : array
+    public static function filterByClassRecursive(string $className, iterable $values): array
     {
         return self::filterByClassesRecursive([$className], $values);
     }
 
-    public static function filterByClassesRecursive(iterable $classes, iterable $values) : array
+    public static function filterByClassesRecursive(iterable $classes, iterable $values): array
     {
         $classes = IterableHelper::toArray($classes);
 
         $result = [];
 
-        $filter = static function($item, $offset) use (&$filter, &$result, $classes){
-            foreach($classes as $className){
-                if(is_object($item) && get_class($item) === $className){
+        $filter = static function ($item, $offset) use (&$filter, &$result, $classes) {
+            foreach ($classes as $className) {
+                if (is_object($item) && get_class($item) === $className) {
                     $result[$offset] = $item;
                 }
             }
 
-            if($item instanceof \Traversable){
-                foreach($item as $o => $i){
+            if (is_iterable($item)) {
+                foreach ($item as $o => $i) {
                     $filter($i, $o);
                 }
             }
@@ -94,10 +94,47 @@ abstract class ClassFilter
             return null;
         };
 
-        foreach($values as $offset => $item){
+        foreach ($values as $offset => $item) {
             $filter($item, $offset);
         }
 
         return $result;
     }
+
+    public static function filterByClassAndCallMethod(
+        string $class,
+        iterable $values,
+        string $method,
+        ...$params
+    ): array
+    {
+        if (!method_exists($class, $method)) {
+            $msg = sprintf('Method: %s does not exists in class', $class);
+            throw new \LogicException($msg);
+        }
+
+        return array_map(static function ($item) use ($method, $params) {
+            $item->$method(...$params);
+            return $item;
+        }, self::filterByClass($class, $values));
+    }
+
+    public static function filterByClassRecursiveAndCallMethod(
+        string $class,
+        iterable $values,
+        string $method,
+        ...$params
+    ): array
+    {
+        if (!method_exists($method, $class)) {
+            $msg = sprintf('Method: %s does not exists in class', $class);
+            throw new \LogicException($msg);
+        }
+
+        return array_map(static function ($item) use ($method, $params) {
+            $item->$method(...$params);
+            return $item;
+        }, self::filterByClassRecursive($class, $values));
+    }
+
 }

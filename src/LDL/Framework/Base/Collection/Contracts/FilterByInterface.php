@@ -34,4 +34,29 @@ interface FilterByInterface
      * @return CollectionInterface
      */
     public function filterByInterfacesRecursive(iterable $interfaces) : CollectionInterface;
+
+    /**
+     * @param string $interface
+     * @param string $method
+     * @param mixed ...$params
+     * @return CollectionInterface
+     */
+    public function filterByInterfaceAndCallMethod(
+        string $interface,
+        string $method,
+        ...$params
+    ) : CollectionInterface;
+
+    /**
+     * @param string $interface
+     * @param string $method
+     * @param mixed ...$params
+     * @return CollectionInterface
+     */
+    public function filterByInterfaceRecursiveAndCallMethod(
+        string $interface,
+        string $method,
+        ...$params
+    ) : CollectionInterface;
+
 }

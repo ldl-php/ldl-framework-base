@@ -51,5 +51,48 @@ trait FilterByClassInterfaceTrait
           ClassFilter::filterByClassesRecursive($classes, $collection)
         );
     }
+
+    public function filterByClassAndCallMethod(
+        string $class,
+        string $method,
+        ...$params
+    ) : CollectionInterface
+    {
+        $this->requireImplements([CollectionInterface::class, FilterByClassInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
+        $collection = clone($this);
+
+        return $collection->setItems(
+            ClassFilter::filterByClassAndCallMethod(
+                $class,
+                $collection,
+                $method,
+                ...$params
+            )
+        );
+    }
+
+    public function filterByClassRecursiveAndCallMethod(
+        string $class,
+        string $method,
+        ...$params
+    ) : CollectionInterface
+    {
+        $this->requireImplements([CollectionInterface::class, FilterByClassInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
+        $collection = clone($this);
+
+        return $collection->setItems(
+            ClassFilter::filterByClassRecursiveAndCallMethod(
+                $class,
+                $collection,
+                $method,
+                ...$params
+            )
+        );
+    }
+
     //</editor-fold>
 }
