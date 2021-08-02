@@ -72,7 +72,7 @@ $collection->append(new Foo)
     ->append(new ExtendsFoo)
     ->append(new ExtendsBar);
 
-echo "Filter by class Foo: (Foo must be shown)\n";
+echo "Filter by class Foo: (Foo and his callback 'hello foo!' must be shown)\n";
 
 foreach($collection->filterByClassAndCallMethod(Foo::class,'test', 'hello foo!') as $item){
     var_dump(get_class($item));
