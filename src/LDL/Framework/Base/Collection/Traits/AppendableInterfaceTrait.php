@@ -33,37 +33,36 @@ trait AppendableInterfaceTrait
             $this->checkLockAppend();
         }
 
-        $gKey = $this->getAutoincrementKey();
-
         if(null !== $key){
             ArrayHelper::validateKey($key);
-            $gKey = $key;
 
-            if($this->hasKey($gKey)){
+            if($this->hasKey($key)){
                 $msg = sprintf(
                     'Item with key: %s already exists, if you want to replace an item use %s',
-                    $gKey,
+                    $key,
                     ReplaceableInterface::class
                 );
                 throw new \LogicException($msg);
             }
         }
 
-        if($this instanceof BeforeAppendInterface){
-            $this->getBeforeAppend()->call($this, $item, $gKey);
-        }
+        $gKey = $this->getAutoincrementKey();
 
-        if(null === $this->getFirstKey()){
-            $this->setFirstKey($gKey);
-        }
-
-        $this->setLastKey($gKey);
-        $this->setItem($item, $gKey);
-
-        if(!$key){
+        if(null === $key){
+            $key = $gKey;
             $this->setAutoincrementKey($gKey + 1);
         }
 
+        if($this instanceof BeforeAppendInterface){
+            $this->getBeforeAppend()->call($this, $item, $key);
+        }
+
+        if(null === $this->getFirstKey()){
+            $this->setFirstKey($key);
+        }
+
+        $this->setLastKey($key);
+        $this->setItem($item, $key);
         $this->setCount($this->count() + 1);
 
         return $this;

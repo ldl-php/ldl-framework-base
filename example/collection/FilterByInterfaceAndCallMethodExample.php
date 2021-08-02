@@ -75,7 +75,7 @@ $collection->append(new FooLDL())
     ->append(new FooBarLDL())
     ->append(new FooBarExtended());
 
-echo "Filter by Interface A: (FooLDL must be shown)\n";
+echo "Filter by Interface A: (FooLDL and his callback 'Howdy!' must be shown)\n";
 
 foreach($collection->filterByInterfaceAndCallMethod(A::class,'test','Howdy!') as $item){
     var_dump(get_class($item));

@@ -66,7 +66,7 @@ trait CollectionInterfaceTrait
             return $first;
         }
 
-        return $this->isLocked() ? clone($first) : $first;
+        return $this->_isLocked() ? clone($first) : $first;
     }
 
     public function getFirstKey()
@@ -187,7 +187,7 @@ trait CollectionInterfaceTrait
 
     public function toArray(): array
     {
-        $isLocked = $this->isLocked();
+        $isLocked = $this->_isLocked();
 
         /**
          * If the current class does not implements LockableObjectInterface, modification on it's
@@ -215,7 +215,7 @@ trait CollectionInterfaceTrait
     {
         $items = $this->items;
 
-        if($this->isLocked()){
+        if($this->_isLocked()){
             $items = \iterator_to_array($this, true);
         }
 
@@ -229,7 +229,7 @@ trait CollectionInterfaceTrait
     {
         $items = $this->items;
 
-        if($this->isLocked()){
+        if($this->_isLocked()){
             $items = \iterator_to_array($this);
         }
 
