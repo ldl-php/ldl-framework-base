@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Helper;
 
-abstract class IterableHelper
+final class IterableHelper
 {
     /**
      * @param iterable $items

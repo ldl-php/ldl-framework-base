@@ -6,7 +6,7 @@ use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\ReplaceException;
 use LDL\Framework\Base\Exception\LockingException;
 
-interface ReplaceableInterface
+interface ReplaceByKeyInterface
 {
     /**
      * If the key already exists, it will be replaced, if the key does not exists
@@ -21,5 +21,5 @@ interface ReplaceableInterface
      *
      * @return CollectionInterface
      */
-    public function replace($item, $key) : CollectionInterface;
+    public function replaceByKey($item, $key) : CollectionInterface;
 }

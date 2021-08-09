@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Helper;
 
-abstract class ClassHelper
+final class ClassHelper
 {
     /**
      * Obtains all traits which are implemented inside of a class

@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Helper;
 
-abstract class RegexHelper
+final class RegexHelper
 {
     /**
      * Validates that a regex has proper delimiters

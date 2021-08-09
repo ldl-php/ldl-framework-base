@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Helper;
 
-abstract class ComparisonOperatorHelper
+final class ComparisonOperatorHelper
 {
     public const OPERATOR_EQ='==';
     public const OPERATOR_STR_EQ='eq';
