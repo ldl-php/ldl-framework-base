@@ -6,11 +6,11 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\HasDuplicateKeyVerificationInterface;
 use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceableInterface;
 use LDL\Framework\Base\Collection\Exception\ReplaceException;
@@ -22,6 +22,10 @@ trait ReplaceableInterfaceTrait
 {
     use ClassRequirementHelperTrait;
 
+    private static $_instanceOfLockableObject;
+    private static $_instanceOfLockReplace;
+    private static $_instanceOfVerifyKey;
+
     //<editor-fold desc="ReplaceableInterface Methods">
     public function replace($item, $key) : CollectionInterface
     {
@@ -32,11 +36,23 @@ trait ReplaceableInterfaceTrait
 
         $this->requireTraits(CollectionInterfaceTrait::class);
 
-        if($this instanceof LockableObjectInterface){
+        if(null === self::$_instanceOfLockableObject){
+            self::$_instanceOfLockableObject = $this instanceof LockableObjectInterface;
+        }
+
+        if(null === self::$_instanceOfLockReplace){
+            self::$_instanceOfLockReplace = $this instanceof LockReplaceInterface;
+        }
+
+        if(null === self::$_instanceOfVerifyKey){
+            self::$_instanceOfVerifyKey = $this instanceof HasDuplicateKeyVerificationInterface;
+        }
+
+        if(self::$_instanceOfLockableObject){
             $this->checkLock();
         }
 
-        if($this instanceof LockReplaceInterface){
+        if(self::$_instanceOfLockReplace){
             $this->checkLockReplace();
         }
 
@@ -49,11 +65,13 @@ trait ReplaceableInterfaceTrait
         }
 
         if(false === $this->hasKey($key)){
-            if($this instanceof AppendableInterface){
-                return $this->append($item, $key);
+            if(!self::$_instanceOfVerifyKey){
+                throw new ReplaceException("Item with key: $key does not exists");
             }
 
-            throw new ReplaceException("Item with key: $key does not exists");
+            foreach($this->onDuplicateKey() as $callable){
+                $callable->call($this, $item, $key);
+            }
         }
 
         if($this instanceof BeforeRemoveInterface){

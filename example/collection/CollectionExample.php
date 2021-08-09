@@ -4,6 +4,7 @@ require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
+use LDL\Framework\Base\Collection\Contracts\HasDuplicateKeyVerificationInterface;
 use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
 use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceableInterface;
@@ -15,6 +16,7 @@ use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\ReplaceableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Collection\Traits\HasDuplicateKeyVerificationInterfaceTrait;
 
 interface MyCollectionInterface extends CollectionInterface, KeyFilterInterface, RemovableInterface, ReplaceableInterface, UnshiftInterface
 {
@@ -30,15 +32,21 @@ abstract class MyCollection implements MyCollectionInterface
     use UnshiftInterfaceTrait;
 }
 
-abstract class MyChildCollection extends MyCollection implements AppendableInterface
+abstract class MyChildCollection extends MyCollection implements AppendableInterface, HasDuplicateKeyVerificationInterface
 {
     use AppendableInterfaceTrait;
     use AppendManyTrait;
+    use HasDuplicateKeyVerificationInterfaceTrait;
 }
 
 class MyAppendableCollection extends MyChildCollection
 {
-
+    public function __construct()
+    {
+        $this->onDuplicateKey()->append(function($v, $k){
+            return $this->append($v, $k);
+        });
+    }
 }
 
 echo "Create collection\n";

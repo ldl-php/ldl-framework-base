@@ -19,17 +19,18 @@ abstract class IterableHelper
 
     /**
      * @param iterable $items
+     * @param bool $useKeys
      *
      * @return array
      */
-    public static function toArray(iterable $items) : array
+    public static function toArray(iterable $items, bool $useKeys = true) : array
     {
         if(is_array($items)){
-            return $items;
+            return $useKeys ? $items : array_values($items);
         }
 
         if($items instanceof \Traversable){
-            return \iterator_to_array($items, true);
+            return \iterator_to_array($items, $useKeys);
         }
 
         return [];

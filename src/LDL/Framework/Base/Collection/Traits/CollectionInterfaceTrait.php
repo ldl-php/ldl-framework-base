@@ -328,15 +328,12 @@ trait CollectionInterfaceTrait
     protected function removeItem($key): CollectionInterface
     {
         unset($this->items[$key]);
-
         return $this;
     }
 
-    protected function setAutoincrementKey($key): CollectionInterface
+    protected function increaseAutoIncrement() : void
     {
-        $this->autoincrementKey = $key;
-
-        return $this;
+        $this->autoincrementKey++;
     }
     //</editor-fold>
 

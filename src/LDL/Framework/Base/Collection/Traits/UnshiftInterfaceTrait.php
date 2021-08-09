@@ -18,17 +18,28 @@ trait UnshiftInterfaceTrait
 {
     use ClassRequirementHelperTrait;
 
+    private static $_instanceOfLockableObject;
+    private static $_instanceOfLockAppend;
+
     //<editor-fold desc="UnshiftInterface methods">
     public function unshift($item, $key = null): CollectionInterface
     {
         $this->requireImplements([CollectionInterface::class, UnshiftInterface::class]);
         $this->requireTraits(CollectionInterfaceTrait::class);
 
-        if($this instanceof LockableObjectInterface){
+        if(null === self::$_instanceOfLockableObject){
+            self::$_instanceOfLockableObject = $this instanceof LockableObjectInterface;
+        }
+
+        if(null === self::$_instanceOfLockAppend){
+            self::$_instanceOfLockAppend = $this instanceof LockAppendInterface;
+        }
+
+        if(self::$_instanceOfLockableObject){
             $this->checkLock();
         }
 
-        if($this instanceof LockAppendInterface){
+        if(self::$_instanceOfLockAppend){
             $this->checkLockAppend();
         }
 
