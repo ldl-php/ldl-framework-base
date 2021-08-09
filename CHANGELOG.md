@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- fixes/1200767008358756 - Improve traits. Fix autoincrement on Appendable. Add duplicate traits and helper
 - fixes/1200705568268975 - Fix AppendableInterfaceTrait
 - fix/1200415270891779 - Fix array_walk from UnshiftInterfaceTrait
 - fix/1200360444683565 - Remove extra brackets on UnshiftInterfaceTrait
