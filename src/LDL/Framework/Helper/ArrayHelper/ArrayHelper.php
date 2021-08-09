@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Helper\ArrayHelper;
 
-abstract class ArrayHelper
+final class ArrayHelper
 {
     /**
      * @param $key

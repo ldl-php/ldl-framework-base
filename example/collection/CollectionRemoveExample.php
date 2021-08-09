@@ -6,6 +6,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
+use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
@@ -78,15 +79,17 @@ echo "Remove last item\n";
 
 $collection->removeLast();
 
-echo "Remove item with key 2\n";
+echo "Try to remove item with key 2 (not exist), exception must be thrown\n";
 
-$collection->remove(2);
+try{
+    $collection->remove(2);
+}catch(RemoveException $e){
+    echo "EXCEPTION: {$e->getMessage()}\n";
+}
 
 echo "Remove item with key 3\n";
 
 $collection->remove(3);
-
-echo "First and Last must be the same\n";
 
 echo "First key: ".$collection->getFirstKey()."\n";
 echo "Last key: ".$collection->getLastKey()."\n";
