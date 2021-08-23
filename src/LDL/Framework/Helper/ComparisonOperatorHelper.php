@@ -26,7 +26,7 @@ abstract class ComparisonOperatorHelper
     public const OPERATOR_STR_LT='lt';
 
     public const OPERATOR_LTE='<=';
-    public const OPERATOR_STR_LTE='le';
+    public const OPERATOR_STR_LTE='lte';
 
     public static function getValidOperators() : array
     {
@@ -176,6 +176,68 @@ abstract class ComparisonOperatorHelper
          * Not needed, all cases above plus operator validation must ensure operator
          */
         return false;
+    }
+
+    /**
+     * @param string $operator
+     * @return string
+     * @throws \Exception
+     */
+    public static function getOppositeOperator(string $operator) : string
+    {
+        self::validate($operator);
+
+        switch($operator){
+            case self::OPERATOR_EQ:
+                return self::OPERATOR_NOT_EQ;
+
+            case self::OPERATOR_NOT_EQ:
+                return self::OPERATOR_EQ;
+
+            case self::OPERATOR_STR_EQ:
+                return self::OPERATOR_STR_NOT_EQ;
+
+            case self::OPERATOR_STR_NOT_EQ:
+                return self::OPERATOR_STR_EQ;
+
+            case self::OPERATOR_SEQ:
+                return self::OPERATOR_NOT_SEQ;
+
+            case self::OPERATOR_NOT_SEQ:
+                return self::OPERATOR_SEQ;
+
+            case self::OPERATOR_STR_SEQ:
+                return self::OPERATOR_STR_NOT_SEQ;
+
+            case self::OPERATOR_STR_NOT_SEQ:
+                return self::OPERATOR_STR_SEQ;
+
+            case self::OPERATOR_LTE:
+                return self::OPERATOR_GTE;
+
+            case self::OPERATOR_STR_LTE:
+                return self::OPERATOR_STR_GTE;
+
+            case self::OPERATOR_GTE:
+                return self::OPERATOR_LTE;
+
+            case self::OPERATOR_STR_GTE:
+                return self::OPERATOR_STR_LTE;
+
+            case self::OPERATOR_LT:
+                return self::OPERATOR_GT;
+
+            case self::OPERATOR_STR_LT:
+                return self::OPERATOR_STR_GT;
+
+            case self::OPERATOR_GT:
+                return self::OPERATOR_LT;
+
+            case self::OPERATOR_STR_GT:
+                return self::OPERATOR_STR_LT;
+        }
+
+        return '';
     }
 
     public static function isEqualsOperator(string $operator, bool $useStrOperator=true) : bool

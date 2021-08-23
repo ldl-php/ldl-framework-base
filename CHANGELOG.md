@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1199522825882943 - Add Symfony Var Dumper (https://github.com/symfony/var-dumper)
 - feature/1200636482135423 - Enhance ComparisonOperatorHelper
 - feature/1200836379007024 - Create MbEncodingHelper
+- feature/1200836379007034 - Add getOppositeOperator to ComparisonOperatorHelper
 
 ### Changed
 
