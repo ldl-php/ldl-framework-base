@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1200636482135423 - Enhance ComparisonOperatorHelper
 - feature/1200836379007024 - Create MbEncodingHelper
 - feature/1200836379007034 - Add getOppositeOperator to ComparisonOperatorHelper
+- feature/1200767008358756 - Remove UnshiftInterface in favor of AppendInPositionInterface / Added KeyResolverCollection 
 
 ### Changed
 

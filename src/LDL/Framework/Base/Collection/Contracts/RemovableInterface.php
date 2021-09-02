@@ -20,7 +20,7 @@ interface RemovableInterface
      *
      * @return CollectionInterface
      */
-    public function remove($key) : CollectionInterface;
+    public function removeByKey($key) : CollectionInterface;
 
     /**
      * Remove last appended item

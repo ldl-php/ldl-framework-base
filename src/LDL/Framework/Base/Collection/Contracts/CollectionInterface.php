@@ -4,6 +4,7 @@ namespace LDL\Framework\Base\Collection\Contracts;
 
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Base\Contracts\ToArrayInterface;
+use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 
 interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
 {
@@ -18,7 +19,8 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
      * Check if a key exists
      *
      * @param number|string $key
-     * @throws \Exception
+     * @throws \Exception if the passed key is not a valid array key
+     * @see ArrayHelper::validateKey()
      * @return bool
      */
     public function hasKey($key) : bool;

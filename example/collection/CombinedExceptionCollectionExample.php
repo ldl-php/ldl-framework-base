@@ -63,7 +63,7 @@ try{
 
 echo "Remove item with key 1\n";
 
-$collection->remove(1);
+$collection->removeByKey(1);
 
 echo "Remove last item\n";
 

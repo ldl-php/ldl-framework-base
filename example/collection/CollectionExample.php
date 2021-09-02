@@ -6,14 +6,11 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
 use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
-use LDL\Framework\Base\Collection\Contracts\UnshiftInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\KeyFilterInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
-use LDL\Framework\Base\Collection\Traits\HasDuplicateKeyVerificationInterfaceTrait;
 use LDL\Framework\Base\Collection\Contracts\BeforeReplaceInterface;
 use LDL\Framework\Base\Collection\Traits\BeforeReplaceInterfaceTrait;
 use LDL\Framework\Base\Collection\Contracts\ReplaceEqualValueInterface;
@@ -23,7 +20,7 @@ use LDL\Framework\Base\Collection\Traits\ReplaceEqualValueInterfaceTrait;
 use LDL\Framework\Base\Collection\Contracts\ReplaceMissingKeyInterface;
 use LDL\Framework\Base\Collection\Traits\ReplaceMissingKeyInterfaceTrait;
 
-interface MyCollectionInterface extends CollectionInterface, KeyFilterInterface, RemovableInterface, ReplaceByKeyInterface, ReplaceEqualValueInterface, UnshiftInterface, BeforeReplaceInterface, ReplaceMissingKeyInterface
+interface MyCollectionInterface extends CollectionInterface, KeyFilterInterface, RemovableInterface, ReplaceByKeyInterface, ReplaceEqualValueInterface, BeforeReplaceInterface, ReplaceMissingKeyInterface
 {
 
 }
@@ -35,7 +32,6 @@ abstract class MyCollection implements MyCollectionInterface
     use RemovableInterfaceTrait;
     use ReplaceByKeyInterfaceTrait;
     use ReplaceEqualValueInterfaceTrait;
-    use UnshiftInterfaceTrait;
     use BeforeReplaceInterfaceTrait;
     use ReplaceMissingKeyInterfaceTrait;
 }
@@ -44,7 +40,6 @@ abstract class MyChildCollection extends MyCollection implements AppendableInter
 {
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use HasDuplicateKeyVerificationInterfaceTrait;
 }
 
 class MyAppendableCollection extends MyChildCollection
@@ -93,22 +88,11 @@ foreach($collection as $value){
     echo "Item: $value\n";
 }
 
-echo "Replace item with key: 'lol' (not exists) and value: 'something', it has append to the collection\n";
-try{
-    $collection->replaceByKey('something', 'lol');
-}catch(\Exception $e){
-    echo "EXCEPTION: {$e->getMessage()}\n";
-}
-
+echo "Replace item with key: 'lol' (which does not exist) and value: 'something', it must be append to the collection\n";
+$collection->replaceByKey('something', 'lol');
 
 echo "Check items in the collection\n";
 
 foreach($collection as $value){
     echo "Item: $value\n";
 }
-
-echo "Add item: 'first' at the beginning\n";
-
-$collection->unshift('first');
-
-echo "Get first item: {$collection->getFirst()}\n";

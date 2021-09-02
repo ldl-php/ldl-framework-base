@@ -20,7 +20,7 @@ trait RemovableInterfaceTrait
     use ClassRequirementHelperTrait;
 
     //<editor-fold desc="RemovableInterface methods">
-    public function remove($key): CollectionInterface
+    public function removeByKey($key): CollectionInterface
     {
         $this->requireImplements([
             CollectionInterface::class,
@@ -67,7 +67,7 @@ trait RemovableInterfaceTrait
 
     public function removeLast() : CollectionInterface
     {
-        $this->remove($this->getLastKey());
+        $this->removeByKey($this->getLastKey());
         return $this;
     }
 
@@ -84,13 +84,13 @@ trait RemovableInterfaceTrait
 
         foreach($this as $key => $val){
             if(true === $strict && $val === $value){
-                $this->remove($key);
+                $this->removeByKey($key);
                 $removed++;
                 continue;
             }
 
             if($val == $value){
-                $this->remove($key);
+                $this->removeByKey($key);
                 $removed++;
             }
         }

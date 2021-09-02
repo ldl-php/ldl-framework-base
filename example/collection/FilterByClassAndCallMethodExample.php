@@ -6,17 +6,17 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
 use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
-use LDL\Framework\Base\Collection\Contracts\UnshiftInterface;
+use LDL\Framework\Base\Collection\Contracts\AppendInPositionInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\KeyFilterInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\AppendInPositionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\FilterByClassInterface;
 use LDL\Framework\Base\Collection\Traits\FilterByClassInterfaceTrait;
 
-interface FilterByClassAndCallExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, UnshiftInterface, FilterByClassInterface
+interface FilterByClassAndCallExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, AppendInPositionInterface, FilterByClassInterface
 {
 
 }
@@ -52,7 +52,7 @@ class FilterByClassCollection implements FilterByClassAndCallExample
     use AppendManyTrait;
     use KeyFilterInterfaceTrait;
     use RemovableInterfaceTrait;
-    use UnshiftInterfaceTrait;
+    use AppendInPositionInterfaceTrait;
     use FilterByClassInterfaceTrait;
 }
 
