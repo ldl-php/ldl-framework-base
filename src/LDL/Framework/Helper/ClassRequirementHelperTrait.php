@@ -36,7 +36,10 @@ trait ClassRequirementHelperTrait
 
         ClassHelper::mustHaveTraits($class, $traits);
 
-        $this->_tVerifyCollectionTraitHelperHasTraits = array_merge($this->_tVerifyCollectionTraitHelperHasTraits, $traits);
+        $this->_tVerifyCollectionTraitHelperHasTraits = array_merge(
+            $this->_tVerifyCollectionTraitHelperHasTraits,
+            $traits
+        );
     }
 
     /**

@@ -9,24 +9,13 @@ use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
-use LDL\Framework\Base\Collection\Contracts\HasDuplicateKeyVerificationAppendInterface;
-use LDL\Framework\Base\Collection\Traits\HasDuplicateKeyVerificationAppendInterfaceTrait;
-use LDL\Framework\Helper\Collection\DuplicateKeyHelper;
 
-class AppendableExample implements CollectionInterface, AppendableInterface, RemovableInterface, HasDuplicateKeyVerificationAppendInterface
+class AppendableExample implements CollectionInterface, AppendableInterface, RemovableInterface
 {
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
     use RemovableInterfaceTrait;
-    use HasDuplicateKeyVerificationAppendInterfaceTrait;
-
-    public function __construct()
-    {
-        $this->onAppendDuplicateKey()->append(function(){
-            return DuplicateKeyHelper::getBiggestKey($this);
-        });
-    }
 }
 
 echo "Create collection\n";
@@ -35,7 +24,9 @@ $collection = new AppendableExample();
 
 echo "Append items: 'a','b'\n";
 
-$collection->appendMany(['a','b'], true);
+$collection->appendMany(['test'=>'a','b'], true);
+
+$collection->appendMany(['test'=>'y'], true);
 
 foreach($collection as $key => $item){
     echo "Key: ".$key." - Item: ".$item."\n";
@@ -55,7 +46,7 @@ foreach($collection as $key => $item){
 
 echo "Remove first item\n";
 
-$collection->remove(0);
+$collection->removeByKey(0);
 
 echo "Number of items: ".$collection->count()."\n";
 
@@ -139,9 +130,9 @@ foreach($collection as $key => $item){
 
 echo "Remove 'b','c','f'\n";
 
-$collection->remove(1);
-$collection->remove(4);
-$collection->remove(7);
+$collection->removeByKey(1);
+$collection->removeByKey(4);
+$collection->removeByKey(7);
 
 echo "Number of items: ".$collection->count()."\n";
 
