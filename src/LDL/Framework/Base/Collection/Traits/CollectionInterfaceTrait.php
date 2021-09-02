@@ -260,7 +260,6 @@ trait CollectionInterfaceTrait
     {
         $key = $key ?? $this->count;
         $this->items[$key] = $item;
-
         return $this;
     }
 

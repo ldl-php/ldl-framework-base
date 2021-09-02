@@ -9,30 +9,37 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Contracts\HasDuplicateKeyVerificationAppendInterface;
-use LDL\Framework\Base\Collection\Contracts\HasDuplicateKeyVerificationInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByKeyInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Collection\Contracts\HasDuplicateKeyResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\FloatKeyResolver;
+use LDL\Framework\Base\Collection\Key\Resolver\IntegerKeyResolver;
+use LDL\Framework\Base\Collection\Key\Resolver\Collection\Contracts\HasKeyResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Collection\Contracts\HasAppendKeyResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Collection\KeyResolverCollection;
+use LDL\Framework\Base\Collection\Key\Resolver\Collection\KeyResolverCollectionInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\ObjectKeyResolver;
+use LDL\Framework\Base\Collection\Key\Resolver\StringKeyResolver;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
-use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
 trait AppendableInterfaceTrait
 {
     use ClassRequirementHelperTrait;
 
+    /**
+     * @var bool
+     */
     private $_instanceOfLockableObject;
+
+    /**
+     * @var bool
+     */
     private $_instanceOfLockAppend;
-    private $_instanceOfAppendVerifyKey;
-    private $_instanceOfVerifyKey;
 
     //<editor-fold desc="AppendableInterface methods">
     public function append($item, $key = null): CollectionInterface
     {
-        if(null !== $key){
-            ArrayHelper::validateKey($key);
-        }
-
         $this->requireImplements([AppendableInterface::class, CollectionInterface::class]);
         $this->requireTraits(CollectionInterfaceTrait::class);
 
@@ -44,14 +51,6 @@ trait AppendableInterfaceTrait
             $this->_instanceOfLockAppend = $this instanceof LockAppendInterface;
         }
 
-        if(null === $this->_instanceOfAppendVerifyKey){
-            $this->_instanceOfAppendVerifyKey = $this instanceof HasDuplicateKeyVerificationAppendInterface;
-        }
-
-        if(null === $this->_instanceOfVerifyKey){
-            $this->_instanceOfVerifyKey = $this instanceof HasDuplicateKeyVerificationInterface;
-        }
-
         if($this->_instanceOfLockableObject){
             $this->checkLock();
         }
@@ -60,37 +59,30 @@ trait AppendableInterfaceTrait
             $this->checkLockAppend();
         }
 
-        $gKey = $this->getAutoincrementKey();
+        $keyResolver = $this->_getAppendKeyResolver();
+        $duplicateKeyResolver = $this->_getAppendDuplicateKeyResolver();
 
-        if(null === $key){
-            $key = $gKey;
-        }
+        $key = $keyResolver->resolve($this, $key, $item);
 
-        $callables = [];
+        /**
+         * If the key exists, call Duplicate key resolver
+         */
+        if($this->hasKey($key)) {
 
-        if($this->hasKey($key)){
-            if($this->_instanceOfAppendVerifyKey){
-                $callables = $this->onAppendDuplicateKey();
+            $key = $duplicateKeyResolver->resolve($this, $key, $item);
+
+            /**
+             * If the key still exists, throw an exception
+             */
+            if ($this->hasKey($key)) {
+                $msg = sprintf(
+                    'Item with key: %s already exists, if you want to replace an item use %s',
+                    $key,
+                    ReplaceByKeyInterface::class
+                );
+
+                throw new \LogicException($msg);
             }
-
-            if(!$this->_instanceOfAppendVerifyKey && $this->_instanceOfVerifyKey){
-                $callables = $this->onDuplicateKey();
-            }
-        }
-
-        foreach($callables as $callable){
-            $key = $callable->call($this, $item, $key);
-        }
-
-        ArrayHelper::validateKey($key);
-
-        if($this->hasKey($key)){
-            $msg = sprintf(
-                'Item with key: %s already exists, if you want to replace an item use %s',
-                $key,
-                ReplaceByKeyInterface::class
-            );
-            throw new \LogicException($msg);
         }
 
         $this->increaseAutoIncrement();
@@ -108,6 +100,38 @@ trait AppendableInterfaceTrait
         $this->setCount($this->count() + 1);
 
         return $this;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Private methods">
+    private function _getAppendKeyResolver() : KeyResolverCollectionInterface
+    {
+        if($this instanceof HasAppendKeyResolverInterface){
+            return $this->getAppendKeyResolver();
+        }
+
+        if($this instanceof HasKeyResolverInterface){
+            return $this->getKeyResolver();
+        }
+
+        return new KeyResolverCollection([
+            new IntegerKeyResolver(),
+            new FloatKeyResolver(),
+            new StringKeyResolver(),
+            new ObjectKeyResolver()
+        ]);
+    }
+
+    private function _getAppendDuplicateKeyResolver() : KeyResolverCollectionInterface
+    {
+        if($this instanceof HasDuplicateKeyResolverInterface){
+            return $this->getDuplicateKeyResolver();
+        }
+
+        return new KeyResolverCollection([
+            new StringKeyResolver(),
+            new IntegerKeyResolver()
+        ]);
     }
     //</editor-fold>
 }

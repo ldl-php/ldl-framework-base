@@ -10,7 +10,7 @@ final class ArrayHelper
      */
     public static function isValidKey($key) : bool
     {
-        return is_string($key) || is_int($key) || is_float($key);
+        return is_string($key) || is_int($key);
     }
 
     /**
@@ -25,7 +25,7 @@ final class ArrayHelper
 
         throw new Exception\InvalidKeyException(
             sprintf(
-                'Key type must be a string, an integer or a float, %s was given',
+                'Key type must be a string, an integer, %s was given',
                 gettype($key)
             )
         );

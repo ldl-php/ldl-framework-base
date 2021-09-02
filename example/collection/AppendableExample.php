@@ -9,24 +9,15 @@ use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
-use LDL\Framework\Base\Collection\Contracts\HasDuplicateKeyVerificationAppendInterface;
-use LDL\Framework\Base\Collection\Traits\HasDuplicateKeyVerificationAppendInterfaceTrait;
-use LDL\Framework\Helper\Collection\DuplicateKeyHelper;
+use LDL\Framework\Base\Collection\Key\Resolver\Traits\HasDuplicateKeyResolverInterfaceTrait;
 
-class AppendableExample implements CollectionInterface, AppendableInterface, RemovableInterface, HasDuplicateKeyVerificationAppendInterface
+class AppendableExample implements CollectionInterface, AppendableInterface, RemovableInterface
 {
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
     use RemovableInterfaceTrait;
-    use HasDuplicateKeyVerificationAppendInterfaceTrait;
-
-    public function __construct()
-    {
-        $this->onAppendDuplicateKey()->append(function(){
-            return DuplicateKeyHelper::getBiggestKey($this);
-        });
-    }
+    use HasDuplicateKeyResolverInterfaceTrait;
 }
 
 echo "Create collection\n";
@@ -35,12 +26,14 @@ $collection = new AppendableExample();
 
 echo "Append items: 'a','b'\n";
 
-$collection->appendMany(['a','b'], true);
+$collection->appendMany(['test'=>'a','b'], true);
+
+$collection->appendMany(['test'=>'y'], true);
 
 foreach($collection as $key => $item){
     echo "Key: ".$key." - Item: ".$item."\n";
 }
-
+die();
 echo "Append item 'c' with key 4\n";
 
 $collection->append('c', 4);
