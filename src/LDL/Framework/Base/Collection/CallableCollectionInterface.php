@@ -17,4 +17,8 @@ interface CallableCollectionInterface extends CollectionInterface, AppendableInt
      */
     public function call(...$params) : void;
 
+    /**
+     * @param mixed &...$params
+     */
+    public function callByRef(&...$params) : void;
 }

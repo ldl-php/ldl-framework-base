@@ -47,4 +47,14 @@ class CallableCollection implements CallableCollectionInterface
             $closure(...$params);
         }
     }
+
+    public function callByRef(&...$params): void
+    {
+        /**
+         * @var \Closure $closure
+         */
+        foreach($this as $closure){
+            $closure(...$params);
+        }
+    }
 }
