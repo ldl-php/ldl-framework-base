@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Collection\Key\Resolver\Contracts;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 
-interface DuplicateKeyResolverInterface
+interface DuplicateResolverInterface
 {
 
     /**
@@ -14,6 +14,6 @@ interface DuplicateKeyResolverInterface
      * @param mixed ..$params
      * @return string|int|float|null
      */
-    public function resolveDuplicateKey(CollectionInterface $collection, $key, $item, ...$params);
+    public function resolveDuplicate(CollectionInterface $collection, $key, $item, ...$params);
 
 }

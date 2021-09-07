@@ -55,24 +55,24 @@ class HashValueKeyResolver implements FullKeyResolverInterface
         );
     }
 
-    public function resolveCustomKey(CollectionInterface $collection, $key, $item = null, ...$params)
+    public function resolveCustom(CollectionInterface $collection, $key, $item = null, ...$params)
     {
         return hash($this->algorithm, serialize($item), false);
     }
 
-    public function resolveNullKey(CollectionInterface $collection, $item, ...$params)
+    public function resolveNull(CollectionInterface $collection, $item, ...$params)
     {
-        $this->resolveCustomKey($collection, null, $item);
+        $this->resolveCustom($collection, null, $item);
     }
 
-    public function resolveDuplicateKey(CollectionInterface $collection, $key, $value=null, ...$params)
+    public function resolveDuplicate(CollectionInterface $collection, $key, $value=null, ...$params)
     {
         $i = 0;
 
         while($i++ < $this->limit){
             $newHash = sprintf(
                 '%s_%s',
-                $this->resolveCustomKey($collection, $key, $value),
+                $this->resolveCustom($collection, $key, $value),
                 $this->count += $this->increment
             );
 

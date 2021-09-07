@@ -9,10 +9,10 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\NullKeyResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Contracts\NullResolverInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 
-interface NullKeyResolverCollectionInterface extends CollectionInterface, LockableObjectInterface, BeforeAppendInterface, AppendableInterface, LockAppendInterface, BeforeRemoveInterface, RemovableInterface, LockRemoveInterface, NullKeyResolverInterface
+interface NullResolverCollectionInterface extends CollectionInterface, LockableObjectInterface, BeforeAppendInterface, AppendableInterface, LockAppendInterface, BeforeRemoveInterface, RemovableInterface, LockRemoveInterface, NullResolverInterface
 {
 
 }
