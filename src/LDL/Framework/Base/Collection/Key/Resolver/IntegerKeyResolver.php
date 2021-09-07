@@ -24,7 +24,7 @@ class IntegerKeyResolver implements FullKeyResolverInterface
         $this->increment = $increment;
     }
 
-    public function resolveCustomKey(CollectionInterface $collection, $key, $item = null, ...$params)
+    public function resolveCustom(CollectionInterface $collection, $key, $item = null, ...$params)
     {
         if(count($collection)===0){
             return 0;
@@ -34,12 +34,12 @@ class IntegerKeyResolver implements FullKeyResolverInterface
         return $this->count;
     }
 
-    public function resolveNullKey(CollectionInterface $collection, $item, ...$params)
+    public function resolveNull(CollectionInterface $collection, $item, ...$params)
     {
-        return $this->resolveCustomKey($collection, null, $item, ...$params);
+        return $this->resolveCustom($collection, null, $item, ...$params);
     }
 
-    public function resolveDuplicateKey(CollectionInterface $collection, $key, $item=null, ...$params)
+    public function resolveDuplicate(CollectionInterface $collection, $key, $item=null, ...$params)
     {
         if(!is_int($key)){
             return $key;

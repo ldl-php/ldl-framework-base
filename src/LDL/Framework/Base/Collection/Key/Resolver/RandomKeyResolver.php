@@ -19,34 +19,28 @@ class RandomKeyResolver implements FullKeyResolverInterface
      */
     private $limit;
 
-    /**
-     * @var int
-     */
-    private $count;
-
     public function __construct(string $prefix='rnd_', int $limit=null)
     {
         $this->limit = $limit ?? self::DEFAULT_LIMIT;
         $this->prefix = $prefix;
-        $this->count = 0;
     }
 
-    public function resolveCustomKey(CollectionInterface $collection, $key, $value = null)
+    public function resolveCustom(CollectionInterface $collection, $key, $item = null, ...$params)
     {
         return uniqid($this->prefix,true);
     }
 
-    public function resolveNullKey(CollectionInterface $collection, ...$params)
+    public function resolveNull(CollectionInterface $collection, $item=null, ...$params)
     {
-        return $this->resolveCustomKey($collection, null, ...$params);
+        return $this->resolveCustom($collection, null, ...$params);
     }
 
-    public function resolveDuplicateKey(CollectionInterface $collection, $key, $value=null)
+    public function resolveDuplicate(CollectionInterface $collection, $key, $item=null, ...$params)
     {
         $i = 0;
 
         while($i++ < $this->limit){
-            $newKey = $this->resolveNullKey($collection,$value);
+            $newKey = $this->resolveNull($collection, $item, $params);
             if(!$collection->hasKey($newKey)){
                 return $newKey;
             }

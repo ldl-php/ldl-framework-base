@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Collection\Key\Resolver\Contracts;
 
-interface FullKeyResolverInterface extends CustomKeyResolverInterface, DuplicateKeyResolverInterface, NullKeyResolverInterface
+interface FullKeyResolverInterface extends CustomResolverInterface, DuplicateResolverInterface, NullResolverInterface
 {
 
 }

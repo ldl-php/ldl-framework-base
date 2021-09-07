@@ -3,8 +3,7 @@
 namespace LDL\Framework\Base\Collection\Key\Resolver\Collection;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\AutoIncrementKeyResolver;
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\NullKeyResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Contracts\DuplicateResolverInterface;
 use LDL\Framework\Base\Collection\Key\Resolver\IntegerKeyResolver;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Traits\BeforeAppendInterfaceTrait;
@@ -14,10 +13,8 @@ use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
-use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
-use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
-class NullKeyResolverCollection implements NullKeyResolverCollectionInterface
+class DuplicateResolverCollection implements DuplicateResolverCollectionInterface
 {
     use CollectionInterfaceTrait;
     use LockableObjectInterfaceTrait;
@@ -47,17 +44,17 @@ class NullKeyResolverCollection implements NullKeyResolverCollectionInterface
      */
     public function append($item, $key = null): CollectionInterface
     {
-        if(!$item instanceof NullKeyResolverInterface) {
+        if(!$item instanceof DuplicateResolverInterface) {
             $msg = sprintf(
                 'Given item is not an instance of "%s", "%s" was given',
-                NullKeyResolverInterface::class,
+                DuplicateResolverInterface::class,
                 is_object($item) ? get_class($item) : gettype($item)
             );
 
             throw new \InvalidArgumentException($msg);
         }
 
-        $this->setItem($item, $this->keyResolver->resolveNullKey($this, null));
+        $this->setItem($item, $this->keyResolver->resolveNull($this, $key, $item));
         $this->setCount($this->count() + 1);
 
         return $this;
@@ -66,33 +63,17 @@ class NullKeyResolverCollection implements NullKeyResolverCollectionInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveNullKey(CollectionInterface $collection, $key, ...$params)
+    public function resolveDuplicate(CollectionInterface $collection, $key, $value=null, ...$params)
     {
-        $resolvers = [];
+        $val = null;
 
         /**
-         * @var NullKeyResolverInterface $resolver
+         * @var DuplicateResolverCollectionInterface $resolver
          */
         foreach($this as $resolver){
-            $key = $resolver->resolveNullKey($collection, $key, ...$params);
-            $resolvers[] = get_class($resolver);
+            $val = $resolver->resolveDuplicate($collection, $key, $value, ...$params);
         }
 
-        try{
-
-            ArrayHelper::validateKey($key);
-
-        }catch(InvalidKeyException $e){
-
-            $msg = sprintf(
-                'Failed to resolve: %s to a valid key, tried the following resolvers: %s',
-                var_export($key, true),
-                implode(',', $resolvers)
-            );
-
-            throw new InvalidKeyException($msg, $e->getCode(), $e);
-        }
-
-        return $key;
+        return $val;
     }
 }
