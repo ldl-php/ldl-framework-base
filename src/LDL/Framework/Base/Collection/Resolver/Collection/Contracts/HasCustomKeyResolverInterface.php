@@ -11,7 +11,7 @@
  * the RouteInterface::getName() : string value
  */
 
-namespace LDL\Framework\Base\Collection\Resolver\Collection;
+namespace LDL\Framework\Base\Collection\Resolver\Collection\Contracts;
 
 use LDL\Framework\Base\Collection\Resolver\Contracts\CustomResolverInterface;
 
