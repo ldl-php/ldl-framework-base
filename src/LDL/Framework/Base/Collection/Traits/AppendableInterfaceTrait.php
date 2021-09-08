@@ -12,20 +12,19 @@ use LDL\Framework\Base\Collection\Contracts\BeforeResolveKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByKeyInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\Contracts\Append\HasAppendDuplicateKeyResolverInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\Contracts\HasNullKeyResolverInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\DuplicateKeyResolverCollection;
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\HasCustomKeyResolverInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\HasDuplicateKeyResolverInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\NullKeyResolverCollection;
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\CustomKeyResolverInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\DuplicateKeyResolverInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\NullKeyResolverInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\DecimalKeyResolver;
-use LDL\Framework\Base\Collection\Key\Resolver\IntegerKeyResolver;
-use LDL\Framework\Base\Collection\Key\Resolver\HasKeyResolver;
-use LDL\Framework\Base\Collection\Key\Resolver\ObjectToStringKeyResolver;
-use LDL\Framework\Base\Collection\Key\Resolver\StringKeyResolver;
+use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\Append\HasAppendDuplicateKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasNullKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\DuplicateResolverCollection;
+use LDL\Framework\Base\Collection\Resolver\Collection\HasCustomKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\HasDuplicateKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\NullResolverCollection;
+use LDL\Framework\Base\Collection\Resolver\Contracts\CustomResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Contracts\DuplicateResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Contracts\NullResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Key\DecimalKeyResolver;
+use LDL\Framework\Base\Collection\Resolver\Key\IntegerKeyResolver;
+use LDL\Framework\Base\Collection\Resolver\Key\HasObjectKeyResolver;
+use LDL\Framework\Base\Collection\Resolver\Key\StringKeyResolver;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
@@ -75,7 +74,7 @@ trait AppendableInterfaceTrait
         $customKeyResolver = $this->_getCustomKeyResolver();
 
         if(null !== $customKeyResolver){
-            $key = $customKeyResolver->resolveCustomKey($this, $key, $item);
+            $key = $customKeyResolver->resolveCustom($this, $key, $item);
         }
 
         /**
@@ -84,7 +83,7 @@ trait AppendableInterfaceTrait
          */
         if(null === $key){
             $key = $this->_getAppendNullKeyResolver()
-                ->resolveNullKey($this, $item);
+                ->resolveNull($this, $item);
         }
 
         /**
@@ -92,7 +91,7 @@ trait AppendableInterfaceTrait
          */
         if($this->hasKey($key)) {
             $key = $this->_getAppendDuplicateKeyResolver()
-                ->resolveDuplicateKey($this, $key, $item);
+                ->resolveDuplicate($this, $key, $item);
 
             /**
              * If the key still exists, throw an exception
@@ -127,7 +126,7 @@ trait AppendableInterfaceTrait
 
     //<editor-fold desc="Private methods">
 
-    private function _getCustomKeyResolver() : ?CustomKeyResolverInterface
+    private function _getCustomKeyResolver() : ?CustomResolverInterface
     {
         if($this instanceof HasCustomKeyResolverInterface){
             return $this->getCustomKeyResolver();
@@ -136,18 +135,18 @@ trait AppendableInterfaceTrait
         return null;
     }
 
-    private function _getAppendNullKeyResolver() : NullKeyResolverInterface
+    private function _getAppendNullKeyResolver() : NullResolverInterface
     {
         if($this instanceof HasNullKeyResolverInterface){
             return $this->getNullKeyResolver();
         }
 
-        return new NullKeyResolverCollection([
+        return new NullResolverCollection([
             new IntegerKeyResolver()
         ]);
     }
 
-    private function _getAppendDuplicateKeyResolver() : DuplicateKeyResolverInterface
+    private function _getAppendDuplicateKeyResolver() : DuplicateResolverInterface
     {
         if($this instanceof HasAppendDuplicateKeyResolverInterface){
             return $this->getAppendDuplicateKeyResolver();
@@ -157,11 +156,11 @@ trait AppendableInterfaceTrait
             return $this->getDuplicateKeyResolver();
         }
 
-        return new DuplicateKeyResolverCollection([
+        return new DuplicateResolverCollection([
             new IntegerKeyResolver(),
             new DecimalKeyResolver(),
             new StringKeyResolver(),
-            new HasKeyResolver()
+            new HasObjectKeyResolver()
         ]);
     }
     //</editor-fold>
