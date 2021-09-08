@@ -6,7 +6,7 @@
  * the passed 'test' key, for example 'test_1' If the collection still has the key after trying to obtain a new
  * non-conflicting key, an exception must be thrown.
  */
-namespace LDL\Framework\Base\Collection\Resolver\Collection;
+namespace LDL\Framework\Base\Collection\Resolver\Collection\Contracts;
 
 use LDL\Framework\Base\Collection\Resolver\Contracts\DuplicateResolverInterface;
 

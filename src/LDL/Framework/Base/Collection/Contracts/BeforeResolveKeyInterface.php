@@ -8,7 +8,10 @@ interface BeforeResolveKeyInterface
 {
     /**
      * Returns a collection which holds callbacks, said callbacks must be executed before
-     * adding a new element to the collection.
+     * resolving the collection key, and before adding a new element to the collection.
+     *
+     * The call to this collection of callables must be done BY REFERENCE, so a chance to modify
+     * anything before appending is provided.
      *
      * @return CallableCollectionInterface
      */

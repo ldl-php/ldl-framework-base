@@ -32,6 +32,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1200836379007034 - Add getOppositeOperator to ComparisonOperatorHelper
 - feature/1200767008358756 - Remove UnshiftInterface in favor of AppendInPositionInterface / Added KeyResolverCollection 
 - feature/1200931458994855 - Add "callByRef" on CallableCollection (in which arguments are passed by reference)
+- feature/1200942872266138 - Add HasValueResolverInterface
 
 ### Changed
 

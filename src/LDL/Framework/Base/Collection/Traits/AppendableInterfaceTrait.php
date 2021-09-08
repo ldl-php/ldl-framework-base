@@ -14,9 +14,10 @@ use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByKeyInterface;
 use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\Append\HasAppendDuplicateKeyResolverInterface;
 use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasNullKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasValueResolverInterface;
 use LDL\Framework\Base\Collection\Resolver\Collection\DuplicateResolverCollection;
-use LDL\Framework\Base\Collection\Resolver\Collection\HasCustomKeyResolverInterface;
-use LDL\Framework\Base\Collection\Resolver\Collection\HasDuplicateKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasCustomKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasDuplicateKeyResolverInterface;
 use LDL\Framework\Base\Collection\Resolver\Collection\NullResolverCollection;
 use LDL\Framework\Base\Collection\Resolver\Contracts\CustomResolverInterface;
 use LDL\Framework\Base\Collection\Resolver\Contracts\DuplicateResolverInterface;
@@ -65,7 +66,7 @@ trait AppendableInterfaceTrait
         }
 
         if($this instanceof BeforeResolveKeyInterface){
-            $this->getBeforeResolveKey()->call($this, $item, $key);
+            $this->getBeforeResolveKey()->callByRef($this, $item, $key);
         }
 
         /**
