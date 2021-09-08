@@ -3,7 +3,8 @@
 namespace LDL\Framework\Base\Collection\Key\Resolver\Collection;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\DuplicateResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\AutoIncrementKeyResolver;
+use LDL\Framework\Base\Collection\Key\Resolver\Contracts\DuplicateKeyResolverInterface;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Traits\BeforeAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\BeforeRemoveInterfaceTrait;
@@ -12,8 +13,10 @@ use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
+use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
+use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
-class CustomKeyResolverCollection implements DuplicateResolverCollectionInterface
+class CustomKeyResolverCollection implements DuplicateKeyResolverCollectionInterface
 {
     use CollectionInterfaceTrait;
     use LockableObjectInterfaceTrait;
@@ -36,10 +39,10 @@ class CustomKeyResolverCollection implements DuplicateResolverCollectionInterfac
      */
     public function append($item, $key = null): CollectionInterface
     {
-        if(!$item instanceof DuplicateResolverInterface) {
+        if(!$item instanceof DuplicateKeyResolverInterface) {
             $msg = sprintf(
                 'Given item is not an instance of "%s", "%s" was given',
-                DuplicateResolverInterface::class,
+                DuplicateKeyResolverInterface::class,
                 is_object($item) ? get_class($item) : gettype($item)
             );
 
@@ -55,17 +58,33 @@ class CustomKeyResolverCollection implements DuplicateResolverCollectionInterfac
     /**
      * {@inheritdoc}
      */
-    public function resolveDuplicate(CollectionInterface $collection, $key, $value=null, ...$params)
+    public function resolveDuplicateKey(CollectionInterface $collection, $key, $value=null, ...$params)
     {
-        $val = null;
+        $resolvers = [];
 
         /**
-         * @var DuplicateResolverCollectionInterface $resolver
+         * @var DuplicateKeyResolverCollectionInterface $resolver
          */
         foreach($this as $resolver){
-            $val = $resolver->resolveDuplicate($collection, $key, $value, ...$params);
+            $key = $resolver->resolve($collection, $key, $value, ...$params);
+            $resolvers[] = get_class($resolver);
         }
 
-        return $val;
+        try{
+
+            ArrayHelper::validateKey($key);
+
+        }catch(InvalidKeyException $e){
+
+            $msg = sprintf(
+                'Failed to resolve: %s to a valid key, tried the following resolvers: %s',
+                var_export($key, true),
+                implode(',', $resolvers)
+            );
+
+            throw new InvalidKeyException($msg, $e->getCode(), $e);
+        }
+
+        return $key;
     }
 }

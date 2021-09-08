@@ -27,7 +27,7 @@ class HasKeyResolver implements FullKeyResolverInterface
         $this->prefix = $prefix ?? self::DEFAULT_PREFIX;
     }
 
-    public function resolveCustom(CollectionInterface $collection, $key, $item = null, ...$params)
+    public function resolveCustomKey(CollectionInterface $collection, $key, $item = null, ...$params)
     {
         if(!is_object($item)) {
             return $key;
@@ -40,12 +40,12 @@ class HasKeyResolver implements FullKeyResolverInterface
         return $item->getObjectKey();
     }
 
-    public function resolveNull(CollectionInterface $collection, $item=null, ...$params)
+    public function resolveNullKey(CollectionInterface $collection, $item=null, ...$params)
     {
-        return $this->resolveCustom($collection, null, $item, ...$params);
+        return $this->resolveCustomKey($collection, null, $item, ...$params);
     }
 
-    public function resolveDuplicate(CollectionInterface $collection, $key, $item, ...$params)
+    public function resolveDuplicateKey(CollectionInterface $collection, $key, $item, ...$params)
     {
         if(!is_object($item)) {
             return $key;

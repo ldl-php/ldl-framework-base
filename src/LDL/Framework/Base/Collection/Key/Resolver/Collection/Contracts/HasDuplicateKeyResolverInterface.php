@@ -8,15 +8,15 @@
  */
 namespace LDL\Framework\Base\Collection\Key\Resolver\Collection;
 
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\DuplicateResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Contracts\DuplicateKeyResolverInterface;
 
 /**
- * Interface HasCustomResolverInterface
+ * Interface HasCustomKeyResolverInterface
  * @package LDL\Framework\Base\Collection\Key\Resolver\Collection
  */
-interface HasDuplicateResolverInterface
+interface HasDuplicateKeyResolverInterface
 {
 
-    public function getDuplicateResolver() : DuplicateResolverInterface;
+    public function getDuplicateKeyResolver() : DuplicateKeyResolverInterface;
 
 }

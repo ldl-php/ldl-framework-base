@@ -5,11 +5,11 @@ namespace LDL\Framework\Base\Collection\Key\Resolver\Contracts;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 
 /**
- * Interface CustomResolverInterface
+ * Interface CustomKeyResolverInterface
  * @package LDL\Framework\Base\Collection\Key\Resolver\Contracts
  */
 
-interface CustomResolverInterface
+interface CustomKeyResolverInterface
 {
 
     /**
@@ -19,6 +19,6 @@ interface CustomResolverInterface
      * @param mixed ...$params
      * @return string|int
      */
-    public function resolveCustom(CollectionInterface $collection, $key, $item=null, ...$params);
+    public function resolveCustomKey(CollectionInterface $collection, $key, $item=null, ...$params);
 
 }

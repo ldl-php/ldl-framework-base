@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Collection\Key\Resolver\Contracts;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 
-interface NullResolverInterface
+interface NullKeyResolverInterface
 {
 
     /**
@@ -13,6 +13,6 @@ interface NullResolverInterface
      * @param mixed ...$params
      * @return string|int|float|null
      */
-    public function resolveNull(CollectionInterface $collection, $item, ...$params);
+    public function resolveNullKey(CollectionInterface $collection, $item, ...$params);
 
 }

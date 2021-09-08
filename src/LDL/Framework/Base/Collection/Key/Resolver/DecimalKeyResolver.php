@@ -31,7 +31,7 @@ class DecimalKeyResolver implements FullKeyResolverInterface
         $this->limit = $limit ?? self::DEFAULT_LIMIT;
     }
 
-    public function resolveCustom(CollectionInterface $collection, $key, $value = null, ...$params)
+    public function resolveCustomKey(CollectionInterface $collection, $key, $value = null, ...$params)
     {
         if(count($collection) === 0){
             return '0.0';
@@ -42,12 +42,12 @@ class DecimalKeyResolver implements FullKeyResolverInterface
         return (string) $this->count;
     }
 
-    public function resolveNull(CollectionInterface $collection, $item, ...$params)
+    public function resolveNullKey(CollectionInterface $collection, $item, ...$params)
     {
-        return $this->resolveCustom($collection, null, $item, ...$params);
+        return $this->resolveCustomKey($collection, null, $item, ...$params);
     }
 
-    public function resolveDuplicate(CollectionInterface $collection, $key, $value=null, ...$params)
+    public function resolveDuplicateKey(CollectionInterface $collection, $key, $value=null, ...$params)
     {
         $isFloat = (float) $key > 0;
 

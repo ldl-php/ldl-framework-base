@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /**
- * HasCustomResolverInterface must be executed only if the given collection implements said key resolver,
+ * HasCustomKeyResolverInterface must be executed only if the given collection implements said key resolver,
  * this is useful when, for example, you'd like to enforce a certain key format and disregard any user input, in that
  * case, this is the interface that would be implemented.
  *
@@ -13,15 +13,15 @@
 
 namespace LDL\Framework\Base\Collection\Key\Resolver\Collection;
 
-use LDL\Framework\Base\Collection\Key\Resolver\Contracts\CustomResolverInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Contracts\CustomKeyResolverInterface;
 
 /**
- * Interface HasCustomResolverInterface
+ * Interface HasCustomKeyResolverInterface
  * @package LDL\Framework\Base\Collection\Key\Resolver\Collection
  */
-interface HasCustomResolverInterface
+interface HasCustomKeyResolverInterface
 {
 
-    public function getCustomResolver() : CustomResolverInterface;
+    public function getCustomKeyResolver() : CustomKeyResolverInterface;
 
 }

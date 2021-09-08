@@ -2,8 +2,8 @@
 
 namespace LDL\Framework\Base\Collection\Key\Resolver\Traits;
 
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\DuplicateResolverCollection;
-use LDL\Framework\Base\Collection\Key\Resolver\Collection\DuplicateResolverCollectionInterface;
+use LDL\Framework\Base\Collection\Key\Resolver\Collection\DuplicateKeyResolverCollection;
+use LDL\Framework\Base\Collection\Key\Resolver\Collection\DuplicateKeyResolverCollectionInterface;
 use LDL\Framework\Base\Collection\Key\Resolver\DecimalKeyResolver;
 use LDL\Framework\Base\Collection\Key\Resolver\IntegerDuplicateKeyResolver;
 use LDL\Framework\Base\Collection\Key\Resolver\ObjectDuplicateKeyResolver;
@@ -12,14 +12,14 @@ use LDL\Framework\Base\Collection\Key\Resolver\StringDuplicateKeyResolver;
 trait HasAppendKeyResolverInterfaceTrait
 {
     /**
-     * @var DuplicateResolverCollectionInterface
+     * @var DuplicateKeyResolverCollectionInterface
      */
     private $_tAppendKeyResolver;
 
-    public function getAppendKeyResolver() : DuplicateResolverCollectionInterface
+    public function getAppendKeyResolver() : DuplicateKeyResolverCollectionInterface
     {
         if(null === $this->_tAppendKeyResolver){
-            return $this->_tAppendKeyResolver = new DuplicateResolverCollection([
+            return $this->_tAppendKeyResolver = new DuplicateKeyResolverCollection([
                 new IntegerDuplicateKeyResolver(),
                 new DecimalKeyResolver(),
                 new StringDuplicateKeyResolver(),
