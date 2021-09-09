@@ -9,13 +9,13 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
-use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
+use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
-trait RemovableInterfaceTrait
+trait RemoveByKeyInterfaceTrait
 {
     use ClassRequirementHelperTrait;
 
@@ -24,7 +24,7 @@ trait RemovableInterfaceTrait
     {
         $this->requireImplements([
             CollectionInterface::class,
-            RemovableInterface::class
+            RemoveByKeyInterface::class
         ]);
 
         $this->requireTraits([CollectionInterfaceTrait::class]);
@@ -69,33 +69,6 @@ trait RemovableInterfaceTrait
     {
         $this->removeByKey($this->getLastKey());
         return $this;
-    }
-
-    public function removeByValue($value, bool $strict = true) : int
-    {
-        $this->requireImplements([
-            CollectionInterface::class,
-            RemovableInterface::class
-        ]);
-
-        $this->requireTraits([CollectionInterfaceTrait::class]);
-
-        $removed = 0;
-
-        foreach($this as $key => $val){
-            if(true === $strict && $val === $value){
-                $this->removeByKey($key);
-                $removed++;
-                continue;
-            }
-
-            if($val == $value){
-                $this->removeByKey($key);
-                $removed++;
-            }
-        }
-
-        return $removed;
     }
     //</editor-fold>
 

@@ -7,7 +7,7 @@ use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Exception\LockingException;
 
-interface RemovableInterface
+interface RemoveByKeyInterface
 {
     /**
      * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
@@ -31,14 +31,4 @@ interface RemovableInterface
      */
     public function removeLast() : CollectionInterface;
 
-    /**
-     * Removes elements from a collection by value comparison
-     *
-     * @param $value
-     * @param bool $strict
-     * @throws LockingException
-     * @throws RemoveException
-     * @return int Amount of removed elements
-     */
-    public function removeByValue($value, bool $strict = true) : int;
 }

@@ -5,18 +5,18 @@ require __DIR__.'/../../vendor/autoload.php';
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
-use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
+use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendInPositionInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\KeyFilterInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendInPositionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\FilterByInterface;
 use LDL\Framework\Base\Collection\Traits\FilterByInterfaceTrait;
 
-interface FilterByInterfaceExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemovableInterface, AppendInPositionInterface, FilterByInterface
+interface FilterByInterfaceExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemoveByKeyInterface, AppendInPositionInterface, FilterByInterface
 {
 
 }
@@ -52,7 +52,7 @@ class FilterByInterfaceCollection implements FilterByInterfaceExample
     use AppendableInterfaceTrait;
     use AppendManyTrait;
     use KeyFilterInterfaceTrait;
-    use RemovableInterfaceTrait;
+    use RemoveByKeyInterfaceTrait;
     use AppendInPositionInterfaceTrait;
     use FilterByInterfaceTrait;
 }

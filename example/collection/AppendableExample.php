@@ -4,18 +4,21 @@ require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
-use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
+use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Collection\Contracts\RemoveByEqualValueInterface;
+use LDL\Framework\Base\Collection\Traits\RemoveByEqualValueInterfaceTrait;
 
-class AppendableExample implements CollectionInterface, AppendableInterface, RemovableInterface
+class AppendableExample implements CollectionInterface, AppendableInterface, RemoveByKeyInterface, RemoveByEqualValueInterface
 {
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use RemovableInterfaceTrait;
+    use RemoveByKeyInterfaceTrait;
+    use RemoveByEqualValueInterfaceTrait;
 }
 
 echo "Create collection\n";
@@ -82,7 +85,7 @@ foreach($collection as $key => $item){
 
 echo "Remove item 'h'\n";
 
-$collection->removeByValue('h');
+$collection->removeByEqualValue('h');
 
 echo "Number of items: ".$collection->count()."\n";
 

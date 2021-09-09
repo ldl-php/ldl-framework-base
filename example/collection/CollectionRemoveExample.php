@@ -5,21 +5,21 @@ require __DIR__.'/../../vendor/autoload.php';
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
-use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
+use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 
-class MyLDLCollection implements CollectionInterface, AppendableInterface, RemovableInterface, LockRemoveInterface
+class MyLDLCollection implements CollectionInterface, AppendableInterface, RemoveByKeyInterface, LockRemoveInterface
 {
     use CollectionInterfaceTrait;
     use AppendManyTrait;
     use AppendableInterfaceTrait;
-    use RemovableInterfaceTrait;
+    use RemoveByKeyInterfaceTrait;
     use LockRemoveInterfaceTrait;
 }
 
