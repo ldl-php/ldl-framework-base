@@ -44,7 +44,10 @@ trait CollectionInterfaceTrait
     public function get($key)
     {
         ArrayHelper::mustHaveKey($this->items, $key);
-        return $this->items[$key];
+
+        $item = $this->items[$key];
+
+        return is_object($item) && $this->_isLocked() ? clone($item) : $item;
     }
 
     public function getFirst()
@@ -56,11 +59,7 @@ trait CollectionInterfaceTrait
 
         $first = $this->items[$this->first];
 
-        if(!is_object($first)){
-            return $first;
-        }
-
-        return $this->_isLocked() ? clone($first) : $first;
+        return is_object($first) && $this->_isLocked() ? clone($first) : $first;
     }
 
     public function getFirstKey()
@@ -77,11 +76,7 @@ trait CollectionInterfaceTrait
 
         $last = $this->items[$this->last];
 
-        if(!is_object($last)){
-            return $last;
-        }
-
-        return $this->isLocked() ? clone($last) : $last;
+        return is_object($last) && $this->_isLocked() ? clone($last) : $last;
     }
 
     public function getLastKey()
