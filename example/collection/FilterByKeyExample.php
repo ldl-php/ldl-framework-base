@@ -40,12 +40,10 @@ $collection = new FilterByKeyExample();
 
 $collection->appendMany($items, true);
 
-
 echo "Filter by keys test1 and test2:\n\n";
 
-foreach($collection->filterByKeys(['test1', 'test2']) as $key=>$value){
-    echo $key."\n";
-}
+echo "Result:\n\n";
+echo var_export($collection->filterByKeys(['test1', 'test2'])->keys(), true);
 
 echo "Filter by key test3 and output it's value (c):\n\n";
 

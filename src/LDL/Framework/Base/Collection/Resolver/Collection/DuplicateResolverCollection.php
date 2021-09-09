@@ -11,7 +11,7 @@ use LDL\Framework\Base\Collection\Traits\BeforeRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
@@ -24,7 +24,7 @@ class DuplicateResolverCollection implements DuplicateResolverCollectionInterfac
     use AppendManyTrait;
     use LockAppendInterfaceTrait;
     use BeforeRemoveInterfaceTrait;
-    use RemovableInterfaceTrait;
+    use RemoveByKeyInterfaceTrait;
     use LockRemoveInterfaceTrait;
 
     /**

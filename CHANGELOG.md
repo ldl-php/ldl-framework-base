@@ -36,8 +36,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
-- fixes/1200767008358756 - Improve traits. Fix autoincrement on Appendable. Add duplicate traits and helper
-- fixes/1200705568268975 - Fix AppendableInterfaceTrait
+- fix/1200767008358756 - Improve traits. Fix autoincrement on Appendable. Add duplicate traits and helper
+- fix/1200705568268975 - Fix AppendableInterfaceTrait
 - fix/1200415270891779 - Fix array_walk from UnshiftInterfaceTrait
 - fix/1200360444683565 - Remove extra brackets on UnshiftInterfaceTrait
 - fix/1200327936147993 - Fix AppendableInterfaceTrait
@@ -45,4 +45,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fix/1200099491334042 - Fix remove on RemovableInterfaceTrait - Add remove example - Add ArrayHelper
 - fix/1200161406794549 - Fix KeyFilterInterface (and trait)
 - fix/1200661351133647 - Clone objects when collection is locked
-- fixes/1200933785056563 - Remove Key word from resolvers collections and contracts
+- fix/1200933785056563 - Remove Key word from resolvers collections and contracts
+- fix/1200949376247310 - If collection is locked, and a CollectionInterface::get call is performed clone if object
+- fix/1200949376247315 - Normalize remove methods into  RemoveByEqualValueInterface & RemoveByKeyInterface

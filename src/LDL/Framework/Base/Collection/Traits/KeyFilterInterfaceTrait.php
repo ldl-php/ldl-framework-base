@@ -13,6 +13,11 @@ use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
+/**
+ * Trait KeyFilterInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see KeyFilterInterface
+ */
 trait KeyFilterInterfaceTrait
 {
     use ClassRequirementHelperTrait;
@@ -24,9 +29,9 @@ trait KeyFilterInterfaceTrait
 
         $keys = IterableHelper::toArray($keys);
 
-        return $this->filter(static function($key) use ($keys){
+        return $this->filter(static function($val, $key) use ($keys){
             return in_array($key, $keys, true);
-        }, \ARRAY_FILTER_USE_KEY);
+        });
     }
 
     public function filterByKey(string $key)
@@ -44,9 +49,9 @@ trait KeyFilterInterfaceTrait
 
         RegexHelper::validate($regex);
 
-        return $this->filter(static function($key) use ($regex){
+        return $this->filter(static function($val, $key) use ($regex){
             return (bool) preg_match($regex, $key);
-        }, \ARRAY_FILTER_USE_KEY);
+        },);
     }
     //</editor-fold>
 }

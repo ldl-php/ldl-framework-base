@@ -11,6 +11,11 @@ use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
 use LDL\Framework\Base\Collection\Exception\LockReplaceException;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait LockReplaceInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see LockReplaceInterface
+ */
 trait LockReplaceInterfaceTrait
 {
     use ClassRequirementHelperTrait;

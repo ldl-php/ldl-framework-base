@@ -52,9 +52,11 @@ final class ClassFilter
             }
 
             if (false === $strict) {
-                return array_filter($classes, static function ($class) use ($v) {
+                $items = array_filter($classes, static function ($class) use ($v) {
                     return get_class($v) === $class || is_subclass_of($v, $class);
                 });
+
+                return count($items) > 0;
             }
 
             foreach ($classes as $class) {
@@ -76,6 +78,10 @@ final class ClassFilter
     {
         $classes = IterableHelper::toArray($classes);
 
+        IterableHelper::map($classes, static function($val, $key){
+
+        });
+
         $result = [];
 
         $filter = static function ($item, $offset) use (&$filter, &$result, $classes) {
@@ -85,18 +91,18 @@ final class ClassFilter
                 }
             }
 
-            if (is_iterable($item)) {
-                foreach ($item as $o => $i) {
-                    $filter($i, $o);
-                }
+            if (!is_iterable($item)) {
+                return false;
             }
 
-            return null;
+            foreach ($item as $o => $i) {
+                $filter($i, $o);
+            }
+
+            return true;
         };
 
-        foreach ($values as $offset => $item) {
-            $filter($item, $offset);
-        }
+        IterableHelper::filter($values, $filter);
 
         return $result;
     }

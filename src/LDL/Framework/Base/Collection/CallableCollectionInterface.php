@@ -6,10 +6,10 @@ use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
-use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
+use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 
-interface CallableCollectionInterface extends CollectionInterface, AppendableInterface, LockAppendInterface, RemovableInterface, LockRemoveInterface, LockableObjectInterface
+interface CallableCollectionInterface extends CollectionInterface, AppendableInterface, LockAppendInterface, RemoveByKeyInterface, LockRemoveInterface, LockableObjectInterface
 {
 
     /**
