@@ -5,11 +5,11 @@ require __DIR__.'/../../vendor/autoload.php';
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
-use LDL\Framework\Base\Collection\Contracts\RemovableInterface;
+use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\KeyFilterInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\BeforeReplaceInterface;
 use LDL\Framework\Base\Collection\Traits\BeforeReplaceInterfaceTrait;
@@ -20,7 +20,7 @@ use LDL\Framework\Base\Collection\Traits\ReplaceEqualValueInterfaceTrait;
 use LDL\Framework\Base\Collection\Contracts\ReplaceMissingKeyInterface;
 use LDL\Framework\Base\Collection\Traits\ReplaceMissingKeyInterfaceTrait;
 
-interface MyCollectionInterface extends CollectionInterface, KeyFilterInterface, RemovableInterface, ReplaceByKeyInterface, ReplaceEqualValueInterface, BeforeReplaceInterface, ReplaceMissingKeyInterface
+interface MyCollectionInterface extends CollectionInterface, KeyFilterInterface, RemoveByKeyInterface, ReplaceByKeyInterface, ReplaceEqualValueInterface, BeforeReplaceInterface, ReplaceMissingKeyInterface
 {
 
 }
@@ -29,7 +29,7 @@ abstract class MyCollection implements MyCollectionInterface
 {
     use CollectionInterfaceTrait;
     use KeyFilterInterfaceTrait;
-    use RemovableInterfaceTrait;
+    use RemoveByKeyInterfaceTrait;
     use ReplaceByKeyInterfaceTrait;
     use ReplaceEqualValueInterfaceTrait;
     use BeforeReplaceInterfaceTrait;

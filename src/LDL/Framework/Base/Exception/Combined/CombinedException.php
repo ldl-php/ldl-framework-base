@@ -10,7 +10,7 @@ use LDL\Framework\Base\Collection\Traits\BeforeAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Exception\LDLException;
 use Throwable;
 
@@ -20,7 +20,7 @@ class CombinedException extends LDLException implements CombinedExceptionInterfa
     use BeforeAppendInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use RemovableInterfaceTrait;
+    use RemoveByKeyInterfaceTrait;
     use LockAppendInterfaceTrait;
     use LockRemoveInterfaceTrait;
 
