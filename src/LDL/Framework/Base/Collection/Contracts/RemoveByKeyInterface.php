@@ -2,7 +2,6 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Exception\LockingException;
@@ -21,7 +20,11 @@ interface RemoveByKeyInterface
      *
      * @return int Returns 0 if no elements have been removed, > 0 when elements have been removed
      */
-    public function removeByKey($key, string $operator, string $order) : int;
+    public function removeByKey(
+        $key,
+        string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
+        string $order = ComparisonOperatorHelper::COMPARE_LTR
+    ) : int;
 
     /**
      * Remove last appended item

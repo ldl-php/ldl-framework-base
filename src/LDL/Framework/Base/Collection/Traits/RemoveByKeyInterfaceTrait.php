@@ -26,17 +26,6 @@ trait RemoveByKeyInterfaceTrait
     use ClassRequirementHelperTrait;
 
     //<editor-fold desc="RemoveByKeyInterface methods">
-
-    /**
-     * @TODO Performance when only one key is passed and the operator is OPERATOR_SEQ (===)
-     *
-     * @param $key
-     * @param string $operator
-     * @param string $order
-     * @return int
-     * @throws \LDL\Framework\Base\Exception\LockingException
-     * @throws \LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException
-     */
     public function removeByKey(
         $key,
         string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
@@ -62,35 +51,36 @@ trait RemoveByKeyInterfaceTrait
 
         $removed = 0;
 
-        if(!ComparisonOperatorHelper::isStrictlyEqualsOperator($operator))
+        if(ComparisonOperatorHelper::isStrictlyEqualsOperator($operator))
         {
-            $this->setItems(
-                IterableHelper::filter($this, function($val, $k) use ($key, $operator, $order) : bool {
-                    $compare = ComparisonOperatorHelper::compare($k, $key, $operator, $order);
+            if(!$this->hasKey($key)){
+                return $removed;
+            }
 
-                    if(!$compare) {
-                        return true;
-                    }
+            $this->removeItem($key);
+            $this->setCount($this->count() - 1);
 
-                    if($this instanceof BeforeRemoveInterface){
-                        $this->getBeforeRemove()->call($this, $this->get($key), $key);
-                    }
-
-                    return false;
-
-                }, $removed)
-            );
-
-            return $removed;
+            return ++$removed;
         }
 
-        if(!$this->hasKey($key)){
-            return $removed;
-        }
+        $this->setItems(
+            IterableHelper::filter($this, function($val, $k) use ($key, $operator, $order) : bool {
+                $compare = ComparisonOperatorHelper::compare($k, $key, $operator, $order);
 
-        $this->removeItem($key);
+                if(!$compare) {
+                    return true;
+                }
 
-        return ++$removed;
+                if($this instanceof BeforeRemoveInterface){
+                    $this->getBeforeRemove()->call($this, $this->get($key), $key);
+                }
+
+                return false;
+
+            }, $removed)
+        );
+
+        return $removed;
     }
 
     public function removeLast() : CollectionInterface
