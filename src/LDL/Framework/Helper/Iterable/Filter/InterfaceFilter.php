@@ -17,16 +17,27 @@ final class InterfaceFilter
         return self::filterByInterfaces([$interface], $values,true);
     }
 
+    /**
+     * Filters a set of iterable values (ideally containing objects only) through a set of iterable interfaces
+     *
+     * if the $complyToAll argument is set to true the object must comply to all interfaces passed as the first argument
+     * if the $complyToAll argument is set to false the object must comply to at least ONE interface.
+     *
+     * @param iterable $interfaces
+     * @param iterable $values
+     * @param bool $complyToAll
+     * @return array
+     */
     public static function filterByInterfaces(
         iterable $interfaces,
         iterable $values,
-        bool $strict=true
+        bool $complyToAll=true
     ) : array
     {
         /**
          * Validate interfaces
          */
-        IterableHelper::map($interfaces, static function($interface){
+        $interfaces = IterableHelper::map($interfaces, static function($interface) : string {
             if(!is_string($interface)){
                 throw new \InvalidArgumentException(
                     sprintf(
@@ -39,17 +50,22 @@ final class InterfaceFilter
             if(!interface_exists($interface)){
                 throw new \InvalidArgumentException("Interface '$interface' does not exists");
             }
+
+            return $interface;
         });
 
-        $interfaces = IterableHelper::toArray($interfaces);
-
-        return IterableHelper::filter($values, static function($v) use ($interfaces, $strict){
-            if(false === $strict) {
-                return IterableHelper::filter($interfaces, static function ($interface) use ($v) {
+        return IterableHelper::filter($values, static function($v) use ($interfaces, $complyToAll){
+            if(false === $complyToAll) {
+                $items = IterableHelper::filter($interfaces, static function ($interface) use ($v) {
                     return $v instanceof $interface;
                 });
+
+                return count($items) > 0;
             }
 
+            /**
+             * Going through all values is not needed, this is why we use foreach instead of filter to be able to break.
+             */
             foreach($interfaces as $interface){
                 if(!$v instanceof $interface){
                     return false;

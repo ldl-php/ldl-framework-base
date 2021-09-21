@@ -6,21 +6,22 @@ use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Helper\ComparisonOperatorHelper;
 
 interface RemoveByKeyInterface
 {
     /**
-     * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
+     * Remove an element from a collection by a specific key.
      *
-     * @param $key
-     *
+     * @param string|int $key
+     * @param string $operator
+     * @param string $order
      * @throws LockingException
-     * @throws RemoveException
      * @throws InvalidKeyException
      *
-     * @return CollectionInterface
+     * @return int Returns 0 if no elements have been removed, > 0 when elements have been removed
      */
-    public function removeByKey($key) : CollectionInterface;
+    public function removeByKey($key, string $operator, string $order) : int;
 
     /**
      * Remove last appended item

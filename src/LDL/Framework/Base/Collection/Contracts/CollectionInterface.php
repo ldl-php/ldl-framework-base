@@ -5,6 +5,7 @@ namespace LDL\Framework\Base\Collection\Contracts;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Base\Contracts\ToArrayInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
+use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
 interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
 {
@@ -19,25 +20,30 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
      * Check if a key exists
      *
      * @param number|string $key
+     * @param string $operator
+     * @param string $order
      * @throws \Exception if the passed key is not a valid array key
      * @see ArrayHelper::validateKey()
-     * @return bool
+     * @return int
      */
-    public function hasKey($key) : bool;
+    public function hasKey($key, string $operator, string $order) : int;
 
     /**
      * Check if a value exists inside the collection, comparison should between the given value and the collection
-     * items should be performed by using strict comparison
+     * items should be performed by using strict comparison by default
      *
-     * @param $value
-     * @return bool
+     * @param mixed $value
+     * @param string $operator
+     * @param string $order
+     *
+     * @return int
      */
-    public function hasValue($value) : bool;
+    public function hasValue($value, string $operator, string $order) : int;
 
     /**
      * Obtain an element in the collection
      *
-     * @param $key
+     * @param string|int $key
      * @throws \Exception
      * @return mixed
      */
@@ -54,7 +60,7 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
     /**
      * Returns the first appended key
      *
-     * @return string|number
+     * @return string|int
      */
     public function getFirstKey();
 
@@ -69,7 +75,7 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
     /**
      * Returns the last appended key
      *
-     * @return string|number
+     * @return string|int
      */
     public function getLastKey();
 
@@ -82,19 +88,22 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
     /**
      * Use a callable function on each item of the collection
      *
-     * @param callable $callback
+     * @param callable $func
+     * @param int $mapped
      * @return CollectionInterface
+     * @throws InvalidKeyException
+     * @throws \LDL\Framework\Base\Exception\LockingException
      */
-    public function map(callable $callback) : CollectionInterface;
+    public function map(callable $func, int &$mapped=0) : CollectionInterface;
 
     /**
      * Use array_filter on each item of the collection, returns a new collection instance
      *
-     * @param callable $callback
-     * @param int $mode
+     * @param callable $func
+     * @param int $filtered
      * @return CollectionInterface
      */
-    public function filter(callable $callback, int $mode=0) : CollectionInterface;
+    public function filter(callable $func, int &$filtered=0) : CollectionInterface;
 
     /**
      * @param string $separator

@@ -28,7 +28,7 @@ interface A{
 trait ATrait{
     public function test(string $value) : void
     {
-        echo $value."\n";
+        echo "I'm method ".__METHOD__." and I have been called with the parameter: $value\n";
     }
 }
 

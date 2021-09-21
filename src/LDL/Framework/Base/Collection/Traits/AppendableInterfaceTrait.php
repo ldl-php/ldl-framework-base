@@ -12,9 +12,7 @@ use LDL\Framework\Base\Collection\Contracts\BeforeResolveKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByKeyInterface;
-use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\Append\HasAppendDuplicateKeyResolverInterface;
 use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasNullKeyResolverInterface;
-use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasValueResolverInterface;
 use LDL\Framework\Base\Collection\Resolver\Collection\DuplicateResolverCollection;
 use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasCustomKeyResolverInterface;
 use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasDuplicateKeyResolverInterface;
@@ -29,6 +27,11 @@ use LDL\Framework\Base\Collection\Resolver\Key\StringKeyResolver;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait AppendableInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see AppendableInterface
+ */
 trait AppendableInterfaceTrait
 {
     use ClassRequirementHelperTrait;
@@ -149,10 +152,6 @@ trait AppendableInterfaceTrait
 
     private function _getAppendDuplicateKeyResolver() : DuplicateResolverInterface
     {
-        if($this instanceof HasAppendDuplicateKeyResolverInterface){
-            return $this->getAppendDuplicateKeyResolver();
-        }
-
         if($this instanceof HasDuplicateKeyResolverInterface){
             return $this->getDuplicateKeyResolver();
         }

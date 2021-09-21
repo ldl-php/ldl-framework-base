@@ -10,6 +10,11 @@ use LDL\Framework\Base\Collection\Contracts\FilterByClassInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\Iterable\Filter\ClassFilter;
 
+/**
+ * Trait FilterByClassInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see FilterByClassInterface
+ */
 trait FilterByClassInterfaceTrait
 {
     use ClassRequirementHelperTrait;

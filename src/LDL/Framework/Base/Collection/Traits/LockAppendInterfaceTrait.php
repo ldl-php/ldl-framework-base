@@ -6,12 +6,16 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockAppendInterface;
 use LDL\Framework\Base\Collection\Exception\LockAppendException;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait LockAppendInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see LockAppendInterface
+ */
 trait LockAppendInterfaceTrait
 {
     use ClassRequirementHelperTrait;

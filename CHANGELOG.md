@@ -48,3 +48,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fix/1200933785056563 - Remove Key word from resolvers collections and contracts
 - fix/1200949376247310 - If collection is locked, and a CollectionInterface::get call is performed clone if object
 - fix/1200949376247315 - Normalize remove methods into  RemoveByEqualValueInterface & RemoveByKeyInterface
+- fix/1201029389120686 - Enhance IterableHelper, apply enhancements to traits

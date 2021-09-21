@@ -11,6 +11,7 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
+use LDL\Framework\Helper\ComparisonOperatorHelper;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
@@ -89,9 +90,13 @@ trait CollectionInterfaceTrait
         return 0 === $this->count;
     }
 
-    public function hasKey($key) : bool
+    public function hasKey(
+        $key,
+        string $operator=ComparisonOperatorHelper::OPERATOR_SEQ,
+        string $order=ComparisonOperatorHelper::COMPARE_LTR
+    ) : int
     {
-        return ArrayHelper::hasKey($this->items, $key);
+        return ArrayHelper::hasKey($this->items, $key, $operator, $order);
     }
 
     public function keys() : array
@@ -99,24 +104,22 @@ trait CollectionInterfaceTrait
         return array_keys($this->items);
     }
 
-    public function hasValue($value) : bool
+    public function hasValue(
+        $value,
+        string $operator=ComparisonOperatorHelper::OPERATOR_SEQ,
+        string $order=ComparisonOperatorHelper::COMPARE_LTR
+    ) : int
     {
-        foreach($this as $val){
-            if($val === $value){
-                return true;
-            }
-        }
-
-        return false;
+        return ArrayHelper::hasValue($this->items, $value, $operator, $order);
     }
 
-    public function map(callable $func) : CollectionInterface
+    public function map(callable $func, int &$mapped=0) : CollectionInterface
     {
         /**
          * @var CollectionInterface $collection
          */
         $collection = clone($this);
-        $map = IterableHelper::map($collection, $func);
+        $map = IterableHelper::map($collection, $func, $mapped);
         $collection->setItems([]);
 
         if($collection instanceof AppendableInterface){
@@ -128,13 +131,18 @@ trait CollectionInterfaceTrait
         return $collection;
     }
 
-    public function filter(callable $func, int $mode=0) : CollectionInterface
+    /**
+     * @param callable $func
+     * @param int $filtered
+     * @return CollectionInterface
+     */
+    public function filter(callable $func, int &$filtered=0) : CollectionInterface
     {
         /**
          * @var CollectionInterface $collection
          */
         $collection = clone($this);
-        $collection->setItems(IterableHelper::filter($this, $func, $mode));
+        $collection->setItems(IterableHelper::filter($this, $func, $filtered));
         return $collection;
     }
 

@@ -10,17 +10,38 @@ use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
-use LDL\Framework\Base\Collection\Exception\RemoveException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
+use LDL\Framework\Helper\ComparisonOperatorHelper;
+use LDL\Framework\Helper\IterableHelper;
 
+/**
+ * Trait RemoveByKeyInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see RemoveByKeyInterface
+ */
 trait RemoveByKeyInterfaceTrait
 {
     use ClassRequirementHelperTrait;
 
-    //<editor-fold desc="RemovableInterface methods">
-    public function removeByKey($key): CollectionInterface
+    //<editor-fold desc="RemoveByKeyInterface methods">
+
+    /**
+     * @TODO Performance when only one key is passed and the operator is OPERATOR_SEQ (===)
+     *
+     * @param $key
+     * @param string $operator
+     * @param string $order
+     * @return int
+     * @throws \LDL\Framework\Base\Exception\LockingException
+     * @throws \LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException
+     */
+    public function removeByKey(
+        $key,
+        string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
+        string $order = ComparisonOperatorHelper::COMPARE_LTR
+    ) : int
     {
         $this->requireImplements([
             CollectionInterface::class,
@@ -37,37 +58,48 @@ trait RemoveByKeyInterfaceTrait
             $this->checkLockRemove();
         }
 
-        $exists = $this->hasKey($key);
+        ArrayHelper::validateKey($key);
 
-        if(!$exists){
-            throw new RemoveException("Item with key: $key does not exists");
+        $removed = 0;
+
+        if(!ComparisonOperatorHelper::isStrictlyEqualsOperator($operator))
+        {
+            $this->setItems(
+                IterableHelper::filter($this, function($val, $k) use ($key, $operator, $order) : bool {
+                    $compare = ComparisonOperatorHelper::compare($k, $key, $operator, $order);
+
+                    if(!$compare) {
+                        return true;
+                    }
+
+                    if($this instanceof BeforeRemoveInterface){
+                        $this->getBeforeRemove()->call($this, $this->get($key), $key);
+                    }
+
+                    return false;
+
+                }, $removed)
+            );
+
+            return $removed;
         }
 
-        if($this instanceof BeforeRemoveInterface){
-            $this->getBeforeRemove()->call($this, $exists ? $this->get($key) : null, $key);
+        if(!$this->hasKey($key)){
+            return $removed;
         }
 
         $this->removeItem($key);
-        $this->setCount($this->count() - 1);
 
-        $keys = $this->keys();
-        $lastKey = count($keys);
-
-        if(0 === $lastKey) {
-            $this->setFirstKey(null);
-            $this->setLastKey(null);
-            return $this;
-        }
-
-        $this->setFirstKey($keys[0]);
-        $this->setLastKey($keys[$lastKey - 1]);
-
-        return $this;
+        return ++$removed;
     }
 
     public function removeLast() : CollectionInterface
     {
-        $this->removeByKey($this->getLastKey());
+        $this->removeByKey($this->getLastKey(),
+            ComparisonOperatorHelper::OPERATOR_SEQ,
+            ComparisonOperatorHelper::COMPARE_LTR
+        );
+
         return $this;
     }
     //</editor-fold>

@@ -2,24 +2,22 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\ReplaceException;
-use LDL\Framework\Base\Exception\LockingException;
 
 interface ReplaceByKeyInterface
 {
     /**
-     * If the key already exists, it will be replaced, if the key does not exists
-     * it will throw a ReplaceException
+     * Replaces a $key in a collection with a $newKey and an OPTIONAL $replacement.
+     * If $replacement is exactly equal to null the value must remain, if it's not
+     * the value must also be replaced.
      *
-     * @param $item
-     * @param $key
-     *
-     * @throws LockingException
+     * @param string|int $key
+     * @param string|int $newKey
+     * @param null|mixed $replacement
+     * @param string $operator
+     * @param string $order
+     * @return int Returns the amount of elements that were replaced
      * @throws ReplaceException
-     * @throws InvalidKeyException
-     *
-     * @return CollectionInterface
      */
-    public function replaceByKey($item, $key) : CollectionInterface;
+    public function replaceByKey($key, $newKey, $replacement, string $operator, string $order) : int;
 }

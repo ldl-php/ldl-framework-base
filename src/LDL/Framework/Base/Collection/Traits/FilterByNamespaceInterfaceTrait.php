@@ -9,6 +9,11 @@ use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
+/**
+ * Trait FilterByNamespaceInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see FilterByNamespaceInterface
+ */
 trait FilterByNamespaceInterfaceTrait
 {
     use FilterByNameInterfaceTrait;
@@ -69,7 +74,7 @@ trait FilterByNamespaceInterfaceTrait
             /**
              * @var NamespaceInterface $v
              */
-            return preg_match($regex, $v->getNamespace());
+            return (bool) preg_match($regex, $v->getNamespace());
         });
     }
 

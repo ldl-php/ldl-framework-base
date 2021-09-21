@@ -7,6 +7,11 @@ use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait BeforeRemoveInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see BeforeRemoveInterface
+ */
 trait BeforeRemoveInterfaceTrait
 {
     use ClassRequirementHelperTrait;
