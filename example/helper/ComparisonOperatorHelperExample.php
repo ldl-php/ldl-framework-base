@@ -27,3 +27,7 @@ pr(ComparisonOperatorHelper::OPERATOR_STR_GT);
 pr(ComparisonOperatorHelper::OPERATOR_STR_LT);
 pr(ComparisonOperatorHelper::OPERATOR_STR_GTE);
 pr(ComparisonOperatorHelper::OPERATOR_STR_LTE);
+pr(ComparisonOperatorHelper::OPERATOR_STR_BETWEEN);
+pr(ComparisonOperatorHelper::OPERATOR_BETWEEN);
+pr(ComparisonOperatorHelper::OPERATOR_NOT_BETWEEN);
+pr(ComparisonOperatorHelper::OPERATOR_STR_NOT_BETWEEN);

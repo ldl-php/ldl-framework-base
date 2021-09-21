@@ -18,13 +18,16 @@ class CollectionExample implements CollectionInterface, AppendableInterface, Rem
     use RemoveByKeyInterfaceTrait;
 }
 
+echo "Create collection\n";
+
 $collection = new CollectionExample();
 
+echo "Append many uniqid's with the same key: '1.1'\n";
 $collection->append(uniqid('', true),'1.1');
 $collection->append(uniqid('', true),'1.1');
 $collection->append(uniqid('', true),'1.1');
 $collection->append(uniqid('', true));
 
-foreach($collection as $k=>$v){
-    echo $k."\n";
-}
+echo "Check items in the collection\n";
+
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";

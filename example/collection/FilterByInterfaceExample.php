@@ -4,19 +4,13 @@ require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
-use LDL\Framework\Base\Collection\Contracts\KeyFilterInterface;
-use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
-use LDL\Framework\Base\Collection\Contracts\AppendInPositionInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\KeyFilterInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\AppendInPositionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\FilterByInterface;
 use LDL\Framework\Base\Collection\Traits\FilterByInterfaceTrait;
 
-interface FilterByInterfaceExample extends CollectionInterface, AppendableInterface, KeyFilterInterface, RemoveByKeyInterface, AppendInPositionInterface, FilterByInterface
+interface FilterByInterfaceExample extends CollectionInterface, AppendableInterface, FilterByInterface
 {
 
 }
@@ -51,26 +45,29 @@ class FilterByInterfaceCollection implements FilterByInterfaceExample
     use CollectionInterfaceTrait;
     use AppendableInterfaceTrait;
     use AppendManyTrait;
-    use KeyFilterInterfaceTrait;
-    use RemoveByKeyInterfaceTrait;
-    use AppendInPositionInterfaceTrait;
     use FilterByInterfaceTrait;
+
+    public function __construct(iterable $items)
+    {
+        $this->setItems($items);
+    }
 }
 
 echo "Create collection\n";
 
-$collection = new FilterByInterfaceCollection();
-$collection->append(new FooLDL())
-    ->append(new BarLDL())
-    ->append(new FooBarLDL())
-    ->append(new FooBarExtended());
+$collection = new FilterByInterfaceCollection([
+    new FooLDL(),
+    new BarLDL(),
+    new FooBarLDL(),
+    new FooBarExtended()
+]);
 
 echo "Filter by Interface A: (FooLDL, FooBarLDL and FooBarExtended must be shown)\n";
 foreach($collection->filterByInterface(A::class) as $item){
     var_dump(get_class($item));
 }
 
-echo "Filter by interfaces, A and B with strict mode set to false (FooLDL, BarLDL, FooBarLDL and FooBarExtended must be shown)\n";
+echo "Filter by interfaces, A and B with complyToAll mode set to false (FooLDL, BarLDL, FooBarLDL and FooBarExtended must be shown)\n";
 
 foreach($collection->filterByInterfaces([A::class, B::class], false) as $item){
     var_dump(get_class($item));

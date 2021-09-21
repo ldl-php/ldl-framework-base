@@ -33,10 +33,30 @@ interface AppendInPositionInterface
     public function appendInPosition($item, int $position, $key = null): CollectionInterface;
 
     /**
+     * Appends a set of elements in position N
+     *
+     * @param iterable $items
+     * @param int $position
+     *
+     * @throws \InvalidArgumentException if the $position argument is invalid
+     * @throws LockingException
+     * @throws InvalidKeyException
+     *
+     * @return CollectionInterface
+     */
+    public function appendManyInPosition(iterable $items, int $position) : CollectionInterface;
+
+    /**
      * Alias of self::appendInPosition with APPEND_POSITION_FIRST as the $position argument
      * @param $item
      * @param $key
      * @return CollectionInterface
      */
     public function unshift($item, $key) : CollectionInterface;
+
+    /**
+     * @param iterable $items
+     * @return CollectionInterface
+     */
+    public function unshiftMany(iterable $items) : CollectionInterface;
 }

@@ -4,10 +4,10 @@ namespace LDL\Framework\Base\Collection\Contracts;
 
 use LDL\Framework\Base\Collection\CallableCollectionInterface;
 
-interface ReplaceMissingKeyInterface
+interface OnRemoveNoMatchInterface
 {
     /**
      * @return CallableCollectionInterface
      */
-    public function onReplaceMissingKey() : CallableCollectionInterface;
+    public function getOnRemoveNoMatch() : CallableCollectionInterface;
 }

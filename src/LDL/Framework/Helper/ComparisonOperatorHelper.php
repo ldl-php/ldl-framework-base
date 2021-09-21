@@ -4,6 +4,9 @@ namespace LDL\Framework\Helper;
 
 final class ComparisonOperatorHelper
 {
+    public const COMPARE_LTR = 'ltr';
+    public const COMPARE_RTL = 'rtl';
+
     public const OPERATOR_EQ='==';
     public const OPERATOR_STR_EQ='eq';
 
@@ -28,6 +31,12 @@ final class ComparisonOperatorHelper
     public const OPERATOR_LTE='<=';
     public const OPERATOR_STR_LTE='lte';
 
+    public const OPERATOR_BETWEEN = '<>';
+    public const OPERATOR_STR_BETWEEN = 'btw';
+
+    public const OPERATOR_NOT_BETWEEN = '!<>';
+    public const OPERATOR_STR_NOT_BETWEEN = 'nbtw';
+
     public static function getValidOperators() : array
     {
         return [
@@ -46,7 +55,11 @@ final class ComparisonOperatorHelper
             self::OPERATOR_LT,
             self::OPERATOR_STR_LT,
             self::OPERATOR_LTE,
-            self::OPERATOR_STR_LTE
+            self::OPERATOR_STR_LTE,
+            self::OPERATOR_BETWEEN,
+            self::OPERATOR_STR_BETWEEN,
+            self::OPERATOR_NOT_BETWEEN,
+            self::OPERATOR_STR_NOT_BETWEEN
         ];
     }
 
@@ -75,107 +88,93 @@ final class ComparisonOperatorHelper
     /**
      * @TODO Consider using PHP assert (only when upgrading to 8, suggested by Levy Morrison from PHP Core)
      *
-     * @param mixed $a
-     * @param mixed $b
+     * @param mixed $left
+     * @param mixed $right
      * @param string $operator
+     * @param string $order
+     * @param mixed $between
      * @throws \InvalidArgumentException if given $operator is invalid
      * @return bool
      */
-    public static function compare($a, $b, $operator) : bool
+    public static function compare(
+        $left,
+        $right,
+        string $operator,
+        string $order=self::COMPARE_LTR,
+        $between = null
+    ) : bool
     {
         self::validate($operator);
 
-        switch($operator){
-            case self::isEqualsOperator($operator):
-                return $a == $b;
-            break;
+        /**
+         * Order of operation doesn't matter for equality comparisons
+         */
+        if(self::isEqualsOperator($operator)) {
+            return $left == $right;
+        }
 
-            case self::isStrictlyEqualsOperator($operator):
-                return $a === $b;
-            break;
+        if(self::isStrictlyEqualsOperator($operator)) {
+            return $left === $right;
+        }
 
-            case self::isNotEqualsOperator($operator):
-                return $a != $b;
-            break;
+        if(self::isNotEqualsOperator($operator)) {
+            return $left != $right;
+        }
 
-            case self::isStrictlyNotEqualsOperator($operator):
-                return $a !== $b;
-            break;
-
-            case self::isGreaterOperator($operator):
-                return $a > $b;
-            break;
-
-            case self::isGreaterOrEqualsOperator($operator):
-                return $a >= $b;
-            break;
-
-            case self::isLowerOperator($operator):
-                return $a < $b;
-            break;
-
-            case self::isLowerOrEqualsOperator($operator):
-                return $a <= $b;
-            break;
+        if(self::isStrictlyNotEqualsOperator($operator)) {
+            return $left !== $right;
         }
 
         /**
-         * Not needed, all cases above plus operator validation must ensure operator
+         * Order of comparison DOES matter for arithmetic operations
          */
-        return false;
+        if(self::isGreaterOperator($operator)) {
+            return $order === self::COMPARE_LTR ? $left > $right : $right > $left;
+        }
+
+        if(self::isGreaterOrEqualsOperator($operator)) {
+            return $order === self::COMPARE_LTR ? $left >= $right : $right >= $left;
+        }
+
+        if(self::isLowerOperator($operator)) {
+            return $order === self::COMPARE_LTR ? $left < $right : $right < $left;
+        }
+
+        if(self::isLowerOrEqualsOperator($operator)){
+            return $order === self::COMPARE_LTR ? $left <= $right : $right <= $left;
+        }
+
+        if(self::isBetweenOperator($operator)){
+            return $order === self::COMPARE_LTR ? $between >= $left && $between <= $right : $between >= $right && $between <= $left;
+        }
+
+        if(self::isNotBetweenOperator($operator)){
+            return $order === self::COMPARE_LTR ? $between <= $left && $between >= $right : $between <= $right && $between >= $left;
+        }
+
+        throw new \InvalidArgumentException("Invalid operator: $operator");
     }
 
     /**
-     * @TODO Consider using PHP assert (only when upgrading to 8, suggested by Levy Morrison from PHP Core)
-     *
-     * @param mixed $a
-     * @param mixed $b
+     * @param $left
+     * @param $right
      * @param string $operator
-     * @throws \InvalidArgumentException if given $operator is invalid
+     * @param string $order
+     * @param null $between
      * @return bool
+     * @throws \Exception
      */
-    public static function compareInverse($a, $b, $operator) : bool
+    public static function compareInverse(
+        $left,
+        $right,
+        string $operator,
+        string $order=self::COMPARE_LTR,
+        $between = null
+    ) : bool
     {
         self::validate($operator);
 
-        switch($operator){
-            case self::isEqualsOperator($operator):
-                return $a != $b;
-                break;
-
-            case self::isStrictlyEqualsOperator($operator):
-                return $a !== $b;
-                break;
-
-            case self::isNotEqualsOperator($operator):
-                return $a == $b;
-                break;
-
-            case self::isStrictlyNotEqualsOperator($operator):
-                return $a === $b;
-                break;
-
-            case self::isGreaterOperator($operator):
-                return $a < $b;
-                break;
-
-            case self::isGreaterOrEqualsOperator($operator):
-                return $a <= $b;
-                break;
-
-            case self::isLowerOperator($operator):
-                return $a > $b;
-                break;
-
-            case self::isLowerOrEqualsOperator($operator):
-                return $a >= $b;
-                break;
-        }
-
-        /**
-         * Not needed, all cases above plus operator validation must ensure operator
-         */
-        return false;
+        return self::compare($left, $right, self::getOppositeOperator($operator), $order, $between);
     }
 
     /**
@@ -235,81 +234,92 @@ final class ComparisonOperatorHelper
 
             case self::OPERATOR_STR_GT:
                 return self::OPERATOR_STR_LT;
+
+            case self::OPERATOR_BETWEEN:
+                return self::OPERATOR_NOT_BETWEEN;
+
+            case self::OPERATOR_STR_BETWEEN:
+                return self::OPERATOR_STR_NOT_BETWEEN;
+
+            case self::OPERATOR_NOT_BETWEEN:
+                return self::OPERATOR_BETWEEN;
+
+            case self::OPERATOR_STR_NOT_BETWEEN:
+                return self::OPERATOR_STR_BETWEEN;
         }
 
         return '';
     }
 
-    public static function isEqualsOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isEqualsOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_EQ === $operator || self::OPERATOR_EQ === $operator;
-        }
-
-        return self::OPERATOR_EQ === $operator;
+        return self::OPERATOR_STR_EQ === $operator || self::OPERATOR_EQ === $operator;
     }
 
-    public static function isNotEqualsOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isNotEqualsOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_NOT_EQ === $operator || self::OPERATOR_STR_NOT_SEQ === $operator;
-        }
-
-        return self::OPERATOR_STR_NOT_EQ === $operator;
+        return self::OPERATOR_STR_NOT_EQ === $operator || self::OPERATOR_NOT_EQ === $operator;
     }
 
-    public static function isStrictlyEqualsOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isStrictlyEqualsOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_SEQ === $operator || self::OPERATOR_SEQ === $operator;
-        }
-
-        return self::OPERATOR_SEQ === $operator;
+        return self::OPERATOR_STR_SEQ === $operator || self::OPERATOR_SEQ === $operator;
     }
 
-    public static function isStrictlyNotEqualsOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isStrictlyNotEqualsOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_NOT_SEQ === $operator || self::OPERATOR_STR_NOT_SEQ === $operator;
-        }
-
-        return self::OPERATOR_STR_NOT_SEQ === $operator;
+        return self::OPERATOR_STR_NOT_SEQ === $operator || self::OPERATOR_NOT_SEQ === $operator;
     }
 
-    public static function isGreaterOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isGreaterOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_GT === $operator || self::OPERATOR_GT === $operator;
-        }
-
-        return self::OPERATOR_GT === $operator;
+        return self::OPERATOR_STR_GT === $operator || self::OPERATOR_GT === $operator;
     }
 
-    public static function isGreaterOrEqualsOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isGreaterOrEqualsOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_GTE === $operator || self::OPERATOR_GTE === $operator;
-        }
-
-        return self::OPERATOR_GTE === $operator;
+        return self::OPERATOR_STR_GTE === $operator || self::OPERATOR_GTE === $operator;
     }
 
-    public static function isLowerOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isLowerOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_LT === $operator || self::OPERATOR_LT === $operator;
-        }
-
-        return self::OPERATOR_LT === $operator;
+        return self::OPERATOR_STR_LT === $operator || self::OPERATOR_LT === $operator;
     }
 
-    public static function isLowerOrEqualsOperator(string $operator, bool $useStrOperator=true) : bool
+    public static function isLowerOrEqualsOperator(string $operator) : bool
     {
-        if($useStrOperator){
-            return self::OPERATOR_STR_LTE === $operator || self::OPERATOR_LTE === $operator;
+        return self::OPERATOR_STR_LTE === $operator || self::OPERATOR_LTE === $operator;
+    }
+
+    public static function isBetweenOperator(string $operator) : bool
+    {
+        return self::OPERATOR_STR_BETWEEN === $operator || self::OPERATOR_BETWEEN === $operator;
+    }
+
+    public static function isNotBetweenOperator(string $operator) : bool
+    {
+        return self::OPERATOR_STR_NOT_BETWEEN === $operator || self::OPERATOR_NOT_BETWEEN === $operator;
+    }
+
+    public static function isEqualityOperator(string $operator, bool $includeNegated=true) : bool
+    {
+        $operators = [
+            self::OPERATOR_SEQ,
+            self::OPERATOR_STR_SEQ,
+            self::OPERATOR_EQ,
+            self::OPERATOR_STR_EQ
+        ];
+
+        if($includeNegated){
+            $operators = array_merge($operators, [
+                self::OPERATOR_NOT_EQ,
+                self::OPERATOR_STR_NOT_EQ,
+                self::OPERATOR_NOT_SEQ,
+                self::OPERATOR_STR_NOT_SEQ
+            ]);
         }
 
-        return self::OPERATOR_LTE === $operator;
+        return in_array($operator, $operators, true);
     }
 
 }

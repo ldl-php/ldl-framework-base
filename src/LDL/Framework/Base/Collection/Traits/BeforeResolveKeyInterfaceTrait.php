@@ -7,6 +7,11 @@ use LDL\Framework\Base\Collection\CallableCollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeResolveKeyInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait BeforeResolveKeyInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see BeforeResolveKeyInterface
+ */
 trait BeforeResolveKeyInterfaceTrait
 {
     use ClassRequirementHelperTrait;

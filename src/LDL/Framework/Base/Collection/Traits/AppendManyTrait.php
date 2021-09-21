@@ -10,6 +10,11 @@ use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait AppendManyTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see AppendableInterface
+ */
 trait AppendManyTrait
 {
     use ClassRequirementHelperTrait;

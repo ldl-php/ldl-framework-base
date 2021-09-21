@@ -50,18 +50,13 @@ echo "Append 789 with key: 111\n";
 
 $collection->append(789, 111);
 
-echo "Check items in the collection\n";
-
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
 echo "Remove item with key 0 (first)\n";
-
 $collection->removeByKey(0);
 
 echo "Remove item with key 'test'\n";
-
 $collection->removeByKey('test');
 
 echo "Check first key in the collection\n";
@@ -76,21 +71,16 @@ echo "Remove last item\n";
 
 $collection->removeLast();
 
-echo "Try to remove item with key 4 (which does not exists), exception must be thrown\n";
+echo "Try to remove item with key 4 (which does not exists)\n";
 
-try{
-    $collection->removeByKey(4);
-}catch(RemoveException $e){
-    echo "EXCEPTION: {$e->getMessage()}\n";
-}
+$collection->removeByKey(4);
 
 echo "Remove item with key 1\n";
 
 $collection->removeByKey(1);
 
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
 echo "First key: ".$collection->getFirstKey()."\n";
 echo "Last key: ".$collection->getLastKey()."\n";
@@ -106,11 +96,5 @@ try{
     echo "EXCEPTION: {$e->getMessage()}\n";
 }
 
-echo "Check items in the collection\n";
-
-/**
- * @var \Exception $value
- */
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";

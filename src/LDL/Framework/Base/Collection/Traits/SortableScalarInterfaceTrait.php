@@ -7,6 +7,11 @@ use LDL\Framework\Base\Collection\Contracts\SortableScalarInterface;
 use LDL\Framework\Base\Collection\Contracts\SortInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait SortableScalarInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see SortableScalarInterface
+ */
 trait SortableScalarInterfaceTrait
 {
     use ClassRequirementHelperTrait;

@@ -9,6 +9,11 @@ use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\RegexHelper;
 
+/**
+ * Trait FilterByNameInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see FilterByNameInterface
+ */
 trait FilterByNameInterfaceTrait
 {
     use ClassRequirementHelperTrait;
@@ -58,7 +63,7 @@ trait FilterByNameInterfaceTrait
                 return false;
             }
 
-            return preg_match($regex, $v->getName());
+            return (bool) preg_match($regex, $v->getName());
         });
     }
     //</editor-fold>

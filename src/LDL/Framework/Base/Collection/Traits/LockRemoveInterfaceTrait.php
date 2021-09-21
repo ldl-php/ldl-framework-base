@@ -11,6 +11,11 @@ use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait LockRemoveInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see LockRemoveInterface
+ */
 trait LockRemoveInterfaceTrait
 {
     use ClassRequirementHelperTrait;

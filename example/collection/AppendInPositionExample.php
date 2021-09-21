@@ -26,48 +26,38 @@ echo "Append many: 2,3,4,5\n";
 
 $collection->appendMany([2,3,4,5]);
 
-echo "Check items in the collection\n";
-
-/**
- * @var \Exception $value
- */
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
 echo "Append 1 in first position (top of collection)\n";
 
 $collection->appendInPosition(
-    1,
+    'first (I will be second at the end of this example)',
     AppendInPositionInterface::APPEND_POSITION_FIRST
 );
 
-echo "Check items in the collection\n";
-
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
 echo "First key is: {$collection->getFirstKey()}\n";
 echo "Last key is: {$collection->getLastKey()}\n";
 
+echo "Append in same position (3) with the same index:\n\n";
+
 $collection->appendInPosition(
-    'In 3rd position',
+    'I must be below',
     3,
     'string_index_3rd'
 );
 
 $collection->appendInPosition(
-    'In 3rd position (duplicate)',
+    'I must be above',
     3,
     'string_index_3rd'
 );
 
-echo "Check items in the collection\n";
-
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
 echo "First key is: {$collection->getFirstKey()}\n";
 echo "Last key is: {$collection->getLastKey()}\n";
@@ -87,36 +77,33 @@ try{
     echo "OK: {$e->getMessage()}\n";
 }
 
-echo "Check items in the collection\n";
-
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
 $collection->appendInPosition(
-    'In 3rd position',
+    'I must be above the two',
     3,
-    'string_index_3rd_copy'
+    'string_index_3rd'
 );
+
+echo "Append an item in the last position:\n\n";
 
 $collection->appendInPosition(
     'In last position',
-    10
+    AppendInPositionInterface::APPEND_POSITION_LAST
 );
 
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
+echo "Append an item to the top of the collection:\n\n";
 
-echo "Check items in the collection\n";
+$collection->appendInPosition('I must be on top',1);
 
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
+$collection->appendManyInPosition(['key_1'=>20,'key_2'=>21,'key_3'=>22], 1);
 
-echo "#############################################\n";
-$collection->appendInPosition('999',1);
-
-
-foreach($collection as $key => $value){
-    echo "Key: $key, Item: $value\n";
-}
+echo "Check items in the collection:\n\n";
+echo var_export(\iterator_to_array($collection, true), true)."\n\n";

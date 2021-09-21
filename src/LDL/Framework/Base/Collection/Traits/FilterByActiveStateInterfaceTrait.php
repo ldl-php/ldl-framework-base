@@ -4,8 +4,8 @@
  * This trait applies the FilterByActiveStateInterface so you can just easily use it in your class.
  * Don't forget to validate the items in your collection against IsActiveInterface
  *
- * @see \LDL\Framework\Base\Contracts\IsActiveInterface
- * @see \LDL\Framework\Base\Collection\Contracts\FilterByActiveStateInterface
+ * @see IsActiveInterface
+ * @see FilterByActiveStateInterface
  */
 
 namespace LDL\Framework\Base\Collection\Traits;

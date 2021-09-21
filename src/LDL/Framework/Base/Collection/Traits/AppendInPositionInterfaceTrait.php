@@ -10,6 +10,11 @@ use LDL\Framework\Base\Collection\Contracts\AppendInPositionInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait AppendInPositionInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see AppendInPositionInterface
+ */
 trait AppendInPositionInterfaceTrait
 {
     use ClassRequirementHelperTrait;
@@ -17,7 +22,7 @@ trait AppendInPositionInterfaceTrait
         append as _append;
     }
 
-    //<editor-fold desc="AppendWithOrderInterface methods">
+    //<editor-fold desc="AppendInPositionInterface methods">
     /**
      * {@inheritdoc}
      */
@@ -33,36 +38,46 @@ trait AppendInPositionInterfaceTrait
     /**
      * {@inheritdoc}
      */
+    public function unshiftMany(iterable $items) : CollectionInterface
+    {
+        return $this->appendManyInPosition(
+            $items,
+            AppendInPositionInterface::APPEND_POSITION_FIRST
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function hasPosition(int $position) : bool
     {
         $this->_tAppendInPositionInterfaceTraitValidatePosition($position);
         return $position > $this->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function appendInPosition($item, int $position, $key = null): CollectionInterface
+    public function appendManyInPosition(iterable $items, int $position) : CollectionInterface
     {
-        $this->requireImplements([AppendInPositionInterface::class, CollectionInterface::class]);
-        $this->_append($item, $key);
-
         $this->_tAppendInPositionInterfaceTraitValidatePosition($position);
 
-        if(AppendInPositionInterface::APPEND_POSITION_LAST === $position){
+        $this->requireImplements([
+            AppendInPositionInterface::class,
+            CollectionInterface::class
+        ]);
+
+        $count = $this->count();
+
+        foreach($items as $key => $item) {
+            $this->_append($item, $key);
+        }
+
+        if(AppendInPositionInterface::APPEND_POSITION_LAST === $position || $count === $position){
             return $this;
         }
 
-        $items = $this->toArray();
-        $lastKey = $this->getLastKey();
-        $last = array_pop($items);
+        $items = array_slice($this->toArray(), $count);
 
         if(AppendInPositionInterface::APPEND_POSITION_FIRST === $position){
-            $this->setItems([$lastKey => $last] + $items);
-            $this->setFirstKey($lastKey);
-            $keys = array_keys($items);
-            $this->setLastKey($keys[count($keys)-1]);
-
+            $this->setItems($items + array_slice($this->toArray(), 0 , $count));
             return $this;
         }
 
@@ -71,14 +86,13 @@ trait AppendInPositionInterfaceTrait
         $found = false;
         $result = [];
 
-        foreach($items as $k => $v){
-            $result[$k] = $v;
-
-            if($i++ === $position){
-                $result[$lastKey] = $last;
+        foreach($this->toArray() as $k => $v){
+            if($position === $i++){
+                $result += $items;
                 $found = true;
             }
 
+            $result[$k] = $v;
         }
 
         if(!$found){
@@ -90,11 +104,63 @@ trait AppendInPositionInterfaceTrait
             throw new \InvalidArgumentException($msg);
         }
 
-        $keys = array_keys($result);
+        $this->setItems($result);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function appendInPosition($item, int $position, $key = null): CollectionInterface
+    {
+        $this->_tAppendInPositionInterfaceTraitValidatePosition($position);
+
+        $this->requireImplements([
+            AppendInPositionInterface::class,
+            CollectionInterface::class
+        ]);
+
+        $this->_append($item, $key);
+        $count = $this->count();
+
+        if(AppendInPositionInterface::APPEND_POSITION_LAST === $position || $position === $count){
+            return $this;
+        }
+
+        $items = $this->toArray();
+        $lastKey = $this->getLastKey(); //Has key already resolved
+        $last = array_pop($items);
+
+        if(AppendInPositionInterface::APPEND_POSITION_FIRST === $position){
+            $this->setItems([$lastKey => $last] + $items);
+            return $this;
+        }
+
+        $i=1;
+
+        $found = false;
+        $result = [];
+
+        foreach($items as $k => $v){
+            if($position === $i++){
+                $result[$lastKey] = $last;
+                $found = true;
+            }
+
+            $result[$k] = $v;
+        }
+
+        if(!$found){
+            $msg = sprintf(
+                'Position "%s" is undefined in this collection',
+                $position
+            );
+
+            throw new \InvalidArgumentException($msg);
+        }
 
         $this->setItems($result);
-        $this->setFirstKey($keys[0]);
-        $this->setLastKey($keys[count($keys)-1]);
 
         return $this;
     }

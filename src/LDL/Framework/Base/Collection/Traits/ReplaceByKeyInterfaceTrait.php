@@ -10,17 +10,29 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
+use LDL\Framework\Base\Collection\Contracts\OnReplaceNoMatchInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByKeyInterface;
-use LDL\Framework\Base\Collection\Contracts\ReplaceMissingKeyInterface;
-use LDL\Framework\Base\Collection\Exception\ReplaceException;
+use LDL\Framework\Base\Collection\Resolver\Collection\Contracts\HasDuplicateKeyResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Collection\DuplicateResolverCollection;
+use LDL\Framework\Base\Collection\Resolver\Contracts\DuplicateResolverInterface;
+use LDL\Framework\Base\Collection\Resolver\Key\DecimalKeyResolver;
+use LDL\Framework\Base\Collection\Resolver\Key\HasObjectKeyResolver;
+use LDL\Framework\Base\Collection\Resolver\Key\IntegerKeyResolver;
+use LDL\Framework\Base\Collection\Resolver\Key\StringKeyResolver;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
+use LDL\Framework\Helper\ComparisonOperatorHelper;
+use LDL\Framework\Helper\IterableHelper;
 
+/**
+ * Trait ReplaceByKeyInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see ReplaceByKeyInterface
+ */
 trait ReplaceByKeyInterfaceTrait
 {
     use ClassRequirementHelperTrait;
@@ -29,11 +41,16 @@ trait ReplaceByKeyInterfaceTrait
     private $_instanceOfLockReplace;
 
     //<editor-fold desc="ReplaceByKeyInterface Methods">
-    public function replaceByKey($item, $key) : CollectionInterface
+    public function replaceByKey(
+        $key,
+        $newKey,
+        $replacement=null,
+        string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
+        string $order = ComparisonOperatorHelper::COMPARE_LTR
+    ) : int
     {
-        if(null !== $key){
-            ArrayHelper::validateKey($key);
-        }
+        ArrayHelper::isValidKey($key);
+        ArrayHelper::isValidKey($newKey);
 
         $this->requireImplements([
             CollectionInterface::class,
@@ -58,26 +75,65 @@ trait ReplaceByKeyInterfaceTrait
             $this->checkLockReplace();
         }
 
-        if($this instanceof BeforeReplaceInterface){
-            $this->getBeforeReplace()->call($this, $item, $key);
-        }
+        $newItems = $items = IterableHelper::toArray($this, true);
 
-        if($this->hasKey($key)){
-            if($this instanceof BeforeRemoveInterface){
-                $this->getBeforeRemove()->call($this, $item, $key);
+        $callback = function($val, $k) use ($replacement, &$newItems, $key, $newKey, $operator, $order) {
+            $compare = ComparisonOperatorHelper::compare($k, $key, $operator, $order);
+
+            if (!$compare) {
+                return false;
             }
 
-            $this->setItem($item, $key);
-            return $this;
+            if ($this instanceof BeforeReplaceInterface) {
+                $this->getBeforeReplace()->call(
+                    $this,
+                    $val,
+                    $k,
+                    $replacement,
+                    $operator,
+                    $order
+                );
+            }
+
+            unset($newItems[$k]);
+
+            if(array_key_exists($newKey, $newItems)){
+                $newKey = $this->_getReplaceByKeyDuplicateKeyResolver()
+                    ->resolveDuplicate($this, $newKey, $replacement);
+            }
+
+            $newItems[$newKey] = $replacement ?? $val;
+
+            return true;
+        };
+
+        $replaced = ArrayHelper::replaceByCallback($items, null, $callback, true);
+
+        if($replaced > 0){
+            $this->setItems($newItems);
+
+            return $replaced;
         }
 
-        if(!$this instanceof ReplaceMissingKeyInterface){
-            throw new ReplaceException("Item with key: '$key' does not exists");
+        if($this instanceof OnReplaceNoMatchInterface){
+            $this->getOnReplaceNoMatch()->call(...func_get_args());
         }
 
-        $this->onReplaceMissingKey()->call($this, $item, $key);
+        return $replaced;
+    }
 
-        return $this;
+    private function _getReplaceByKeyDuplicateKeyResolver() : DuplicateResolverInterface
+    {
+        if($this instanceof HasDuplicateKeyResolverInterface){
+            return $this->getDuplicateKeyResolver();
+        }
+
+        return new DuplicateResolverCollection([
+            new IntegerKeyResolver(),
+            new DecimalKeyResolver(),
+            new StringKeyResolver(),
+            new HasObjectKeyResolver()
+        ]);
     }
     //</editor-fold>
 }

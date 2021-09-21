@@ -8,6 +8,11 @@ use LDL\Framework\Base\Collection\Contracts\SortInterface;
 use LDL\Framework\Base\Contracts\PriorityInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
+/**
+ * Trait PrioritySortingInterfaceTrait
+ * @package LDL\Framework\Base\Collection\Traits
+ * @see PrioritySortingInterface
+ */
 trait PrioritySortingInterfaceTrait
 {
     use ClassRequirementHelperTrait;

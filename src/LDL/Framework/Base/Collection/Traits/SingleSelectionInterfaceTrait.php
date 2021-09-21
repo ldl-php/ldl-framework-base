@@ -2,7 +2,7 @@
 
 /**
  * This trait applies the SingleSelectionInterface so you can just easily use it in your class.
- * @see \LDL\Framework\Base\Collection\Contracts\SingleSelectionInterface
+ * @see SingleSelectionInterface
  */
 
 namespace LDL\Framework\Base\Collection\Traits;
