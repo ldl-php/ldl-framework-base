@@ -1,0 +1,29 @@
+Create collection
+Create collection with items:
+
+array (
+  'first' => 'Hello',
+  'second' => 'LDL',
+  'third' => 'LDL',
+  'last' => 'World',
+)
+
+Replace item with value 'LDL' with 'REPLACE_BY_CALLBACK'
+
+
+#####################################################
+Trigger on before replace: second => LDL
+#####################################################
+
+
+
+#####################################################
+Trigger on before replace: third => LDL
+#####################################################
+
+array (
+  'first' => 'Hello',
+  'second' => 'REPLACE_BY_CALLBACK',
+  'third' => 'REPLACE_BY_CALLBACK',
+  'last' => 'World',
+)

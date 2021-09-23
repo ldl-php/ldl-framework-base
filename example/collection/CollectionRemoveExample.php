@@ -72,8 +72,11 @@ echo "Remove last item\n";
 $collection->removeLast();
 
 echo "Try to remove item with key 4 (which does not exists)\n";
+$removed = $collection->removeByKey(4);
 
-$collection->removeByKey(4);
+if($removed === 0){
+    echo "OK: Key 4 does not exist in the collection\n";
+}
 
 echo "Remove item with key 1\n";
 

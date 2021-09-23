@@ -51,14 +51,21 @@ trait RemoveByKeyInterfaceTrait
 
         $removed = 0;
 
+        /**
+         * Performance enhancement, IterableHelper::filter will go through every value
+         * for strict equals comparison (===) this is not needed.
+         */
         if(ComparisonOperatorHelper::isStrictlyEqualsOperator($operator))
         {
             if(!$this->hasKey($key)){
                 return $removed;
             }
 
+            if($this instanceof BeforeRemoveInterface){
+                $this->getBeforeRemove()->call($this, $this->get($key), $key);
+            }
+
             $this->removeItem($key);
-            $this->setCount($this->count() - 1);
 
             return ++$removed;
         }

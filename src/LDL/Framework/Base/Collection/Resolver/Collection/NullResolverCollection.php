@@ -57,7 +57,6 @@ class NullResolverCollection implements NullResolverCollectionInterface
         }
 
         $this->setItem($item, $this->keyResolver->resolveNull($this, null));
-        $this->setCount($this->count() + 1);
 
         return $this;
     }

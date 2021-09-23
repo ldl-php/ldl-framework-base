@@ -1,0 +1,11 @@
+Create new PriorityCollection class instance
+Append PriorityClass2
+Append PriorityClass1
+Append PriorityClass3 (does not implement PriorityInterface)
+Sort by priority ascending:
+1
+2
+
+Sort by priority descending:
+2
+1

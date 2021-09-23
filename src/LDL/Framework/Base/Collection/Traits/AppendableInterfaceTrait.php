@@ -122,7 +122,6 @@ trait AppendableInterfaceTrait
 
         $this->setLastKey($key);
         $this->setItem($item, $key);
-        $this->setCount($this->count() + 1);
 
         return $this;
     }

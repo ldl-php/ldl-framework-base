@@ -1,0 +1,106 @@
+Create AppendInPositionExample
+Append many: 2,3,4,5
+Check items in the collection:
+
+array (
+  0 => 2,
+  1 => 3,
+  2 => 4,
+  3 => 5,
+)
+
+Append 1 in first position (top of collection)
+Check items in the collection:
+
+array (
+  4 => 'first (I will be second at the end of this example)',
+  0 => 2,
+  1 => 3,
+  2 => 4,
+  3 => 5,
+)
+
+First key is: 4
+Last key is: 3
+Append in same position (3) with the same index:
+
+Check items in the collection:
+
+array (
+  4 => 'first (I will be second at the end of this example)',
+  0 => 2,
+  'string_index_3rd_1' => 'I must be above',
+  'string_index_3rd' => 'I must be below',
+  1 => 3,
+  2 => 4,
+  3 => 5,
+)
+
+First key is: 4
+Last key is: 3
+Try to pass an invalid negative position (-20)
+OK: Position argument must be a non-negative integer, "-20" was given
+Try to pass a non existing position
+OK: Position "1000" is undefined in this collection
+Check items in the collection:
+
+array (
+  4 => 'first (I will be second at the end of this example)',
+  0 => 2,
+  'string_index_3rd_1' => 'I must be above',
+  'string_index_3rd' => 'I must be below',
+  1 => 3,
+  2 => 4,
+  3 => 5,
+)
+
+Append an item in the last position:
+
+Check items in the collection:
+
+array (
+  4 => 'first (I will be second at the end of this example)',
+  0 => 2,
+  'string_index_3rd_2' => 'I must be above the two',
+  'string_index_3rd_1' => 'I must be above',
+  'string_index_3rd' => 'I must be below',
+  1 => 3,
+  2 => 4,
+  3 => 5,
+  5 => 'In last position',
+)
+
+Append an item to the top of the collection:
+
+Check items in the collection:
+
+array (
+  6 => 'I must be on top',
+  4 => 'first (I will be second at the end of this example)',
+  0 => 2,
+  'string_index_3rd_2' => 'I must be above the two',
+  'string_index_3rd_1' => 'I must be above',
+  'string_index_3rd' => 'I must be below',
+  1 => 3,
+  2 => 4,
+  3 => 5,
+  5 => 'In last position',
+)
+
+Check items in the collection:
+
+array (
+  'key_1' => 20,
+  'key_2' => 21,
+  'key_3' => 22,
+  0 => 'I must be on top',
+  1 => 'first (I will be second at the end of this example)',
+  2 => 2,
+  'string_index_3rd_2' => 'I must be above the two',
+  'string_index_3rd_1' => 'I must be above',
+  'string_index_3rd' => 'I must be below',
+  3 => 3,
+  4 => 4,
+  5 => 5,
+  6 => 'In last position',
+)
