@@ -4,6 +4,9 @@ namespace LDL\Framework\Helper;
 
 final class IterableHelper
 {
+    public const BEFORE_LAST_POSITION = -2;
+    public const LAST_POSITION = -1;
+
     /**
      * @param iterable $items
      * @return int|null
@@ -89,4 +92,25 @@ final class IterableHelper
         );
     }
 
+    /**
+     * @param iterable $items
+     * @param int $position
+     * @return mixed
+     */
+    public static function getKeyInPosition(iterable $items, int $position)
+    {
+        $keys = self::keys($items);
+        $pos = $position < 0 ? count($keys) + $position : $position;
+
+        if(!array_key_exists($pos, $keys)){
+            $msg = sprintf(
+                'Position "%s" is undefined',
+                $position
+            );
+
+            throw new \InvalidArgumentException($msg);
+        }
+
+        return $keys[$pos];
+    }
 }

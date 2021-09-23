@@ -1,0 +1,45 @@
+Create collection
+Create collection with items:
+
+array (
+  'first' => 'Hello',
+  'second' => 'LDL',
+  'third' => 'LDL',
+  'last' => 'World',
+)
+
+Check items in the collection:
+
+array (
+  'first' => 'Hello',
+  'second' => 'LDL',
+  'third' => 'LDL',
+  'last' => 'World',
+)
+
+Replace item with value 'World' with 'REPLACED_WORLD'
+
+
+#####################################################
+Trigger on before replace: last => World
+#####################################################
+
+Replace items with value 'LDL' with 'REPLACED_LDL'
+
+
+#####################################################
+Trigger on before replace: second => LDL
+#####################################################
+
+
+
+#####################################################
+Trigger on before replace: third => LDL
+#####################################################
+
+array (
+  'first' => 'Hello',
+  'second' => 'REPLACED_LDL',
+  'third' => 'REPLACED_LDL',
+  'last' => 'REPLACED_WORLD',
+)

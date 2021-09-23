@@ -121,10 +121,18 @@ trait AppendInPositionInterfaceTrait
             CollectionInterface::class
         ]);
 
-        $this->_append($item, $key);
-        $count = $this->count();
+        if($position > $this->count()){
+            $msg = sprintf(
+                'Position "%s" is undefined in this collection',
+                $position
+            );
 
-        if(AppendInPositionInterface::APPEND_POSITION_LAST === $position || $position === $count){
+            throw new \InvalidArgumentException($msg);
+        }
+
+        $this->_append($item, $key);
+
+        if(AppendInPositionInterface::APPEND_POSITION_LAST === $position || $position === $this->count()){
             return $this;
         }
 
@@ -139,25 +147,14 @@ trait AppendInPositionInterfaceTrait
 
         $i=1;
 
-        $found = false;
         $result = [];
 
         foreach($items as $k => $v){
             if($position === $i++){
                 $result[$lastKey] = $last;
-                $found = true;
             }
 
             $result[$k] = $v;
-        }
-
-        if(!$found){
-            $msg = sprintf(
-                'Position "%s" is undefined in this collection',
-                $position
-            );
-
-            throw new \InvalidArgumentException($msg);
         }
 
         $this->setItems($result);

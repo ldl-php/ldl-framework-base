@@ -1,0 +1,15 @@
+Create collection
+Append items:
+
+array (
+  'test' => 'a',
+  0 => 'b',
+)
+
+Append item with duplicate key 'test', key must be resolved to a different key (test_1):
+
+array (
+  'test' => 'a',
+  0 => 'b',
+  'test_1' => 'y',
+)

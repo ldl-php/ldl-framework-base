@@ -1,0 +1,5 @@
+Create Active State Collection instance
+Append class ActiveStateFilterExampleTest1 with active: true
+Append class ActiveStateFilterExampleTest2 with active: false
+Filter class by active state
+ActiveStateFilterExampleTest1

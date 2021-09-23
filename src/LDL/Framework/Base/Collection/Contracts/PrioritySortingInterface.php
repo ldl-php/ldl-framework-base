@@ -22,5 +22,5 @@ interface PrioritySortingInterface extends SortInterface
      *
      * @return CollectionInterface
      */
-    public function sortByPriority(string $order=self::SORT_ASCENDING) : CollectionInterface;
+    public function sortByPriority(string $order) : CollectionInterface;
 }

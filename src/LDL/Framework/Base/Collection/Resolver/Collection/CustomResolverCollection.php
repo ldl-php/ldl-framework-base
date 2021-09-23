@@ -57,7 +57,6 @@ class CustomResolverCollection implements CustomResolverCollectionInterface
         }
 
         $this->setItem($item, $this->keyResolver->resolveCustom($this, $key, $item));
-        $this->setCount($this->count() + 1);
 
         return $this;
     }

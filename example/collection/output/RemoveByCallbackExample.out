@@ -1,0 +1,29 @@
+Create collection
+Create collection with items:
+
+array (
+  'first' => 'Hello',
+  'second' => 'LDL',
+  'third' => 'LDL',
+  'last' => 'World',
+)
+
+Remove items where value is equal to 'LDL'
+
+
+#####################################################
+Trigger on before remove: second => LDL
+#####################################################
+
+
+
+#####################################################
+Trigger on before remove: third => LDL
+#####################################################
+
+Removed 2 items!
+
+array (
+  'first' => 'Hello',
+  'last' => 'World',
+)

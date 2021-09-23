@@ -1,0 +1,5 @@
+Create collection
+Append Foo, Bar, Bar, FooBar, ExtendsFoo and ExtendsBar classes
+Filter by class Foo: (Foo and his callback 'hello foo!' must be shown)
+hello foo!
+string(3) "Foo"

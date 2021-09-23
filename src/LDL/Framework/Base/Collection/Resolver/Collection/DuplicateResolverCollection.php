@@ -57,7 +57,6 @@ class DuplicateResolverCollection implements DuplicateResolverCollectionInterfac
         }
 
         $this->setItem($item, $this->keyResolver->resolveDuplicate($this, $key, $item));
-        $this->setCount($this->count() + 1);
 
         return $this;
     }

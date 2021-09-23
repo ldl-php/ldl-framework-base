@@ -1,0 +1,31 @@
+Create collection with the following keys and values:
+
+array (
+  'test1' => 'a',
+  'test2' => 'b',
+  'test3' => 'c',
+  'test4' => 'd',
+  'testAR' => 'e',
+)
+
+Filter by keys test1 and test2:
+
+Result:
+
+array (
+  0 => 'test1',
+  1 => 'test2',
+)Filter by key test3 and output it's value (c):
+
+c
+
+Filter by key test22 (exception must be thrown):
+
+EXCEPTION: Could not filter by key: "test22", key does not exists
+
+Filter by regex test[0-9]+ (all elements except testAR must show up):
+
+test1
+test2
+test3
+test4

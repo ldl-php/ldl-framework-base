@@ -1,0 +1,32 @@
+Create collection
+Append items:
+
+array (
+  'test' => 'a',
+  0 => 'b',
+  1 => 'c',
+  2 => 'd',
+  3 => 'e',
+  4 => 'f',
+  5 => 'g',
+)
+
+Remove where value > 'd' (e,f and g must be removed):
+
+array (
+  'test' => 'a',
+  0 => 'b',
+  1 => 'c',
+  2 => 'd',
+)
+
+Remove where value < 'd' (c, b and a must be removed):
+
+array (
+  2 => 'd',
+)
+
+Remove where value === 'd' (Empty array must be displayed):
+
+array (
+)

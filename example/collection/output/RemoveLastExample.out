@@ -1,0 +1,46 @@
+Create collection
+Append items:
+array (
+  0 => 'a',
+  'test' => 'b',
+  1 => 'c',
+  2 => 'd',
+)
+
+Remove last (2 => 'd' must be removed):
+Items in collection: 3
+array (
+  0 => 'a',
+  'test' => 'b',
+  1 => 'c',
+)
+Check first and last key
+First key: 0
+Last key: 1
+
+Remove last (1 => 'c' must be removed):
+Items in collection: 2
+array (
+  0 => 'a',
+  'test' => 'b',
+)
+Check first and last key
+First key: 0
+Last key: test
+
+Remove last ('test' => 'b' must be removed):
+Items in collection: 1
+array (
+  0 => 'a',
+)
+Check first and last key
+First key: 0
+Last key: 0
+
+Remove last (0 => 'a' must be removed):
+Items in collection: 0
+array (
+)
+Check first and last key
+First key:
+Last key:

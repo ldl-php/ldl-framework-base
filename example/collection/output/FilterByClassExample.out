@@ -1,0 +1,15 @@
+Create collection
+Append Foo, Bar, Bar, FooBar, ExtendsFoo and ExtendsBar classes
+Filter by class Foo: (Foo must be shown)
+string(3) "Foo"
+Filter by classes, Foo and Bar with strict mode set to false (Foo, Bar, ExtendsFoo and ExtendsBar must be shown)
+string(3) "Foo"
+string(3) "Bar"
+string(3) "Bar"
+string(10) "ExtendsFoo"
+string(10) "ExtendsBar"
+Filter by class Bar in strict mode, Bar must be shown two times
+string(3) "Bar"
+string(3) "Bar"
+Filter by class Foo recursive
+string(3) "Foo"

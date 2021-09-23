@@ -1,0 +1,45 @@
+Create collection
+Append 'Hello World'
+Append 'LDL'
+Append 'example' with key: 'test'
+Append Many: 123, 456
+Append 789 with key: 111
+Check items in the collection:
+
+array (
+  0 => 'Hello world',
+  1 => 'LDL',
+  'test' => 'example',
+  2 => 123,
+  3 => 456,
+  111 => 789,
+)
+
+Remove item with key 0 (first)
+Remove item with key 'test'
+Check first key in the collection
+key: 1
+Check last key in the collection
+key: 111
+Remove last item
+Try to remove item with key 4 (which does not exists)
+OK: Key 4 does not exist in the collection
+Remove item with key 1
+Check items in the collection:
+
+array (
+  2 => 123,
+  3 => 456,
+)
+
+First key: 2
+Last key: 3
+Lock remove
+Try to remove an item, exception must be thrown
+EXCEPTION: Collection is locked, can not remove elements
+Check items in the collection:
+
+array (
+  2 => 123,
+  3 => 456,
+)

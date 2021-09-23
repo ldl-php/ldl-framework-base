@@ -252,6 +252,7 @@ trait CollectionInterfaceTrait
     {
         $key = $key ?? $this->count;
         $this->items[$key] = $item;
+        $this->count = count($this->items);
         return $this;
     }
 
@@ -318,7 +319,30 @@ trait CollectionInterfaceTrait
      */
     protected function removeItem($key): CollectionInterface
     {
+        if(!$this->hasKey($key)){
+            return $this;
+        }
+
+        $this->first = null;
+        $this->last = null;
+
         unset($this->items[$key]);
+
+        $count = $this->count() - 1;
+        $count = $count < 0 ? 0 : $count;
+
+        $this->setCount($count);
+
+        $keys = array_keys($this->items);
+        $countKeys = count($keys);
+
+        if(0 === $countKeys){
+            return $this;
+        }
+
+        $this->first =  $keys[0];
+        $this->last = $keys[count($keys) - 1];
+
         return $this;
     }
     //</editor-fold>

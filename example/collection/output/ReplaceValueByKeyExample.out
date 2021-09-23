@@ -1,0 +1,39 @@
+Create collection
+Create collection with items:
+
+array (
+  'first' => 'Hello',
+  'second' => 'LDL',
+  'third' => 'LDL',
+  'last' => 'World',
+)
+
+Check items in the collection:
+
+array (
+  'first' => 'Hello',
+  'second' => 'LDL',
+  'third' => 'LDL',
+  'last' => 'World',
+)
+
+Replace key 'first' with '<World>'
+
+
+#####################################################
+Trigger on before replace: first => Hello
+#####################################################
+
+Replace key 'last' with '<LDL>'
+
+
+#####################################################
+Trigger on before replace: last => World
+#####################################################
+
+array (
+  'first' => '<World>',
+  'second' => 'LDL',
+  'third' => 'LDL',
+  'last' => '<LDL>',
+)

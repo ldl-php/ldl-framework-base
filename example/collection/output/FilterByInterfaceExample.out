@@ -1,0 +1,16 @@
+Create collection
+Filter by Interface A: (FooLDL, FooBarLDL and FooBarExtended must be shown)
+string(6) "FooLDL"
+string(9) "FooBarLDL"
+string(14) "FooBarExtended"
+Filter by interfaces, A and B with complyToAll mode set to false (FooLDL, BarLDL, FooBarLDL and FooBarExtended must be shown)
+string(6) "FooLDL"
+string(6) "BarLDL"
+string(9) "FooBarLDL"
+string(14) "FooBarExtended"
+Filter by interface A and B (FooBarLDL must be shown)
+string(9) "FooBarLDL"
+Filter by Interface A recursive: (FooLDL, FooBarLDL and FooBarExtended must be shown)
+string(6) "FooLDL"
+string(9) "FooBarLDL"
+string(14) "FooBarExtended"

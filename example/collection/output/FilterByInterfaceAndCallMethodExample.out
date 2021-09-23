@@ -1,0 +1,8 @@
+Create collection
+Filter by Interface A: (FooLDL and his callback 'Howdy!' must be shown)
+I'm method ATrait::test and I have been called with the parameter: Howdy!
+I'm method ATrait::test and I have been called with the parameter: Howdy!
+I'm method ATrait::test and I have been called with the parameter: Howdy!
+string(6) "FooLDL"
+string(9) "FooBarLDL"
+string(14) "FooBarExtended"

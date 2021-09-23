@@ -1,0 +1,35 @@
+Create collection
+Append items:
+
+array (
+  'test' => 'a',
+  0 => 'b',
+  1 => 'c',
+  2 => 'd',
+  3 => 'e',
+  4 => 'f',
+  5 => 'g',
+)
+
+Remove where key > 3 (Keys 4 and 5 must be removed):
+
+array (
+  'test' => 'a',
+  0 => 'b',
+  1 => 'c',
+  2 => 'd',
+  3 => 'e',
+)
+
+Remove where key <= 1 (Keys 0, 1 and test must be removed):
+
+array (
+  2 => 'd',
+  3 => 'e',
+)
+
+Remove where key !== 2 (Key 3 must be removed):
+
+array (
+  2 => 'd',
+)

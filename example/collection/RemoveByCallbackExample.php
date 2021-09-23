@@ -47,7 +47,6 @@ $collection = new RemoveByCallbackExample($items);
 
 echo "Remove items where value is equal to 'LDL'\n";
 $count = $collection->removeByCallback(static function($val) : bool {
-    dump($val);
     return 'LDL' === $val;
 });
 

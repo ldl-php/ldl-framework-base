@@ -1,0 +1,25 @@
+Create new PriorityCollection class instance
+Append [2,'a','e',1,5,'b','d',3,'c',4]
+Sort ascending:
+a
+b
+c
+d
+e
+1
+2
+3
+4
+5
+
+Sort descending:
+5
+4
+3
+2
+1
+e
+d
+c
+b
+a
