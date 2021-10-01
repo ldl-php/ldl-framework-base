@@ -1,0 +1,20 @@
+Create collection FilterByValueTypeExampleCollection:
+
+array (
+  0 => 1,
+  1 => 2,
+  2 => 3,
+  3 => 'hello',
+  4 => 'world',
+  5 =>
+  array (
+    0 => 'a',
+    1 => 'b',
+    2 => 'c',
+  ),
+  6 =>
+  (object) array(
+  ),
+)
+
+Filter strings in mixed collection:

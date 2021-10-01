@@ -7,6 +7,19 @@ final class IterableHelper
     public const BEFORE_LAST_POSITION = -2;
     public const LAST_POSITION = -1;
 
+    public const PHP_TYPE_STRING = 'string';
+    public const PHP_TYPE_BOOL = 'boolean';
+    public const PHP_TYPE_ARRAY = 'array';
+    public const PHP_TYPE_INTEGER = 'integer';
+    public const PHP_TYPE_DOUBLE = 'double';
+    public const PHP_TYPE_OBJECT = 'object';
+    public const PHP_TYPE_RESOURCE = 'resource';
+    public const PHP_TYPE_NULL = 'null';
+
+    public const LDL_TYPE_STRNUM = 'strnum';
+    public const LDL_TYPE_UINT = 'uint';
+    public const LDL_TYPE_UDOUBLE = 'udouble';
+
     /**
      * @param iterable $items
      * @return int|null
@@ -112,5 +125,51 @@ final class IterableHelper
         }
 
         return $keys[$pos];
+    }
+
+    public static function filterByValueType(iterable $items, string $type) : array
+    {
+        return self::filterByValueTypes($items, [$type]);
+    }
+
+    public static function filterByValueTypes(iterable $items, iterable $types) : array
+    {
+        $types = self::toArray($types);
+
+        $hasUint = $hasUDouble = $hasStrNum = false;
+
+        foreach($types as $type){
+            switch(strtolower($type)){
+                case self::LDL_TYPE_UINT:
+                    $hasUint = true;
+                break;
+
+                case self::LDL_TYPE_UDOUBLE:
+                    $hasUDouble = true;
+                break;
+
+                case self::LDL_TYPE_STRNUM:
+                    $hasStrNum = true;
+                break;
+            }
+        }
+
+        return self::filter($items, static function ($val) use ($types, $hasUint, $hasUDouble, $hasStrNum){
+            $type = strtolower(gettype($val));
+
+            if($hasUint && self::PHP_TYPE_INTEGER === $type){
+                return $val >= 0;
+            }
+
+            if($hasUDouble && self::PHP_TYPE_DOUBLE === $type){
+                return $val >= 0;
+            }
+
+            if($hasStrNum && (self::PHP_TYPE_INTEGER === $type || self::PHP_TYPE_DOUBLE === $type)){
+                return true;
+            }
+
+            return in_array($type, $types, true);
+        });
     }
 }

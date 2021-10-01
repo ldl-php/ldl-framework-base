@@ -155,7 +155,7 @@ trait CollectionInterfaceTrait
                 }
 
                 if(is_numeric($item)){
-                    return (string) $item;
+                    return true;
                 }
 
                 if(
@@ -177,8 +177,10 @@ trait CollectionInterfaceTrait
         );
     }
 
-    public function toArray(): array
+    public function toArray(bool $useKeys=null) : array
     {
+        $useKeys = $useKeys ?? true;
+
         $isLocked = $this->_isLocked();
 
         /**
@@ -186,7 +188,7 @@ trait CollectionInterfaceTrait
          * children is allowed (in a collection which contains or may contain objects for example)
          */
         if(!$isLocked){
-            return $this->items;
+            return $useKeys ? $this->items : array_values($this->items);
         }
 
         /**
@@ -197,7 +199,8 @@ trait CollectionInterfaceTrait
         $items = [];
 
         foreach($this as $key => $item){
-            $items[$key] = is_object($item) && $isLocked ? clone($item) : $item;
+            $value = is_object($item) && $isLocked ? clone($item) : $item;
+            $useKeys ? $items[$key] = $value : $items[] = $value;
         }
 
         return $items;
