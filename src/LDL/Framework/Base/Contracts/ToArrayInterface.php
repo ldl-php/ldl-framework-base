@@ -8,7 +8,8 @@ interface ToArrayInterface
 {
     /**
      * @throws ToArrayException
+     * @param bool $useKeys
      * @return array
      */
-    public function toArray() : array;
+    public function toArray(bool $useKeys=null) : array;
 }
