@@ -18,3 +18,35 @@ array (
 )
 
 Filter strings in mixed collection:
+
+array (
+  3 => 'hello',
+  4 => 'world',
+)
+
+Filter integers in mixed collection:
+
+array (
+  0 => 1,
+  1 => 2,
+  2 => 3,
+)
+
+Filter objects in mixed collection:
+
+array (
+  6 =>
+  (object) array(
+  ),
+)
+
+Filter arrays in mixed collection:
+
+array (
+  5 =>
+  array (
+    0 => 'a',
+    1 => 'b',
+    2 => 'c',
+  ),
+)

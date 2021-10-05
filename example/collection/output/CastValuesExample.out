@@ -1,0 +1,81 @@
+Create collection
+Append items:
+
+array (
+  0 => 1,
+  1 => 2,
+  2 => 3,
+  3 => true,
+  4 => false,
+  5 => NULL,
+  6 => 1.1,
+  7 => 'hello',
+)
+
+Append class Test1 with __toString = '-1'
+Append class Test2 with __toString = '-2'
+Append class Test3 with __toString = '-3'
+
+Check items in collection
+
+array (
+  0 => 1,
+  1 => 2,
+  2 => 3,
+  3 => true,
+  4 => false,
+  5 => NULL,
+  6 => 1.1,
+  7 => 'hello',
+  8 =>
+  Test1::__set_state(array(
+  )),
+  9 =>
+  Test2::__set_state(array(
+  )),
+  10 =>
+  Test3::__set_state(array(
+  )),
+)
+
+Cast collection to string
+
+Item key: '0' | value: '1' | type: 'string'
+Item key: '1' | value: '2' | type: 'string'
+Item key: '2' | value: '3' | type: 'string'
+Item key: '3' | value: '1' | type: 'string'
+Item key: '4' | value: '0' | type: 'string'
+Item key: '5' | value: '' | type: 'string'
+Item key: '6' | value: '1.1' | type: 'string'
+Item key: '7' | value: 'hello' | type: 'string'
+Item key: '8' | value: '-1' | type: 'string'
+Item key: '9' | value: '-2' | type: 'string'
+Item key: '10' | value: '-3' | type: 'string'
+
+Cast collection to integer
+
+Item key: '0' | value: '1' | type: 'integer'
+Item key: '1' | value: '2' | type: 'integer'
+Item key: '2' | value: '3' | type: 'integer'
+Item key: '3' | value: '1' | type: 'integer'
+Item key: '4' | value: '0' | type: 'integer'
+Item key: '5' | value: '0' | type: 'integer'
+Item key: '6' | value: '1' | type: 'integer'
+Item key: '7' | value: '0' | type: 'integer'
+Item key: '8' | value: '-1' | type: 'integer'
+Item key: '9' | value: '-2' | type: 'integer'
+Item key: '10' | value: '-3' | type: 'integer'
+
+Cast collection to boolean
+
+Item key: '0' | value: '1' | type: 'boolean'
+Item key: '1' | value: '1' | type: 'boolean'
+Item key: '2' | value: '1' | type: 'boolean'
+Item key: '3' | value: '1' | type: 'boolean'
+Item key: '4' | value: '' | type: 'boolean'
+Item key: '5' | value: '' | type: 'boolean'
+Item key: '6' | value: '1' | type: 'boolean'
+Item key: '7' | value: '1' | type: 'boolean'
+Item key: '8' | value: '1' | type: 'boolean'
+Item key: '9' | value: '1' | type: 'boolean'
+Item key: '10' | value: '1' | type: 'boolean'
