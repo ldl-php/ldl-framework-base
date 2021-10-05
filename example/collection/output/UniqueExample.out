@@ -1,0 +1,38 @@
+Create collection
+Append items:
+
+array (
+  0 => 'Hello',
+  1 => 'Hello',
+  2 => 'Hello',
+  3 => 'World',
+)
+
+Append class Test1 with comparison value = 0
+Append class Test2 with comparison value = 0
+Append class Test3 with comparison value = 'a'
+
+Check items in collection
+
+array (
+  0 => 'Hello',
+  1 => 'Hello',
+  2 => 'Hello',
+  3 => 'World',
+  4 =>
+  Test1::__set_state(array(
+  )),
+  5 =>
+  Test2::__set_state(array(
+  )),
+  6 =>
+  Test3::__set_state(array(
+  )),
+)
+
+Get unique collection
+
+Item key: '0' | value: 'Hello'
+Item key: '3' | value: 'World'
+Item key: '4' | value: 'Test1'
+Item key: '6' | value: 'Test3'

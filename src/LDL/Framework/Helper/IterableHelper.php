@@ -2,6 +2,8 @@
 
 namespace LDL\Framework\Helper;
 
+use LDL\Framework\Base\Collection\Contracts\ComparisonInterface;
+
 final class IterableHelper
 {
     public const BEFORE_LAST_POSITION = -2;
@@ -142,15 +144,15 @@ final class IterableHelper
             switch(strtolower($type)){
                 case self::LDL_TYPE_UINT:
                     $hasUint = true;
-                break;
+                    break;
 
                 case self::LDL_TYPE_UDOUBLE:
                     $hasUDouble = true;
-                break;
+                    break;
 
                 case self::LDL_TYPE_STRNUM:
                     $hasStrNum = true;
-                break;
+                    break;
             }
         }
 
@@ -170,6 +172,54 @@ final class IterableHelper
             }
 
             return in_array($type, $types, true);
+        });
+    }
+
+    public static function unique(iterable $items)
+    {
+        $values = [];
+
+        return self::filter($items, static function($val, $key) use (&$values){
+            $value = $val;
+            $isObject = is_object($val);
+            $isComparable = $val instanceof ComparisonInterface;
+
+            if($isObject && !$isComparable){
+                if(!method_exists($val, '__toString')){
+                    return false;
+                }
+
+                $value = (string) $val;
+            }
+
+            if($isObject && $isComparable){
+                $value = $val->getComparisonValue();
+            }
+
+            if(!is_scalar($value)){
+                return false;
+            }
+
+            if(in_array($value, $values, true)){
+                return false;
+            }
+
+            $values[$key] = $value;
+            return true;
+        });
+    }
+
+    public static function cast(iterable $items, string $type) : array
+    {
+        return self::map($items, static function($val, $key) use($type){
+            $val = false === $val ? '0' : $val;
+
+            if(is_object($val) && method_exists($val, '__toString')){
+                $val = (string) $val;
+            }
+
+            settype($val, $type);
+            return $val;
         });
     }
 }
