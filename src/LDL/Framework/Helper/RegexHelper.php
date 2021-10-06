@@ -5,19 +5,15 @@ namespace LDL\Framework\Helper;
 final class RegexHelper
 {
     /**
-     * Validates that a regex has proper delimiters
+     * Validates that a regex is valid
      *
      * @param string $regex
      * @throws \LogicException if the regex is invalid
      */
     public static function validate(string $regex) : void
     {
-        $split = str_split($regex);
-        $firstCharacter = $split[0];
-        $lastCharacter = $split[count($split)-1];
-
-        if($firstCharacter !== $lastCharacter){
-            throw new \LogicException("Invalid regex: \"$regex\" no regex delimiters were found");
+        if(@preg_match($regex, '') === false){
+            throw new \LogicException("Invalid regex: \"$regex\"");
         }
     }
 }

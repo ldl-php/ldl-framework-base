@@ -54,3 +54,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fix/1201030058026867 - Fix removeByKey, decrease count when SEQ operator has been passed
 - fix/1201047787762387 - Fix RemoveByKey to SEQ operator. Add getKeyInPosition in IterableHelper
 - fix/1201136297126505 - Move all constants to a final class Constants
+- fix/1200373038347536 - Fix validate from RegexHelper, it does not allow for flags such as: /test/i
