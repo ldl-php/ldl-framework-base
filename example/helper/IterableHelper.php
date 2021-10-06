@@ -2,6 +2,7 @@
 
 require __DIR__.'/../../vendor/autoload.php';
 
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
 
@@ -23,7 +24,7 @@ echo IterableHelper::getCount($array)."\n\n";
 
 echo "Filter where value > 2:\n\n";
 $result = IterableHelper::filter($array, static function($v){
-   return ComparisonOperatorHelper::compare($v, 2,ComparisonOperatorHelper::OPERATOR_GT);
+   return ComparisonOperatorHelper::compare($v, 2,Constants::OPERATOR_GT);
 });
 
 echo var_export($result, true)."\n\n";

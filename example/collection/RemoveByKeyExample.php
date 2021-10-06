@@ -11,6 +11,7 @@ use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\RemoveByValueInterface;
 use LDL\Framework\Base\Collection\Traits\RemoveByValueInterfaceTrait;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
 use LDL\Framework\Helper\IterableHelper;
 
@@ -42,16 +43,16 @@ echo var_export($items,true)."\n\n";
 $collection->appendMany($items, true);
 
 echo "Remove where key > 3 (Keys 4 and 5 must be removed):\n\n";
-$collection->removeByKey(3,ComparisonOperatorHelper::OPERATOR_GT);
+$collection->removeByKey(3,Constants::OPERATOR_GT);
 
 echo var_export(IterableHelper::toArray($collection), true)."\n\n";
 
 echo "Remove where key <= 1 (Keys 0, 1 and test must be removed):\n\n";
-$collection->removeByKey(1, ComparisonOperatorHelper::OPERATOR_LTE);
+$collection->removeByKey(1, Constants::OPERATOR_LTE);
 
 echo var_export(IterableHelper::toArray($collection), true)."\n\n";
 
 echo "Remove where key !== 2 (Key 3 must be removed):\n\n";
-$collection->removeByKey(2,ComparisonOperatorHelper::OPERATOR_NOT_SEQ);
+$collection->removeByKey(2,Constants::OPERATOR_NOT_SEQ);
 
 echo var_export(IterableHelper::toArray($collection), true);

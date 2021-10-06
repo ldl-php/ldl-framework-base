@@ -9,6 +9,7 @@ use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\SortableScalarInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Constants;
 
 class ScalarCollection implements CollectionInterface, AppendableInterface, SortableScalarInterface
 {
@@ -26,12 +27,12 @@ $collection->appendMany([2,'a','e',1,5,'b','d',3,'c',4]);
 
 echo "Sort ascending:\n";
 
-foreach($collection->sortScalar(SortableScalarInterface::SORT_ASCENDING) as $item){
+foreach($collection->sortScalar(Constants::SORT_ASCENDING) as $item){
     echo $item."\n";
 }
 
 echo "\nSort descending:\n";
 
-foreach($collection->sortScalar(SortableScalarInterface::SORT_DESCENDING) as $item){
+foreach($collection->sortScalar(Constants::SORT_DESCENDING) as $item){
     echo $item."\n";
 }

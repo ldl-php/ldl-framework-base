@@ -11,7 +11,7 @@ use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Contracts\RemoveByValueInterface;
 use LDL\Framework\Base\Collection\Traits\RemoveByValueInterfaceTrait;
-use LDL\Framework\Helper\ComparisonOperatorHelper;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\IterableHelper;
 
 class RemoveByValueExample implements CollectionInterface, AppendableInterface, RemoveByKeyInterface, RemoveByValueInterface
@@ -42,16 +42,16 @@ echo var_export($items,true)."\n\n";
 $collection->appendMany($items, true);
 
 echo "Remove where value > 'd' (e,f and g must be removed):\n\n";
-$collection->removeByValue('d',ComparisonOperatorHelper::OPERATOR_GT);
+$collection->removeByValue('d',Constants::OPERATOR_GT);
 
 echo var_export(IterableHelper::toArray($collection), true)."\n\n";
 
 echo "Remove where value < 'd' (c, b and a must be removed):\n\n";
-$collection->removeByValue('d',ComparisonOperatorHelper::OPERATOR_LT);
+$collection->removeByValue('d',Constants::OPERATOR_LT);
 
 echo var_export(IterableHelper::toArray($collection), true)."\n\n";
 
 echo "Remove where value === 'd' (Empty array must be displayed):\n\n";
-$collection->removeByValue('d',ComparisonOperatorHelper::OPERATOR_SEQ);
+$collection->removeByValue('d',Constants::OPERATOR_SEQ);
 
 echo var_export(IterableHelper::toArray($collection), true);

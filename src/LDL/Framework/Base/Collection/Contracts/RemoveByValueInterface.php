@@ -11,7 +11,7 @@ interface RemoveByValueInterface
      *
      * Order of comparison is: $value <OPERATOR> $collectionValue
      * Example: given a collection of five numbers 1,2,3,4,5, and given the $value 3
-     * and the operator ComparisonOperatorHelper::OPERATOR_GTE
+     * and the operator Constants::OPERATOR_GTE
      * The comparison would be resolved as
      *
      * 1 >= 3
@@ -24,7 +24,7 @@ interface RemoveByValueInterface
      *
      * @param $value
      * @param string $operator
-     * @param string $order Comparison order (ComparisonOperatorHelper::ORDER_LTR | ComparisonOperatorHelper::ORDER_RTL)
+     * @param string $order Comparison order (Constants::ORDER_LTR | Constants::ORDER_RTL)
      * @throws LockingException
      * @return int Returns 0 if no elements have been removed, > 0 when elements have been removed
      */

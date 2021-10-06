@@ -8,6 +8,7 @@ namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
@@ -92,8 +93,8 @@ trait CollectionInterfaceTrait
 
     public function hasKey(
         $key,
-        string $operator=ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order=ComparisonOperatorHelper::COMPARE_LTR
+        string $operator=Constants::OPERATOR_SEQ,
+        string $order=Constants::COMPARE_LTR
     ) : int
     {
         return ArrayHelper::hasKey($this->items, $key, $operator, $order);
@@ -106,8 +107,8 @@ trait CollectionInterfaceTrait
 
     public function hasValue(
         $value,
-        string $operator=ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order=ComparisonOperatorHelper::COMPARE_LTR
+        string $operator=Constants::OPERATOR_SEQ,
+        string $order=Constants::COMPARE_LTR
     ) : int
     {
         return ArrayHelper::hasValue($this->items, $value, $operator, $order);

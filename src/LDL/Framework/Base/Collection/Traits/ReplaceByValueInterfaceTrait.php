@@ -16,6 +16,7 @@ use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\OnReplaceNoMatchInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByValueInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceValueByKeyInterface;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
@@ -39,8 +40,8 @@ trait ReplaceByValueInterfaceTrait
         $value,
         $replacement,
         bool $useKeys=true,
-        string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order = ComparisonOperatorHelper::COMPARE_LTR
+        string $operator = Constants::OPERATOR_SEQ,
+        string $order = Constants::COMPARE_LTR
     ) : int
     {
         $this->requireImplements([

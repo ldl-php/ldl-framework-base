@@ -2,6 +2,8 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Constants;
+
 interface SortableScalarInterface extends SortInterface
 {
     /**
@@ -14,12 +16,12 @@ interface SortableScalarInterface extends SortInterface
      *
      * @param string $sort, the order in which to sort, order must be one of:
      *
-     *  SortInterface::SORT_ASCENDING
-     *  SortInterface::SORT_DESCENDING
+     *  Constants::SORT_ASCENDING
+     *  Constants::SORT_DESCENDING
      *
      * @see SortInterface
      *
      * @return CollectionInterface
      */
-    public function sortScalar(string $sort=self::SORT_ASCENDING) : CollectionInterface;
+    public function sortScalar(string $sort=Constants::SORT_ASCENDING) : CollectionInterface;
 }

@@ -4,6 +4,5 @@ namespace LDL\Framework\Base\Collection\Contracts;
 
 interface SortInterface
 {
-    public const SORT_ASCENDING  = 'asc';
-    public const SORT_DESCENDING = 'desc';
+
 }

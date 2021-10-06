@@ -1,0 +1,11 @@
+Get CallableCollection traits
+array(4) {
+  [0]=>
+  string(61) "LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait"
+  [1]=>
+  string(61) "LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait"
+  [2]=>
+  string(48) "LDL\Framework\Helper\ClassRequirementHelperTrait"
+  [3]=>
+  string(52) "LDL\Framework\Base\Collection\Traits\AppendManyTrait"
+}
