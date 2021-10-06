@@ -206,7 +206,27 @@ final class IterableHelper
                 $val = (string) $val;
             }
 
-            settype($val, $type);
+            switch($type){
+                case Constants::LDL_TYPE_UINT:
+                    $setType = Constants::PHP_TYPE_INTEGER;
+                    break;
+                case Constants::LDL_TYPE_UDOUBLE:
+                    $setType = Constants::PHP_TYPE_DOUBLE;
+                    break;
+                default:
+                    $setType = $type;
+            }
+
+            settype($val, $setType);
+
+            if(Constants::LDL_TYPE_UINT === $type && $val < 0){
+                $val = 0;
+            }
+
+            if(Constants::LDL_TYPE_UDOUBLE === $type && $val < 0){
+                $val = 0.0;
+            }
+
             return $val;
         });
     }

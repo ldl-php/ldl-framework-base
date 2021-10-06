@@ -45,11 +45,12 @@ $collection = new CastValuesExample();
 $items = [
     1,
     2,
-    3,
+    -3,
     true,
     false,
     null,
     1.1,
+    -1.2,
     'hello'
 ];
 
@@ -85,6 +86,13 @@ foreach(IterableHelper::cast($collection, Constants::PHP_TYPE_INTEGER) as $k => 
 echo "\n";
 echo "Cast collection to boolean\n\n";
 foreach(IterableHelper::cast($collection, Constants::PHP_TYPE_BOOL) as $k => $item){
+    $type = gettype($item);
+    echo "Item key: '$k' | value: '$item' | type: '$type'\n";
+}
+
+echo "\n";
+echo "Cast collection to uint\n\n";
+foreach(IterableHelper::cast($collection, Constants::LDL_TYPE_UINT) as $k => $item){
     $type = gettype($item);
     echo "Item key: '$k' | value: '$item' | type: '$type'\n";
 }
