@@ -2,6 +2,7 @@
 
 namespace LDL\Framework\Helper\ArrayHelper;
 
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
 use LDL\Framework\Helper\IterableHelper;
 
@@ -45,8 +46,8 @@ final class ArrayHelper
     public static function hasKey(
         array $array,
         $key,
-        string $operator=ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order=ComparisonOperatorHelper::COMPARE_LTR
+        string $operator=Constants::OPERATOR_SEQ,
+        string $order=Constants::COMPARE_LTR
     ): int
     {
         self::validateKey($key);
@@ -72,8 +73,8 @@ final class ArrayHelper
     public static function hasValue(
         array $array,
         $value,
-        string $operator=ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order=ComparisonOperatorHelper::COMPARE_LTR
+        string $operator=Constants::OPERATOR_SEQ,
+        string $order=Constants::COMPARE_LTR
     ): int
     {
         return count(
@@ -150,8 +151,8 @@ final class ArrayHelper
     public static function mustHaveKey(
         array $array,
         $key,
-        string $operator=ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order=ComparisonOperatorHelper::COMPARE_LTR
+        string $operator=Constants::OPERATOR_SEQ,
+        string $order=Constants::COMPARE_LTR
     ): void
     {
         $hasKey = self::hasKey($array, $key, $operator, $order);

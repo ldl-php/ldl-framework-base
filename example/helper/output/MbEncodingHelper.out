@@ -1,0 +1,5 @@
+UTF-8 is valid?
+Yes
+
+Validate non-existent encoding UTF-22
+Invalid encoding specified: UTF-22

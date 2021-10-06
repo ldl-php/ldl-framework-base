@@ -7,8 +7,8 @@ use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\IterableHelper;
-use LDL\Framework\Base\Collection\Contracts\ComparisonInterface;
 
 class CastValuesExample implements CollectionInterface, AppendableInterface
 {
@@ -70,21 +70,21 @@ echo "Check items in collection\n\n";
 echo var_export($collection->toArray(),true)."\n\n";
 
 echo "Cast collection to string\n\n";
-foreach(IterableHelper::cast($collection, IterableHelper::PHP_TYPE_STRING) as $k => $item){
+foreach(IterableHelper::cast($collection, Constants::PHP_TYPE_STRING) as $k => $item){
     $type = gettype($item);
     echo "Item key: '$k' | value: '$item' | type: '$type'\n";
 }
 
 echo "\n";
 echo "Cast collection to integer\n\n";
-foreach(IterableHelper::cast($collection, IterableHelper::PHP_TYPE_INTEGER) as $k => $item){
+foreach(IterableHelper::cast($collection, Constants::PHP_TYPE_INTEGER) as $k => $item){
     $type = gettype($item);
     echo "Item key: '$k' | value: '$item' | type: '$type'\n";
 }
 
 echo "\n";
 echo "Cast collection to boolean\n\n";
-foreach(IterableHelper::cast($collection, IterableHelper::PHP_TYPE_BOOL) as $k => $item){
+foreach(IterableHelper::cast($collection, Constants::PHP_TYPE_BOOL) as $k => $item){
     $type = gettype($item);
     echo "Item key: '$k' | value: '$item' | type: '$type'\n";
 }

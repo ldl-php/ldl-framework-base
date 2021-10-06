@@ -1,0 +1,40 @@
+Get opposite operator of: !=
+string(2) "=="
+Get opposite operator of: ==
+string(2) "!="
+Get opposite operator of: ===
+string(3) "!=="
+Get opposite operator of: !==
+string(3) "==="
+Get opposite operator of: >
+string(1) "<"
+Get opposite operator of: <
+string(1) ">"
+Get opposite operator of: >=
+string(2) "<="
+Get opposite operator of: <=
+string(2) ">="
+Get opposite operator of: ne
+string(2) "eq"
+Get opposite operator of: eq
+string(2) "ne"
+Get opposite operator of: se
+string(3) "nse"
+Get opposite operator of: nse
+string(2) "se"
+Get opposite operator of: gt
+string(2) "lt"
+Get opposite operator of: lt
+string(2) "gt"
+Get opposite operator of: gte
+string(3) "lte"
+Get opposite operator of: lte
+string(3) "gte"
+Get opposite operator of: btw
+string(4) "nbtw"
+Get opposite operator of: <>
+string(3) "!<>"
+Get opposite operator of: !<>
+string(2) "<>"
+Get opposite operator of: nbtw
+string(3) "btw"

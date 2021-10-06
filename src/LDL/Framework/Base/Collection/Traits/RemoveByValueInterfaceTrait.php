@@ -10,6 +10,7 @@ use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\RemoveByValueInterface;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
@@ -27,8 +28,8 @@ trait RemoveByValueInterfaceTrait
     //<editor-fold desc="RemoveByValueInterface methods">
     public function removeByValue(
         $value,
-        string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order = ComparisonOperatorHelper::COMPARE_LTR
+        string $operator = Constants::OPERATOR_SEQ,
+        string $order = Constants::COMPARE_LTR
     ) : int
     {
         $this->requireImplements([

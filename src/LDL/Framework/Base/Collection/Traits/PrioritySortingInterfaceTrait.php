@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\PrioritySortingInterface;
-use LDL\Framework\Base\Collection\Contracts\SortInterface;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\PriorityInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
@@ -18,7 +18,7 @@ trait PrioritySortingInterfaceTrait
     use ClassRequirementHelperTrait;
 
     //<editor-fold desc="PrioritySortingInterface methods">
-    public function sortByPriority(string $sort=SortInterface::SORT_ASCENDING): CollectionInterface
+    public function sortByPriority(string $sort=Constants::SORT_ASCENDING): CollectionInterface
     {
         $this->requireImplements([
             CollectionInterface::class,
@@ -35,7 +35,7 @@ trait PrioritySortingInterfaceTrait
             $priorityA = $a->getPriority();
             $priorityB = $b->getPriority();
 
-            return SortInterface::SORT_ASCENDING === $sort ? $priorityA <=> $priorityB : $priorityB <=> $priorityA;
+            return Constants::SORT_ASCENDING === $sort ? $priorityA <=> $priorityB : $priorityB <=> $priorityA;
         });
     }
     //</editor-fold>

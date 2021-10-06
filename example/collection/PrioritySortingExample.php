@@ -9,6 +9,7 @@ use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\PrioritySortingInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\PriorityInterface;
 
 class PriorityClass1 implements PriorityInterface
@@ -60,7 +61,7 @@ echo "Sort by priority ascending:\n";
 /**
  * @var PriorityInterface $item
  */
-foreach($collection->sortByPriority(PrioritySortingInterface::SORT_ASCENDING) as $item){
+foreach($collection->sortByPriority(Constants::SORT_ASCENDING) as $item){
     echo $item->getPriority()."\n";
 }
 
@@ -69,6 +70,6 @@ echo "\nSort by priority descending:\n";
 /**
  * @var PriorityInterface $item
  */
-foreach($collection->sortByPriority(PrioritySortingInterface::SORT_DESCENDING) as $item){
+foreach($collection->sortByPriority(Constants::SORT_DESCENDING) as $item){
     echo $item->getPriority()."\n";
 }

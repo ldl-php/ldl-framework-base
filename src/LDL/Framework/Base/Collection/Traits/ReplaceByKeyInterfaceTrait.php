@@ -22,6 +22,7 @@ use LDL\Framework\Base\Collection\Resolver\Key\DecimalKeyResolver;
 use LDL\Framework\Base\Collection\Resolver\Key\HasObjectKeyResolver;
 use LDL\Framework\Base\Collection\Resolver\Key\IntegerKeyResolver;
 use LDL\Framework\Base\Collection\Resolver\Key\StringKeyResolver;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
@@ -45,8 +46,8 @@ trait ReplaceByKeyInterfaceTrait
         $key,
         $newKey,
         $replacement=null,
-        string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order = ComparisonOperatorHelper::COMPARE_LTR
+        string $operator = Constants::OPERATOR_SEQ,
+        string $order = Constants::COMPARE_LTR
     ) : int
     {
         ArrayHelper::isValidKey($key);

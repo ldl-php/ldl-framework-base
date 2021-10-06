@@ -10,6 +10,7 @@ use LDL\Framework\Base\Collection\Contracts\BeforeRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\LockRemoveInterface;
 use LDL\Framework\Base\Collection\Contracts\RemoveByKeyInterface;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
@@ -28,8 +29,8 @@ trait RemoveByKeyInterfaceTrait
     //<editor-fold desc="RemoveByKeyInterface methods">
     public function removeByKey(
         $key,
-        string $operator = ComparisonOperatorHelper::OPERATOR_SEQ,
-        string $order = ComparisonOperatorHelper::COMPARE_LTR
+        string $operator = Constants::OPERATOR_SEQ,
+        string $order = Constants::COMPARE_LTR
     ) : int
     {
         $this->requireImplements([
@@ -93,8 +94,8 @@ trait RemoveByKeyInterfaceTrait
     public function removeLast() : CollectionInterface
     {
         $this->removeByKey($this->getLastKey(),
-            ComparisonOperatorHelper::OPERATOR_SEQ,
-            ComparisonOperatorHelper::COMPARE_LTR
+            Constants::OPERATOR_SEQ,
+            Constants::COMPARE_LTR
         );
 
         return $this;
