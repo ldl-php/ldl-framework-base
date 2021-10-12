@@ -41,7 +41,9 @@ class IntegerKeyResolver implements FullResolverInterface
 
     public function resolveDuplicate(CollectionInterface $collection, $key, $item=null, ...$params)
     {
-        if(!is_int($key)){
+        $isInt = preg_match('#^\d+$#', (string) $key);
+
+        if(!$isInt){
             return $key;
         }
 
