@@ -49,7 +49,7 @@ class DecimalKeyResolver implements FullResolverInterface
 
     public function resolveDuplicate(CollectionInterface $collection, $key, $value=null, ...$params)
     {
-        $isFloat = (float) $key > 0;
+        $isFloat = (bool) preg_match('#\d+.\d+#', (string)$key);
 
         if(!$isFloat){
             return $key;
