@@ -126,7 +126,7 @@ final class IterableHelper
     {
         $types = self::toArray($types);
 
-        $hasUint = $hasUDouble = $hasStrNum = false;
+        $hasUint = $hasUDouble = $hasNumeric = $hasUNumeric = false;
 
         foreach($types as $type){
             switch(strtolower($type)){
@@ -138,13 +138,18 @@ final class IterableHelper
                     $hasUDouble = true;
                     break;
 
-                case Constants::LDL_TYPE_STRNUM:
-                    $hasStrNum = true;
+                case Constants::LDL_TYPE_NUMERIC:
+                    $hasNumeric = true;
                     break;
+
+                case Constants::LDL_TYPE_UNUMERIC:
+                    $hasUNumeric = true;
+                    break;
+
             }
         }
 
-        return self::filter($items, static function ($val) use ($types, $hasUint, $hasUDouble, $hasStrNum){
+        return self::filter($items, static function ($val) use ($types, $hasUint, $hasUDouble, $hasNumeric, $hasUNumeric){
             $type = strtolower(gettype($val));
 
             if($hasUint && Constants::PHP_TYPE_INTEGER === $type){
@@ -155,7 +160,11 @@ final class IterableHelper
                 return $val >= 0;
             }
 
-            if($hasStrNum && in_array($type, [Constants::PHP_TYPE_INTEGER, Constants::PHP_TYPE_DOUBLE, Constants::PHP_TYPE_STRING], true)){
+            if($hasNumeric && is_numeric($val)){
+                return true;
+            }
+
+            if($hasUNumeric && is_numeric($val) && $val > 0){
                 return true;
             }
 

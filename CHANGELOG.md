@@ -57,3 +57,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fix/1200373038347536 - Fix validate from RegexHelper, it does not allow for flags such as: /test/i
 - fix/1201136696237278 - Fix cast from IterableHelper to accept LDL types such as uint and udouble
 - fix/1201177059252666 - Fix decimal and integer key resolvers
+- fix/1201185659118458 - Remove strnum, switch for numeric (matches PHP is_numeric)

@@ -6,32 +6,6 @@ use LDL\Framework\Base\Constants;
 
 final class ComparisonOperatorHelper
 {
-    public static function getValidOperators() : array
-    {
-        return [
-            Constants::OPERATOR_EQ,
-            Constants::OPERATOR_STR_EQ,
-            Constants::OPERATOR_NOT_EQ,
-            Constants::OPERATOR_STR_NOT_EQ,
-            Constants::OPERATOR_SEQ,
-            Constants::OPERATOR_STR_SEQ,
-            Constants::OPERATOR_NOT_SEQ,
-            Constants::OPERATOR_STR_NOT_SEQ,
-            Constants::OPERATOR_GT,
-            Constants::OPERATOR_STR_GT,
-            Constants::OPERATOR_GTE,
-            Constants::OPERATOR_STR_GTE,
-            Constants::OPERATOR_LT,
-            Constants::OPERATOR_STR_LT,
-            Constants::OPERATOR_LTE,
-            Constants::OPERATOR_STR_LTE,
-            Constants::OPERATOR_BETWEEN,
-            Constants::OPERATOR_STR_BETWEEN,
-            Constants::OPERATOR_NOT_BETWEEN,
-            Constants::OPERATOR_STR_NOT_BETWEEN
-        ];
-    }
-
     /**
      * @param string $operator
      * @throws \InvalidArgumentException
@@ -45,13 +19,13 @@ final class ComparisonOperatorHelper
         throw new \InvalidArgumentException(sprintf(
             '"%s" is not a valid comparison operator. Valid comparison operators are: "%s"',
             $operator,
-            implode(', ', self::getValidOperators())
+            implode(', ', Constants::getComparisonOperatorConstants())
         ));
     }
 
     public static function isValid(string $operator) : bool
     {
-        return in_array($operator, self::getValidOperators(), true);
+        return in_array($operator, Constants::getComparisonOperatorConstants(), true);
     }
 
     /**
