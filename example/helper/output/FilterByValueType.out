@@ -120,3 +120,23 @@ array(4) {
   [4]=>
   float(9.0E+99)
 }
+
+Filter items by LDL\Framework\Base\Constants::LDL_TYPE_SCALAR: scalar
+################################################################################
+
+array(7) {
+  [0]=>
+  int(37)
+  [1]=>
+  int(9)
+  [2]=>
+  string(6) "5 dogs"
+  [3]=>
+  string(2) "10"
+  [4]=>
+  float(9.0E+99)
+  [5]=>
+  int(0)
+  [6]=>
+  int(-1)
+}
