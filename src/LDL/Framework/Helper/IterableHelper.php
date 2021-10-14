@@ -126,7 +126,7 @@ final class IterableHelper
     {
         $types = self::toArray($types);
 
-        $hasUint = $hasUDouble = $hasNumeric = $hasUNumeric = false;
+        $hasUint = $hasUDouble = $hasNumeric = $hasUNumeric = $hasScalar = false;
 
         foreach($types as $type){
             switch(strtolower($type)){
@@ -146,10 +146,13 @@ final class IterableHelper
                     $hasUNumeric = true;
                     break;
 
+                case Constants::LDL_TYPE_SCALAR:
+                    $hasScalar = true;
+                    break;
             }
         }
 
-        return self::filter($items, static function ($val) use ($types, $hasUint, $hasUDouble, $hasNumeric, $hasUNumeric){
+        return self::filter($items, static function ($val) use ($types, $hasUint, $hasUDouble, $hasNumeric, $hasUNumeric, $hasScalar){
             $type = strtolower(gettype($val));
 
             if($hasUint && Constants::PHP_TYPE_INTEGER === $type){
@@ -165,6 +168,10 @@ final class IterableHelper
             }
 
             if($hasUNumeric && is_numeric($val) && $val > 0){
+                return true;
+            }
+
+            if($hasScalar && is_scalar($val)){
                 return true;
             }
 

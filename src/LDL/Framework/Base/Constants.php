@@ -65,6 +65,7 @@ final class Constants
     public const LDL_TYPE_UNUMERIC = 'unumeric';
     public const LDL_TYPE_UINT = 'uint';
     public const LDL_TYPE_UDOUBLE = 'udouble';
+    public const LDL_TYPE_SCALAR = 'scalar';
 
     /**
      * @var array|null
@@ -97,7 +98,8 @@ final class Constants
             sprintf('%s::PHP_TYPE_RESOURCE', __CLASS__) => self::PHP_TYPE_RESOURCE,
             sprintf('%s::LDL_TYPE_UDOUBLE', __CLASS__) => self::LDL_TYPE_UDOUBLE,
             sprintf('%s::LDL_TYPE_NUMERIC', __CLASS__) => self::LDL_TYPE_NUMERIC,
-            sprintf('%s::LDL_TYPE_UNUMERIC', __CLASS__) => self::LDL_TYPE_UNUMERIC
+            sprintf('%s::LDL_TYPE_UNUMERIC', __CLASS__) => self::LDL_TYPE_UNUMERIC,
+            sprintf('%s::LDL_TYPE_SCALAR', __CLASS__) => self::LDL_TYPE_SCALAR,
         ];
     }
 
