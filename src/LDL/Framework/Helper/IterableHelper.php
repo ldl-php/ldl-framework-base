@@ -179,38 +179,32 @@ final class IterableHelper
         });
     }
 
-    public static function unique(iterable $items)
+    public static function unique(iterable $items, array &$values=null) : array
     {
-        $values = [];
+        if(null === $values) {
+            $values = [];
+        }
 
-        return self::filter($items, static function($val, $key) use (&$values){
-            $value = $val;
-            $isObject = is_object($val);
-            $isComparable = $val instanceof ComparisonInterface;
+        if(is_object($items) && $items instanceof ComparisonInterface){
+            $val = $items->getComparisonValue();
+            return self::unique(is_iterable($val) ? $val : [$val], $values);
+        }
 
-            if($isObject && !$isComparable){
-                if(!method_exists($val, '__toString')){
-                    return false;
-                }
+        $items = is_iterable($items) ? self::toArray($items) : [$items];
 
-                $value = (string) $val;
+        foreach($items as $item){
+            if(is_iterable($item)){
+                self::unique($item, $values);
+                continue;
             }
 
-            if($isObject && $isComparable){
-                $value = $val->getComparisonValue();
+            if (!in_array($item, $values, true)) {
+                $values[] = $item;
             }
 
-            if(!is_scalar($value)){
-                return false;
-            }
+        }
 
-            if(in_array($value, $values, true)){
-                return false;
-            }
-
-            $values[$key] = $value;
-            return true;
-        });
+        return $values;
     }
 
     public static function cast(iterable $items, string $type) : array
