@@ -37,6 +37,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201127836211937 - Add unique and cast methods on IterableHelper. Add ComparisonInterface
 - feature/1201194348713239 - Add LDL_TYPE_SCALAR and filterByValueType support in IterableHelper
 - feature/1201194352686326 - Combine SingleSelection and MultipleSelection into Selection
+- feature/1201226174735499 - Add object interface types add type support for IterableHelper::filterByValueTypes
 
 ### Changed
 

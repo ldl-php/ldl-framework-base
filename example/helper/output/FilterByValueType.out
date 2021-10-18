@@ -3,7 +3,7 @@ Create array of 7 elements:
 Filter items by LDL\Framework\Base\Constants::LDL_TYPE_INT: integer
 ################################################################################
 
-array(4) {
+array(5) {
   [0]=>
   int(37)
   [1]=>
@@ -12,50 +12,67 @@ array(4) {
   int(0)
   [6]=>
   int(-1)
+  [10]=>
+  object(IntClass)#3 (0) {
+  }
 }
 
 Filter items by LDL\Framework\Base\Constants::LDL_TYPE_UINT: uint
 ################################################################################
 
-array(3) {
+array(4) {
   [0]=>
   int(37)
   [1]=>
   int(9)
   [5]=>
   int(0)
+  [10]=>
+  object(IntClass)#3 (0) {
+  }
 }
 
 Filter items by LDL\Framework\Base\Constants::PHP_TYPE_DOUBLE: double
 ################################################################################
 
-array(1) {
+array(2) {
   [4]=>
   float(9.0E+99)
+  [11]=>
+  object(DoubleClass)#2 (0) {
+  }
 }
 
 Filter items by LDL\Framework\Base\Constants::PHP_TYPE_STRING: string
 ################################################################################
 
-array(2) {
+array(3) {
   [2]=>
   string(6) "5 dogs"
   [3]=>
   string(2) "10"
+  [13]=>
+  object(StringClass)#5 (0) {
+  }
 }
 
 Filter items by LDL\Framework\Base\Constants::PHP_TYPE_BOOL: boolean
 ################################################################################
 
-array(0) {
+array(1) {
+  [14]=>
+  bool(true)
 }
 
 Filter items by LDL\Framework\Base\Constants::PHP_TYPE_ARRAY: array
 ################################################################################
 
-array(1) {
+array(2) {
   [9]=>
   array(0) {
+  }
+  [12]=>
+  object(ArrayClass)#4 (0) {
   }
 }
 
@@ -70,7 +87,19 @@ array(1) {
 Filter items by LDL\Framework\Base\Constants::PHP_TYPE_OBJECT: object
 ################################################################################
 
-array(0) {
+array(4) {
+  [10]=>
+  object(IntClass)#3 (0) {
+  }
+  [11]=>
+  object(DoubleClass)#2 (0) {
+  }
+  [12]=>
+  object(ArrayClass)#4 (0) {
+  }
+  [13]=>
+  object(StringClass)#5 (0) {
+  }
 }
 
 Filter items by LDL\Framework\Base\Constants::PHP_TYPE_RESOURCE: resource
@@ -78,15 +107,18 @@ Filter items by LDL\Framework\Base\Constants::PHP_TYPE_RESOURCE: resource
 
 array(1) {
   [7]=>
-  resource(13) of type (stream)
+  resource(17) of type (stream)
 }
 
 Filter items by LDL\Framework\Base\Constants::LDL_TYPE_UDOUBLE: udouble
 ################################################################################
 
-array(1) {
+array(2) {
   [4]=>
   float(9.0E+99)
+  [11]=>
+  object(DoubleClass)#2 (0) {
+  }
 }
 
 Filter items by LDL\Framework\Base\Constants::LDL_TYPE_NUMERIC: numeric
@@ -124,7 +156,7 @@ array(4) {
 Filter items by LDL\Framework\Base\Constants::LDL_TYPE_SCALAR: scalar
 ################################################################################
 
-array(7) {
+array(8) {
   [0]=>
   int(37)
   [1]=>
@@ -139,4 +171,6 @@ array(7) {
   int(0)
   [6]=>
   int(-1)
+  [14]=>
+  bool(true)
 }
