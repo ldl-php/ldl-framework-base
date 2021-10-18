@@ -3,7 +3,7 @@
 namespace LDL\Framework\Base\Collection\Contracts;
 
 use LDL\Framework\Base\Collection\Exception\CollectionException;
-use LDL\Framework\Base\Contracts\ToArrayInterface;
+use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 

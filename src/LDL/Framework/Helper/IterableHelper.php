@@ -4,6 +4,13 @@ namespace LDL\Framework\Helper;
 
 use LDL\Framework\Base\Collection\Contracts\ComparisonInterface;
 use LDL\Framework\Base\Constants;
+use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
+use LDL\Framework\Base\Contracts\Type\ToBooleanInterface;
+use LDL\Framework\Base\Contracts\Type\ToDoubleInterface;
+use LDL\Framework\Base\Contracts\Type\ToIntInterface;
+use LDL\Framework\Base\Contracts\Type\ToNumericInterface;
+use LDL\Framework\Base\Contracts\Type\ToScalarInterface;
+use LDL\Framework\Base\Contracts\Type\ToStringInterface;
 
 final class IterableHelper
 {
@@ -155,27 +162,77 @@ final class IterableHelper
         return self::filter($items, static function ($val) use ($types, $hasUint, $hasUDouble, $hasNumeric, $hasUNumeric, $hasScalar){
             $type = strtolower(gettype($val));
 
-            if($hasUint && Constants::PHP_TYPE_INTEGER === $type){
-                return $val >= 0;
+            $isObject = Constants::PHP_TYPE_OBJECT === $type;
+            $_types[$type] = $val;
+
+            if($isObject && $val instanceof ToIntInterface){
+                $_types[Constants::PHP_TYPE_INTEGER] = $val->toInt();
             }
 
-            if($hasUDouble && Constants::PHP_TYPE_DOUBLE === $type){
-                return $val >= 0;
+            if($isObject && $val instanceof ToDoubleInterface){
+                $_types[Constants::PHP_TYPE_DOUBLE] = $val->toDouble();
             }
 
-            if($hasNumeric && is_numeric($val)){
+            if($isObject && $val instanceof ToArrayInterface){
+                $_types[Constants::PHP_TYPE_ARRAY] = $val->toArray();
+            }
+
+            if($isObject && $val instanceof ToNumericInterface){
+                $_types[Constants::LDL_TYPE_NUMERIC] = $val->toNumeric();
+            }
+
+            if($isObject && $val instanceof ToScalarInterface){
+                $_types[Constants::LDL_TYPE_SCALAR] = $val->toScalar();
+            }
+
+            if($isObject && $val instanceof ToStringInterface){
+                $_types[Constants::PHP_TYPE_STRING] = $val->toString();
+            }
+
+            if($isObject && $val instanceof ToBooleanInterface){
+                $_types[Constants::PHP_TYPE_BOOL] = $val->toBoolean();
+            }
+
+            if($hasUint && array_key_exists(Constants::PHP_TYPE_INTEGER, $_types)){
+                return $_types[Constants::PHP_TYPE_INTEGER] >= 0;
+            }
+
+            if($hasUDouble && array_key_exists(Constants::PHP_TYPE_DOUBLE, $_types)){
+                return $_types[Constants::PHP_TYPE_DOUBLE] >= 0;
+            }
+
+            if(
+                $hasNumeric &&
+                is_numeric(
+                    array_key_exists(Constants::LDL_TYPE_NUMERIC, $_types) ? $_types[Constants::LDL_TYPE_NUMERIC] : $val
+                )
+            ){
                 return true;
             }
 
-            if($hasUNumeric && is_numeric($val) && $val > 0){
+            if(
+                $hasUNumeric &&
+                is_numeric(
+                    array_key_exists(Constants::LDL_TYPE_NUMERIC, $_types) ? $_types[Constants::LDL_TYPE_NUMERIC] : $val
+                ) &&
+                (array_key_exists(Constants::LDL_TYPE_NUMERIC, $_types) ? $_types[Constants::LDL_TYPE_NUMERIC] : $val) > 0
+            ){
                 return true;
             }
 
-            if($hasScalar && is_scalar($val)){
+            if($hasScalar && is_scalar(
+                array_key_exists(Constants::LDL_TYPE_SCALAR, $_types) ? $_types[Constants::LDL_TYPE_SCALAR] : $val)
+            ){
                 return true;
             }
 
-            return in_array($type, $types, true);
+            foreach($types as $t){
+                if(array_key_exists($t, $_types)){
+                    return true;
+                }
+            }
+
+            return false;
         });
     }
 
