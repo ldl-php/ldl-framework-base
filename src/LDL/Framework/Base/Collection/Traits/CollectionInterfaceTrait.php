@@ -198,8 +198,8 @@ trait CollectionInterfaceTrait
          */
         $items = [];
 
-        foreach($this as $key => $item){
-            $value = is_object($item) && $isLocked ? clone($item) : $item;
+        foreach($this->items as $key => $item){
+            $value = is_object($item) ? clone($item) : $item;
             $useKeys ? $items[$key] = $value : $items[] = $value;
         }
 
