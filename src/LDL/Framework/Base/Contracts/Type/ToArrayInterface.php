@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts\Type;
 
 use LDL\Framework\Base\Exception\ToArrayException;
 
-interface ToArrayInterface
+interface ToArrayInterface extends LDLTypeInterface
 {
     /**
      * @throws ToArrayException
