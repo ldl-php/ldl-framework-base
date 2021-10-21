@@ -69,10 +69,11 @@ final class IterableHelper
     {
         $mapped = null === $mapped || $mapped <= 0 ? 0 : $mapped;
 
+        $i = $items;
         $items = self::toArray($items);
 
-        return array_map(static function($value, $key) use (&$func, &$mapped){
-            $result = $func($value, $key);
+        return array_map(static function($value, $key) use (&$func, &$mapped, &$i){
+            $result = $func($value, $key, $i);
 
             if($result !== $value){
                 $mapped++;
