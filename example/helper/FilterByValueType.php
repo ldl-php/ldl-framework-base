@@ -41,6 +41,11 @@ class StringClass implements ToStringInterface
     {
         return 'StringClass';
     }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }
 
 $dp = opendir(sys_get_temp_dir());
