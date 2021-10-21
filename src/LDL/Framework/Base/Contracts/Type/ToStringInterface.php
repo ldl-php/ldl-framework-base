@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Contracts\Type;
 
-interface ToStringInterface
+interface ToStringInterface extends LDLTypeInterface
 {
     public function toString() : string;
 }

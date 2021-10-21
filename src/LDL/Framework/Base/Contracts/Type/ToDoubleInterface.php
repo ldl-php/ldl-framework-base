@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Contracts\Type;
 
-interface ToDoubleInterface
+interface ToDoubleInterface extends LDLTypeInterface
 {
     /**
      * @return float

@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Contracts\Type;
 
-interface ToNumericInterface
+interface ToNumericInterface extends LDLTypeInterface
 {
 
     public function toNumeric();

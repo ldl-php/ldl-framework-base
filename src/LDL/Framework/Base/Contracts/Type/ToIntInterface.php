@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Contracts\Type;
 
-interface ToIntInterface
+interface ToIntInterface extends LDLTypeInterface
 {
 
     public function toInt() : int;
