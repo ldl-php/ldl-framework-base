@@ -6,6 +6,8 @@ use LDL\Framework\Base\Exception\ToArrayException;
 
 interface ToBooleanInterface extends LDLTypeInterface
 {
+    public const TYPE_METHOD_NAME = 'toBoolean';
+
     /**
      * @throws ToArrayException
      * @return bool

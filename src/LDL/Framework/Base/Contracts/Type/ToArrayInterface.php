@@ -6,6 +6,8 @@ use LDL\Framework\Base\Exception\ToArrayException;
 
 interface ToArrayInterface extends LDLTypeInterface
 {
+    public const TYPE_METHOD_NAME = 'toArray';
+
     /**
      * @throws ToArrayException
      * @param bool $useKeys

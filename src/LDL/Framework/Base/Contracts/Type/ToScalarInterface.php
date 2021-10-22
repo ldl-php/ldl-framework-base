@@ -6,6 +6,8 @@ use LDL\Framework\Base\Exception\ToArrayException;
 
 interface ToScalarInterface extends LDLTypeInterface
 {
+    public const TYPE_METHOD_NAME = 'toScalar';
+
     /**
      * @throws ToArrayException
      * @return string|int|bool|float
