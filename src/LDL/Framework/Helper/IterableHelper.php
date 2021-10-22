@@ -7,7 +7,7 @@ use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
 use LDL\Framework\Base\Contracts\Type\ToBooleanInterface;
 use LDL\Framework\Base\Contracts\Type\ToDoubleInterface;
-use LDL\Framework\Base\Contracts\Type\ToIntInterface;
+use LDL\Framework\Base\Contracts\Type\ToIntegerInterface;
 use LDL\Framework\Base\Contracts\Type\ToNumericInterface;
 use LDL\Framework\Base\Contracts\Type\ToScalarInterface;
 use LDL\Framework\Base\Contracts\Type\ToStringInterface;
@@ -166,8 +166,8 @@ final class IterableHelper
             $isObject = Constants::PHP_TYPE_OBJECT === $type;
             $_types[$type] = $val;
 
-            if($isObject && $val instanceof ToIntInterface){
-                $_types[Constants::PHP_TYPE_INTEGER] = $val->toInt();
+            if($isObject && $val instanceof ToIntegerInterface){
+                $_types[Constants::PHP_TYPE_INTEGER] = $val->toInteger();
             }
 
             if($isObject && $val instanceof ToDoubleInterface){

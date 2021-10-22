@@ -40,6 +40,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201226174735499 - Add object interface types add type support for IterableHelper::filterByValueTypes
 - feature/1201243443283057 - All types must extend to LDLTypeInterface
 - feature/1201243443283062 - Add __toString in ToStringInterface / Pass original items to IterableHelper::map
+- feature/1201253503567912 - Add constants to type interfaces
 
 ### Changed
 

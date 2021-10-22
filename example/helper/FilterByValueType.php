@@ -4,16 +4,16 @@ require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\IterableHelper;
-use LDL\Framework\Base\Contracts\Type\ToIntInterface;
+use LDL\Framework\Base\Contracts\Type\ToIntegerInterface;
 use LDL\Framework\Base\Contracts\Type\ToDoubleInterface;
 use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
 use LDL\Framework\Base\Contracts\Type\ToStringInterface;
 
 echo "Create array of 7 elements:\n\n";
 
-class IntClass implements ToIntInterface
+class IntClass implements ToIntegerInterface
 {
-    public function toInt(): int
+    public function toInteger(): int
     {
         return 99;
     }
