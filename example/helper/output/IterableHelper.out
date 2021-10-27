@@ -20,15 +20,28 @@ array (
   'e' => 5,
 )
 
-Map using key (return key => value as string):
+Map using key (return key => value as string) preserve keys is enabled:
+Only 4 items must be modified
+
+Amount of items modified: 4
 
 array (
-  0 => 1,
-  1 => 'b => 2',
-  2 => 'c => 3',
-  3 => 'd => 4',
-  4 => 'e => 5',
+  'a' => 1,
+  'b' => 'b => 2',
+  'c' => 'c => 3',
+  'd' => 'd => 4',
+  'e' => 'e => 5',
+)
+
+Map using key (return key => value as string) preserve keys is disabled:
+
+array (
+  'a' => 'a => 1',
+  'b' => 'b => 2',
+  'c' => 'c => 3',
+  'd' => 'd => 4',
+  'e' => 'e => 5',
 )
 
 Amount of items modified:
-int(4)
+int(5)

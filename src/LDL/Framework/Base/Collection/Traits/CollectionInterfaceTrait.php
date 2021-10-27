@@ -113,13 +113,18 @@ trait CollectionInterfaceTrait
         return ArrayHelper::hasValue($this->items, $value, $operator, $order);
     }
 
-    public function map(callable $func, int &$mapped=0) : CollectionInterface
+    public function map(
+        callable $func,
+        bool $preserveKeys=true,
+        int &$mapped=0,
+        callable $comparisonFunc = null
+    ) : CollectionInterface
     {
         /**
          * @var CollectionInterface $collection
          */
         $collection = clone($this);
-        $map = IterableHelper::map($collection, $func, $mapped);
+        $map = IterableHelper::map($collection, $func, $preserveKeys, $mapped, $comparisonFunc);
         $collection->setItems([]);
 
         if($collection instanceof AppendableInterface){

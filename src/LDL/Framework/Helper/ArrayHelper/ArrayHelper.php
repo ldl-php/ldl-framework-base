@@ -104,15 +104,14 @@ final class ArrayHelper
         bool $useKeys=true
     ) : int
     {
-        $result = IterableHelper::map(
+        $items = IterableHelper::map(
             $items,
             static function($curVal, $curKey) use ($comparisonFunc, $replacement, &$items){
                 return false === $comparisonFunc($curVal, $curKey, $replacement, $items) ? $curVal : $replacement;
             },
+            $useKeys,
             $replaced
         );
-
-        $items = $useKeys ? array_combine(IterableHelper::keys($items), $result) : $result;
 
         return $replaced;
     }

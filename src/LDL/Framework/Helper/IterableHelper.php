@@ -60,27 +60,42 @@ final class IterableHelper
      * The $mapped parameter is useful when you need to know exactly how many items were modified
      *
      * @param iterable $items
-     * @param callable $func
-     * @param int $mapped
+     * @param callable $func A function which maps the value
+     * @param bool $preserveKeys To preserve original keys or not to
+     * @param int &$modified A variable which is modified by reference stating the count of items which have been modified
+     * @param callable $isModified A callable which determines if the new mapped value is different from the original value
      *
      * @return array
      */
-    public static function map(iterable $items, callable $func, int &$mapped=null) : array
+    public static function map(
+        iterable $items,
+        callable $func,
+        bool $preserveKeys=true,
+        int &$modified=null,
+        callable $isModified=null
+    ) : array
     {
-        $mapped = null === $mapped || $mapped <= 0 ? 0 : $mapped;
+        $modified = null === $modified || $modified <= 0 ? 0 : $modified;
+
+        if(null === $isModified){
+            $isModified = static function($new, $old) : bool {
+              return $new !== $old;
+            };
+        }
 
         $i = $items;
-        $items = self::toArray($items);
+        $items = self::toArray($items, $preserveKeys);
+        $keys = array_keys($items);
 
-        return array_map(static function($value, $key) use (&$func, &$mapped, &$i){
+        $map = array_map(static function($value, $key) use (&$func, &$isModified, &$modified, &$i){
             $result = $func($value, $key, $i);
 
-            if($result !== $value){
-                $mapped++;
-            }
+            true === $isModified($result, $value, $key, $i) && $modified++;
 
             return $result;
-        }, array_values($items), array_keys($items));
+        }, array_values($items), $keys);
+
+        return $preserveKeys ? array_combine($keys, $map) : $map;
     }
 
     /**

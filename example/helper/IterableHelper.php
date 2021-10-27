@@ -29,11 +29,28 @@ $result = IterableHelper::filter($array, static function($v){
 
 echo var_export($result, true)."\n\n";
 
-echo "Map using key (return key => value as string):\n\n";
+echo "Map using key (return key => value as string) preserve keys is enabled:\n";
+echo "Only 4 items must be modified\n\n";
 
 $result = IterableHelper::map($array, static function($v, $k){
-    return 'a' === $k ? $v : "$k => $v";
-}, $modified);
+    return 'a'=== $k ? $v : "$k => $v";
+}, true, $modified);
+
+if(4 !== $modified){
+    throw new \LogicException('Amount of modified items must be 4!');
+}
+
+echo "Amount of items modified: $modified\n\n";
+
+unset($modified);
+
+echo var_export($result, true)."\n\n";
+
+echo "Map using key (return key => value as string) preserve keys is disabled:\n\n";
+
+$result = IterableHelper::map($array, static function($v, $k){
+    return "$k => $v";
+}, true, $modified);
 
 echo var_export($result, true)."\n\n";
 

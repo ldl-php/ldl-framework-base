@@ -89,12 +89,20 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
      * Use a callable function on each item of the collection
      *
      * @param callable $func
+     * @param bool $preserveKeys
      * @param int $mapped
+     * @param callable $comparisonFunc
+     *
      * @return CollectionInterface
      * @throws InvalidKeyException
      * @throws \LDL\Framework\Base\Exception\LockingException
      */
-    public function map(callable $func, int &$mapped=0) : CollectionInterface;
+    public function map(
+        callable $func,
+        bool $preserveKeys,
+        int &$mapped,
+        callable $comparisonFunc
+    ) : CollectionInterface;
 
     /**
      * Use array_filter on each item of the collection, returns a new collection instance
