@@ -62,17 +62,19 @@ final class IterableHelper
      * @param iterable $items
      * @param callable $func
      * @param int $mapped
+     * @param bool $preserveKeys
      *
      * @return array
      */
-    public static function map(iterable $items, callable $func, int &$mapped=null) : array
+    public static function map(iterable $items, callable $func, int &$mapped=null, bool $preserveKeys=true) : array
     {
         $mapped = null === $mapped || $mapped <= 0 ? 0 : $mapped;
 
         $i = $items;
-        $items = self::toArray($items);
+        $items = self::toArray($items, $preserveKeys);
+        $keys = array_keys($items);
 
-        return array_map(static function($value, $key) use (&$func, &$mapped, &$i){
+        $map = array_map(static function($value, $key) use (&$func, &$mapped, &$i){
             $result = $func($value, $key, $i);
 
             if($result !== $value){
@@ -80,7 +82,9 @@ final class IterableHelper
             }
 
             return $result;
-        }, array_values($items), array_keys($items));
+        }, array_values($items), $keys);
+
+        return $preserveKeys ? array_combine($keys, $map) : $map;
     }
 
     /**

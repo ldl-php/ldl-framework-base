@@ -29,13 +29,22 @@ $result = IterableHelper::filter($array, static function($v){
 
 echo var_export($result, true)."\n\n";
 
-echo "Map using key (return key => value as string):\n\n";
+echo "Map using key (return key => value as string) preserve keys is enabled:\n\n";
 
 $result = IterableHelper::map($array, static function($v, $k){
-    return 'a' === $k ? $v : "$k => $v";
-}, $modified);
+    return "$k => $v";
+}, $modified, true);
 
 echo var_export($result, true)."\n\n";
+
+echo "Map using key (return key => value as string) preserve keys is disabled:\n\n";
+
+$result = IterableHelper::map($array, static function($v, $k){
+    return "$k => $v";
+}, $modified, false);
+
+echo var_export($result, true)."\n\n";
+
 
 echo "Amount of items modified:\n";
 var_dump($modified);

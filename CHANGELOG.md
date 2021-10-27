@@ -41,6 +41,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201243443283057 - All types must extend to LDLTypeInterface
 - feature/1201243443283062 - Add __toString in ToStringInterface / Pass original items to IterableHelper::map
 - feature/1201253503567912 - Add constants to type interfaces
+- feature/1201278499056880 - Add $preserveKeys argument to IterableHelper::map (true by default)
 
 ### Changed
 
