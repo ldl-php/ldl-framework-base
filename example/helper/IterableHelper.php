@@ -5,6 +5,16 @@ require __DIR__.'/../../vendor/autoload.php';
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
+use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
+
+class MyArrayClass implements ToArrayInterface{
+
+    public function toArray(bool $useKeys = null): array
+    {
+        return [40,50,60,60,60,'a','b','c',-20];
+    }
+
+}
 
 echo "Create array of 5 elements:\n\n";
 
@@ -56,3 +66,25 @@ echo var_export($result, true)."\n\n";
 
 echo "Amount of items modified:\n";
 var_dump($modified);
+
+echo "Create an instance of MyArrayClass (implements ToArrayInterface)\n\n";
+
+$obj = new MyArrayClass();
+
+echo "Map each value from MyArrayClass\n";
+
+IterableHelper::map($obj, function($i){
+    echo $i."\n";
+});
+
+echo "Get unique values from MyArrayClass\n\n";
+
+echo var_export(IterableHelper::unique($obj), true);
+
+echo "\nFilter value types in MyArrayClass, Integers only:\n\n";
+
+echo var_export(IterableHelper::filterByValueType($obj, Constants::PHP_TYPE_INTEGER), true);
+
+echo "\n\nFilter value types in MyArrayClass, Strings only:\n\n";
+
+echo var_export(IterableHelper::filterByValueType($obj, Constants::PHP_TYPE_STRING), true);

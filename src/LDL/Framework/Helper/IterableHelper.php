@@ -18,25 +18,29 @@ final class IterableHelper
     public const LAST_POSITION = -1;
 
     /**
-     * @param iterable $items
+     * @param iterable|ToArrayInterface $items
      * @return int|null
      */
-    public static function getCount(iterable $items) : ?int
+    public static function getCount($items) : ?int
     {
         if(is_array($items) || $items instanceof \Countable){
             return count($items);
         }
 
-        return count(\iterator_to_array($items));
+        if($items instanceof ToArrayInterface){
+            return count($items->toArray());
+        }
+
+        return null;
     }
 
     /**
-     * @param iterable $items
+     * @param iterable|ToArrayInterface $items
      * @param bool $useKeys
      *
      * @return array
      */
-    public static function toArray(iterable $items, bool $useKeys = true) : array
+    public static function toArray($items, bool $useKeys = true) : array
     {
         if(is_array($items)){
             return $useKeys ? $items : array_values($items);
@@ -46,10 +50,18 @@ final class IterableHelper
             return \iterator_to_array($items, $useKeys);
         }
 
+        if($items instanceof ToArrayInterface){
+            return $items->toArray($useKeys);
+        }
+
         return [];
     }
 
-    public static function keys(iterable $items) : array
+    /**
+     * @param iterable|ToArrayInterface $items
+     * @return array
+     */
+    public static function keys($items) : array
     {
         return array_keys(self::toArray($items));
     }
@@ -59,7 +71,7 @@ final class IterableHelper
      *
      * The $mapped parameter is useful when you need to know exactly how many items were modified
      *
-     * @param iterable $items
+     * @param iterable|ToArrayInterface $items
      * @param callable $func A function which maps the value
      * @param bool $preserveKeys To preserve original keys or not to
      * @param int &$modified A variable which is modified by reference stating the count of items which have been modified
@@ -68,7 +80,7 @@ final class IterableHelper
      * @return array
      */
     public static function map(
-        iterable $items,
+        $items,
         callable $func,
         bool $preserveKeys=true,
         int &$modified=null,
@@ -99,13 +111,13 @@ final class IterableHelper
     }
 
     /**
-     * @param iterable $items
+     * @param iterable|ToArrayInterface $items
      * @param callable $func
      * @param int $filtered
      *
      * @return array
      */
-    public static function filter(iterable $items, callable $func, int &$filtered=null) : array
+    public static function filter($items, callable $func, int &$filtered=null) : array
     {
         $filtered = 0;
 
@@ -119,11 +131,11 @@ final class IterableHelper
     }
 
     /**
-     * @param iterable $items
+     * @param iterable|ToArrayInterface $items
      * @param int $position
      * @return mixed
      */
-    public static function getKeyInPosition(iterable $items, int $position)
+    public static function getKeyInPosition($items, int $position)
     {
         $keys = self::keys($items);
         $pos = $position < 0 ? count($keys) + $position : $position;
@@ -140,12 +152,22 @@ final class IterableHelper
         return $keys[$pos];
     }
 
-    public static function filterByValueType(iterable $items, string $type) : array
+    /**
+     * @param iterable|ToArrayInterface $items
+     * @param string $type
+     * @return array
+     */
+    public static function filterByValueType($items, string $type) : array
     {
         return self::filterByValueTypes($items, [$type]);
     }
 
-    public static function filterByValueTypes(iterable $items, iterable $types) : array
+    /**
+     * @param iterable|ToArrayInterface $items
+     * @param iterable $types
+     * @return array
+     */
+    public static function filterByValueTypes($items, iterable $types) : array
     {
         $types = self::toArray($types);
 
@@ -252,7 +274,23 @@ final class IterableHelper
         });
     }
 
-    public static function unique(iterable $items, array &$values=null) : array
+    /**
+     * Checks if $items is_iterable or if $items is an instance of ToArrayInterface
+     *
+     * @param mixed $items
+     * @return bool
+     */
+    public static function isIterable($items) : bool
+    {
+        return is_iterable($items) || $items instanceof ToArrayInterface;
+    }
+
+    /**
+     * @param iterable|ToArrayInterface $items
+     * @param array|null $values
+     * @return array
+     */
+    public static function unique($items, array &$values=null) : array
     {
         if(null === $values) {
             $values = [];
@@ -260,10 +298,10 @@ final class IterableHelper
 
         if(is_object($items) && $items instanceof ComparisonInterface){
             $val = $items->getComparisonValue();
-            return self::unique(is_iterable($val) ? $val : [$val], $values);
+            return self::unique(self::isIterable($val) ? $val : [$val], $values);
         }
 
-        $items = is_iterable($items) ? self::toArray($items) : [$items];
+        $items = self::isIterable($items) ? self::toArray($items) : [$items];
 
         foreach($items as $item){
             if(is_iterable($item)){
@@ -280,7 +318,12 @@ final class IterableHelper
         return $values;
     }
 
-    public static function cast(iterable $items, string $type) : array
+    /**
+     * @param iterable|ToArrayInterface $items
+     * @param string $type
+     * @return array
+     */
+    public static function cast($items, string $type) : array
     {
         return self::map($items, static function($val, $key) use($type){
             $val = false === $val ? '0' : $val;
