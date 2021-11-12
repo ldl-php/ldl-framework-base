@@ -30,6 +30,12 @@ trait CollectionInterfaceTrait
     private $items = [];
 
     /**
+     * Holds a copy of items for iteration
+     * @var array
+     */
+    private $iterationItems = [];
+
+    /**
      * Holds the key of the last appended item
      * @var number|string
      */
@@ -40,6 +46,16 @@ trait CollectionInterfaceTrait
      * @var number|string
      */
     private $first;
+
+    /**
+     * @var bool
+     */
+    private $_inLoop = false;
+
+    /**
+     * @var int
+     */
+    private $iterationCounter = 0;
 
     //<editor-fold desc="CollectionInterface methods">
     public function get($key)
@@ -268,8 +284,7 @@ trait CollectionInterfaceTrait
     {
         $this->first = null;
         $this->last = null;
-
-        $this->items = IterableHelper::toArray($items);
+        $this->items = IterableHelper::toArray($items, true);
 
         $keys = array_keys($this->items);
         $keyCount = count($keys);
@@ -363,32 +378,53 @@ trait CollectionInterfaceTrait
     //</editor-fold>
 
     //<editor-fold desc="\Iterator Methods">
+
+    /**
+     * Make a "copy" of the current items in case an internal function which calls setItems
+     * is called inside a loop.
+     *
+     * Background: If the original $this->items variable would be used and there is a modification
+     * of the items inside a (for example) a foreach loop through setItems, infinite recursion will occur
+     * as the pointer to the original position of the items array is lost.
+     *
+     * NOTE: As PHP uses a technique called copy on write (CoW), items won't be duplicated unless
+     * a modification to said items occurs, this modification is only possible through self::setItems
+     * or self::setItem
+     *
+     * @see self::setItem
+     * @see self::setItems
+     */
     public function rewind() : void
     {
-        reset($this->items);
-    }
-
-    public function key()
-    {
-        return key($this->items);
-    }
-
-    public function next()
-    {
-        $next = next($this->items);
-        return $this->_isLocked() && is_object($next) ? clone($next) : $next;
+        $this->iterationItems = $this->items;
     }
 
     public function valid() : bool
     {
-        $key = key($this->items);
-        return $key !== null && $key !== false;
+        $key = key($this->iterationItems);
+        $valid = $key !== null && $key !== false;
+        if(!$valid){
+            $this->iterationItems = [];
+        }
+
+        return $valid;
     }
 
     public function current()
     {
-        $current = current($this->items);
+        $current = current($this->iterationItems);
         return $this->_isLocked() && is_object($current) ? clone($current) : $current;
+    }
+
+    public function key()
+    {
+        return key($this->iterationItems);
+    }
+
+    public function next()
+    {
+        $next = next($this->iterationItems);
+        return $this->_isLocked() && is_object($next) ? clone($next) : $next;
     }
     //<editor-fold>
 

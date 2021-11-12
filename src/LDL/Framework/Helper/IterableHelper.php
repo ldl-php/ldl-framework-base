@@ -2,6 +2,7 @@
 
 namespace LDL\Framework\Helper;
 
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\ComparisonInterface;
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
@@ -42,16 +43,16 @@ final class IterableHelper
      */
     public static function toArray($items, bool $useKeys = true) : array
     {
+        if($items instanceof ToArrayInterface) {
+            $items = $items->toArray();
+        }
+
         if(is_array($items)){
             return $useKeys ? $items : array_values($items);
         }
 
         if($items instanceof \Traversable){
             return \iterator_to_array($items, $useKeys);
-        }
-
-        if($items instanceof ToArrayInterface){
-            return $items->toArray($useKeys);
         }
 
         return [];

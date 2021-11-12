@@ -143,4 +143,5 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
      * @return CollectionInterface
      */
     public function ksort(callable $fn) : CollectionInterface;
+
 }

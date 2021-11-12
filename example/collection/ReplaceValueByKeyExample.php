@@ -25,7 +25,7 @@ class ReplaceValueByKeyExample implements ReplaceValueByKeyExampleInterface
         $this->setItems($items);
         $this->getBeforeReplace()->append(static function($collection, $item, $key){
             echo "\n\n#####################################################\n";
-           echo "Trigger on before replace: $key => $item\n";
+            echo "Trigger on before replace: $key => $item\n";
             echo "#####################################################\n\n";
         });
     }
@@ -48,11 +48,19 @@ $collection = new ReplaceValueByKeyExample($items);
 echo "Check items in the collection:\n\n";
 echo var_export(\iterator_to_array($collection, true), true)."\n\n";
 
-echo "Replace key 'first' with '<World>'\n";
-
-$collection->replaceValueByKey('first', '<World>');
-
-echo "Replace key 'last' with '<LDL>'\n";
-$collection->replaceValueByKey('last', '<LDL>');
+/**
+ * Reproduction of bug: (try to create an infinite loop) see ticket for technical details
+ * https://app.asana.com/0/1199522418295938/1201352833985547
+ */
+foreach($collection as $k=>$item){
+    switch($k){
+        case 'first':
+            $collection->replaceValueByKey('first', '<World>');
+            break;
+        case 'last':
+            $collection->replaceValueByKey('last', '<LDL>');
+            break;
+    }
+}
 
 echo var_export(\iterator_to_array($collection, true), true)."\n\n";

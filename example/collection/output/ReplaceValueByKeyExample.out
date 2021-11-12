@@ -17,14 +17,12 @@ array (
   'last' => 'World',
 )
 
-Replace key 'first' with '<World>'
 
 
 #####################################################
 Trigger on before replace: first => Hello
 #####################################################
 
-Replace key 'last' with '<LDL>'
 
 
 #####################################################

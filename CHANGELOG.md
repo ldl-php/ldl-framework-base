@@ -68,3 +68,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fix/1201185659118458 - Remove strnum, switch for numeric (matches PHP is_numeric)
 - fix/1201204612494306 - Fix unique from IterableHelper
 - fix/1201234903595047 - Fix toArray from CollectionInterfaceTrait
+- fix/1201352833985547 - When iterating on a collection and modifying the collection infinite recursion will happen

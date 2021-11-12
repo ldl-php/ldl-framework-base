@@ -45,3 +45,44 @@ array (
 
 Amount of items modified:
 int(5)
+Create an instance of MyArrayClass (implements ToArrayInterface)
+
+Map each value from MyArrayClass
+40
+50
+60
+60
+60
+a
+b
+c
+-20
+Get unique values from MyArrayClass
+
+array (
+  0 => 40,
+  1 => 50,
+  2 => 60,
+  3 => 'a',
+  4 => 'b',
+  5 => 'c',
+  6 => -20,
+)
+Filter value types in MyArrayClass, Integers only:
+
+array (
+  0 => 40,
+  1 => 50,
+  2 => 60,
+  3 => 60,
+  4 => 60,
+  8 => -20,
+)
+
+Filter value types in MyArrayClass, Strings only:
+
+array (
+  5 => 'a',
+  6 => 'b',
+  7 => 'c',
+)
