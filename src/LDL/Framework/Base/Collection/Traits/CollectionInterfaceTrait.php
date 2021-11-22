@@ -6,13 +6,13 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
+use LDL\Framework\Base\Constants;
+use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Constants;
-use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Exception\CollectionException;
-use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
-use LDL\Framework\Helper\IterableHelper;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
 trait CollectionInterfaceTrait
@@ -225,20 +225,6 @@ trait CollectionInterfaceTrait
         }
 
         return $items;
-    }
-
-    public function sort(callable $fn) : CollectionInterface
-    {
-        $items = $this->items;
-
-        if($this->_isLocked()){
-            $items = \iterator_to_array($this, true);
-        }
-
-        uasort($items, $fn);
-        $instance = $this->getEmptyInstance();
-        $instance->items = $items;
-        return $instance;
     }
 
     public function ksort(callable $fn) : CollectionInterface

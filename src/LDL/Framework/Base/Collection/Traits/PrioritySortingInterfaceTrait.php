@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Contracts\PrioritySortingInterface;
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\PriorityInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\PrioritySortingInterface;
 
 /**
  * Trait PrioritySortingInterfaceTrait
@@ -15,10 +17,11 @@ use LDL\Framework\Helper\ClassRequirementHelperTrait;
  */
 trait PrioritySortingInterfaceTrait
 {
-    use ClassRequirementHelperTrait;
+    use SortInterfaceTrait,
+        ClassRequirementHelperTrait;
 
     //<editor-fold desc="PrioritySortingInterface methods">
-    public function sortByPriority(string $sort=Constants::SORT_ASCENDING): CollectionInterface
+    public function sortByPriority(string $sort = Constants::SORT_ASCENDING): CollectionInterface
     {
         $this->requireImplements([
             CollectionInterface::class,
@@ -28,10 +31,9 @@ trait PrioritySortingInterfaceTrait
         /**
          * @var CollectionInterface $this
          */
-        return $this->filter(static function($v){
+        return $this->filter(static function ($v) {
             return $v instanceof PriorityInterface;
-        })
-        ->sort(static function($a, $b) use($sort){
+        })->sortByCallback(static function ($a, $b) use ($sort) {
             $priorityA = $a->getPriority();
             $priorityB = $b->getPriority();
 

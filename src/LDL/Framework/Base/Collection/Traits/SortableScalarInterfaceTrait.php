@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Contracts\SortableScalarInterface;
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\SortableScalarInterface;
 
 /**
  * Trait SortableScalarInterfaceTrait
@@ -14,10 +16,11 @@ use LDL\Framework\Helper\ClassRequirementHelperTrait;
  */
 trait SortableScalarInterfaceTrait
 {
-    use ClassRequirementHelperTrait;
+    use SortInterfaceTrait,
+        ClassRequirementHelperTrait;
 
     //<editor-fold desc="SortableScalarInterface methods">
-    public function sortScalar(string $sort=Constants::SORT_ASCENDING): CollectionInterface
+    public function sortScalar(string $sort = Constants::SORT_ASCENDING): CollectionInterface
     {
         $this->requireImplements([
             CollectionInterface::class,
@@ -27,10 +30,9 @@ trait SortableScalarInterfaceTrait
         /**
          * @var CollectionInterface $this
          */
-        return $this->filter(static function($v){
+        return $this->filter(static function ($v) {
             return is_scalar($v);
-        })
-        ->sort(static function($a, $b) use($sort){
+        })->sortByCallback(static function ($a, $b) use ($sort) {
             return Constants::SORT_ASCENDING === $sort ? $a <=> $b : $b <=> $a;
         });
     }
