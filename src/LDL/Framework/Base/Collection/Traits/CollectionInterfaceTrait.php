@@ -227,20 +227,6 @@ trait CollectionInterfaceTrait
         return $items;
     }
 
-    public function ksort(callable $fn) : CollectionInterface
-    {
-        $items = $this->items;
-
-        if($this->_isLocked()){
-            $items = \iterator_to_array($this);
-        }
-
-        uksort($items, $fn);
-        $instance = $this->getEmptyInstance();
-        $instance->items = $items;
-        return $instance;
-    }
-
     public function getEmptyInstance(...$params) : CollectionInterface
     {
         return new static(...$params);

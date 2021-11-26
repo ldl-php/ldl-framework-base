@@ -127,13 +127,4 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
      * @return CollectionInterface
      */
     public function getEmptyInstance(...$params) : CollectionInterface;
-
-    /**
-     * Returns a new instance, sorted by keys through an anonymous comparison function
-     *
-     * @param callable $fn
-     * @return CollectionInterface
-     */
-    public function ksort(callable $fn) : CollectionInterface;
-
 }
