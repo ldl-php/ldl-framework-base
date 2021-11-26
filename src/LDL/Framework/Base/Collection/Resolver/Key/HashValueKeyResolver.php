@@ -2,6 +2,8 @@
 
 namespace LDL\Framework\Base\Collection\Resolver\Key;
 
+use LDL\Framework\Base\Exception\LogicException;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Resolver\Contracts\FullResolverInterface;
 
@@ -47,7 +49,7 @@ class HashValueKeyResolver implements FullResolverInterface
             $this->algorithm = $algorithm;
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             sprintf(
                 'Invalid hashing algorithm: %s',
                 $algorithm
@@ -81,6 +83,6 @@ class HashValueKeyResolver implements FullResolverInterface
             }
         }
 
-        throw new \LogicException("Exceeded new key limit of {$this->limit}");
+        throw new LogicException("Exceeded new key limit of {$this->limit}");
     }
 }

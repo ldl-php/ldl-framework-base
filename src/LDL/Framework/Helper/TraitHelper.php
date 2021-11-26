@@ -2,10 +2,11 @@
 
 namespace LDL\Framework\Helper;
 
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 final class TraitHelper {
 
     /**
-     * Imperative alias of trait_exists, if trait does not exists an \InvalidArgumentException will be thrown
+     * Imperative alias of trait_exists, if trait does not exists an InvalidArgumentException will be thrown
      *
      * @param string $trait
      * @param $autoload
@@ -16,7 +17,7 @@ final class TraitHelper {
             return;
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             sprintf(
                 'Trait: "%s" is NOT a trait or it was not loaded properly',
                 $trait

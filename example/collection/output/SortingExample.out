@@ -42,16 +42,16 @@ Create new Collection class instance
 
 Sort items with property in ascending:
 array (
-  4 => 
+  4 =>
   T2::__set_state(array(
      'property' => 'a',
   )),
-  2 => 
+  2 =>
   T1::__set_state(array(
      'property' => 6,
   )),
   1 => 34,
-  0 => 
+  0 =>
   T::__set_state(array(
      'property' => 56,
   )),
@@ -61,20 +61,20 @@ array (
 Sort items with property in descending:
 array (
   3 => 1000,
-  0 => 
+  0 =>
   T::__set_state(array(
      'property' => 56,
   )),
   1 => 34,
-  2 => 
+  2 =>
   T1::__set_state(array(
      'property' => 6,
   )),
-  4 => 
+  4 =>
   T2::__set_state(array(
      'property' => 'a',
   )),
 )
 
 Append an object which does NOT implements HasSortValueInterface (EXCEPTION must be thrown)
-OK Exception The object must adhere to HasSortValueInterface.
+OK Exception Instance of class "stdClass" does NOT implements "LDL\Framework\Base\Collection\Contracts\HasSortValueInterface", thus it can't be sorted

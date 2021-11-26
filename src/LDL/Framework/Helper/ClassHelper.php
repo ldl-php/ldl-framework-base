@@ -2,13 +2,16 @@
 
 namespace LDL\Framework\Helper;
 
+use LDL\Framework\Base\Exception\RuntimeException;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
+
 final class ClassHelper
 {
 
     //<editor-fold desc="Class method related methods">
 
     /**
-     * Imperative alias of class_exists, if class does not exists an \InvalidArgumentException will be thrown
+     * Imperative alias of class_exists, if class does not exists an InvalidArgumentException will be thrown
      *
      * @param string $class
      * @param $autoload
@@ -19,7 +22,7 @@ final class ClassHelper
             return;
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             sprintf(
                 'Class: "%s" is NOT a class or it was not loaded properly',
                 $class
@@ -93,7 +96,7 @@ final class ClassHelper
     }
 
     /**
-     * Determines if a $class contains all $methods passed, if it doesn't a \RuntimeException will be thrown.
+     * Determines if a $class contains all $methods passed, if it doesn't a RuntimeException will be thrown.
      *
      * NOTE: Comparison is done in a case sensitive way by default
      *
@@ -101,7 +104,7 @@ final class ClassHelper
      * @param iterable $methods
      * @param bool $caseSensitive
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function mustHaveMethods(string $class, iterable $methods, bool $caseSensitive=true) : void
     {
@@ -111,7 +114,7 @@ final class ClassHelper
             return;
         }
 
-        throw new \RuntimeException(
+        throw new RuntimeException(
             sprintf(
                 'Class: %s does not has the following methods: %s',
                 $class,
@@ -129,7 +132,7 @@ final class ClassHelper
      * @param string $method
      * @param bool $caseSensitive
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function mustHaveMethod(string $class, string $method, bool $caseSensitive=true) : void
     {
@@ -143,7 +146,7 @@ final class ClassHelper
      * Obtains all traits which are implemented inside of a class
      *
      * @param string $class
-     * @throws \InvalidArgumentException if the given $class does not exists
+     * @throws InvalidArgumentException if the given $class does not exists
      *
      * @return string[]
      */
@@ -222,13 +225,13 @@ final class ClassHelper
     }
 
     /**
-     * If the passed $class argument does not contains all traits passed in $traits, a \RuntimeException will be thrown
+     * If the passed $class argument does not contains all traits passed in $traits, a RuntimeException will be thrown
      *
      * @param string $class
      * @param iterable $traits
      * @param bool $caseSensitive
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function mustHaveTraits(string $class, iterable $traits, bool $caseSensitive=true) : void
     {
@@ -238,7 +241,7 @@ final class ClassHelper
             return;
         }
 
-        throw new \RuntimeException(
+        throw new RuntimeException(
             sprintf(
                 'Class: %s does not use the following traits: %s',
                 $class,
@@ -257,7 +260,7 @@ final class ClassHelper
      *
      * @see ClassHelper::mustHaveTraits
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function mustHaveTrait(string $class, string $trait, bool $caseSensitive=true) : void
     {
@@ -276,7 +279,7 @@ final class ClassHelper
      * @param string $class
      * @param iterable $interfaces
      *
-     * @throws \InvalidArgumentException if the given $class argument is not a class or does not exists
+     * @throws InvalidArgumentException if the given $class argument is not a class or does not exists
      *
      * @return string[]
      */
@@ -316,11 +319,11 @@ final class ClassHelper
 
     /**
      * Determines if a $class implements a set of $interfaces, if all $interfaces sent are not implemented
-     * on $class, a \RuntimeException will be thrown
+     * on $class, a RuntimeException will be thrown
      *
      * @param string $class
      * @param iterable $interfaces
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function mustHaveInterfaces(string $class, iterable $interfaces) : void
     {
@@ -330,7 +333,7 @@ final class ClassHelper
             return;
         }
 
-        throw new \RuntimeException(
+        throw new RuntimeException(
             sprintf(
                 'Class: %s does not use the following interfaces: %s',
                 $class,
@@ -340,13 +343,13 @@ final class ClassHelper
     }
 
     /**
-     * Determines if a class implements an interface, if it doesn't a \RuntimeException will be thrown
+     * Determines if a class implements an interface, if it doesn't a RuntimeException will be thrown
      *
      * NOTE: Alias of self::mustHaveInterfaces (syntax sugar)
      *
      * @param string $class
      * @param string $interface
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function mustHaveInterface(string $class, string $interface) : void
     {

@@ -2,12 +2,13 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Contracts\FilterByNameInterface;
+use LDL\Framework\Helper\RegexHelper;
+use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Base\Exception\LogicException;
 use LDL\Framework\Base\Contracts\NameableInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
-use LDL\Framework\Helper\IterableHelper;
-use LDL\Framework\Helper\RegexHelper;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByNameInterface;
 
 /**
  * Trait FilterByNameInterfaceTrait
@@ -27,7 +28,7 @@ trait FilterByNameInterfaceTrait
 
         try {
             return $this->filterByNameRegex($mixed);
-        }catch(\LogicException $e) {
+        }catch(LogicException $e) {
             return $this->filterByNames([$mixed]);
         }
     }

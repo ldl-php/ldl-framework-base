@@ -4,6 +4,7 @@ require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Base\Exception\LogicException;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
 use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
 
@@ -47,7 +48,7 @@ $result = IterableHelper::map($array, static function($v, $k){
 }, true, $modified);
 
 if(4 !== $modified){
-    throw new \LogicException('Amount of modified items must be 4!');
+    throw new LogicException('Amount of modified items must be 4!');
 }
 
 echo "Amount of items modified: $modified\n\n";

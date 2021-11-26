@@ -2,17 +2,18 @@
 
 namespace LDL\Framework\Base\Exception\Combined;
 
+use Throwable;
+use LDL\Framework\Base\Exception\LDLException;
+use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 use LDL\Framework\Base\Collection\Exception\LockAppendException;
 use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
-use LDL\Framework\Base\Collection\Traits\BeforeAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
-use LDL\Framework\Base\Exception\LDLException;
-use Throwable;
+use LDL\Framework\Base\Collection\Traits\BeforeAppendInterfaceTrait;
 
 class CombinedException extends LDLException implements CombinedExceptionInterface
 {
@@ -35,7 +36,7 @@ class CombinedException extends LDLException implements CombinedExceptionInterfa
 
         $this->getBeforeAppend()->append(static function($collection, $item, $key){
             if(false === is_object($item)){
-                throw new \InvalidArgumentException('Item to be added is not an object');
+                throw new InvalidArgumentException('Item to be added is not an object');
             }
 
             if($item instanceof \Throwable){
@@ -48,7 +49,7 @@ class CombinedException extends LDLException implements CombinedExceptionInterfa
                 get_class($item)
             );
 
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         });
 
         if(null !== $exceptions){

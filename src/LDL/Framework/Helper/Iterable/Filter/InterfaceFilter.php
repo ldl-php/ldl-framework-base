@@ -6,6 +6,8 @@
 namespace LDL\Framework\Helper\Iterable\Filter;
 
 use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
+use LDL\Framework\Base\Exception\LogicException;
 
 final class InterfaceFilter
 {
@@ -39,7 +41,7 @@ final class InterfaceFilter
          */
         $interfaces = IterableHelper::map($interfaces, static function($interface) : string {
             if(!is_string($interface)){
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     sprintf(
                         'Given item in interface collection is not of type string, "%s" given',
                         gettype($interface)
@@ -48,7 +50,7 @@ final class InterfaceFilter
             }
 
             if(!interface_exists($interface)){
-                throw new \InvalidArgumentException("Interface '$interface' does not exists");
+                throw new InvalidArgumentException("Interface '$interface' does not exists");
             }
 
             return $interface;
@@ -126,7 +128,7 @@ final class InterfaceFilter
     {
         if(!method_exists($interface, $method)){
             $msg = sprintf('Method: %s does not exists in interface', $interface);
-            throw new \LogicException($msg);
+            throw new LogicException($msg);
         }
 
         return array_map(static function($item) use($method, $params){
@@ -153,7 +155,7 @@ final class InterfaceFilter
     {
         if(!method_exists($interface, $method)){
             $msg = sprintf('Method: %s does not exists in interface', $interface);
-            throw new \LogicException($msg);
+            throw new LogicException($msg);
         }
 
         return array_map(static function($item) use($method, $params){

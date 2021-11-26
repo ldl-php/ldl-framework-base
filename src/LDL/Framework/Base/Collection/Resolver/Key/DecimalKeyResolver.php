@@ -2,6 +2,7 @@
 
 namespace LDL\Framework\Base\Collection\Resolver\Key;
 
+use LDL\Framework\Base\Exception\LogicException;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Resolver\Contracts\FullResolverInterface;
 
@@ -65,7 +66,7 @@ class DecimalKeyResolver implements FullResolverInterface
             $newKey += $this->increment;
 
             if($newKey > $this->limit){
-                throw new \LogicException("Exceeded new key limit of {$this->limit}");
+                throw new LogicException("Exceeded new key limit of {$this->limit}");
             }
 
         } while($collection->hasKey((string) $newKey));

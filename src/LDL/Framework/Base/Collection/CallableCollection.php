@@ -2,14 +2,15 @@
 
 namespace LDL\Framework\Base\Collection;
 
+use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
+use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
-use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 
 class CallableCollection implements CallableCollectionInterface
 {
@@ -32,7 +33,7 @@ class CallableCollection implements CallableCollectionInterface
     {
         if(!$item instanceof \Closure){
             $msg = sprintf('Item to be added must be an instance of %s', \Closure::class);
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
 
         return $this->_append($item, $key);

@@ -7,6 +7,7 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
+use LDL\Framework\Base\Exception\LogicException;
 use LDL\Framework\Base\Collection\Contracts\BeforeAppendInterface;
 use LDL\Framework\Base\Collection\Contracts\BeforeResolveKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
@@ -108,7 +109,7 @@ trait AppendableInterfaceTrait
                     ReplaceByKeyInterface::class
                 );
 
-                throw new \LogicException($msg);
+                throw new LogicException($msg);
             }
         }
 

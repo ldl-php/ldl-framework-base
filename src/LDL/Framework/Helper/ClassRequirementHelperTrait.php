@@ -2,6 +2,8 @@
 
 namespace LDL\Framework\Helper;
 
+use LDL\Framework\Base\Exception\RuntimeException;
+
 trait ClassRequirementHelperTrait
 {
     private $_tVerifyCollectionTraitHelperHasTraits = [];
@@ -12,7 +14,7 @@ trait ClassRequirementHelperTrait
      *
      * @param string|iterable $traits
      * @param string|null $class
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     protected function requireTraits($traits, string $class=null): void
     {
@@ -47,7 +49,7 @@ trait ClassRequirementHelperTrait
      *
      * @param string|iterable $interfaces
      * @param string|null $class
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     protected function requireImplements($interfaces, string $class=null) : void
     {

@@ -2,16 +2,17 @@
 
 namespace LDL\Framework\Helper;
 
-use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Contracts\ComparisonInterface;
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
-use LDL\Framework\Base\Contracts\Type\ToBooleanInterface;
 use LDL\Framework\Base\Contracts\Type\ToDoubleInterface;
-use LDL\Framework\Base\Contracts\Type\ToIntegerInterface;
-use LDL\Framework\Base\Contracts\Type\ToNumericInterface;
 use LDL\Framework\Base\Contracts\Type\ToScalarInterface;
 use LDL\Framework\Base\Contracts\Type\ToStringInterface;
+use LDL\Framework\Base\Contracts\Type\ToBooleanInterface;
+use LDL\Framework\Base\Contracts\Type\ToIntegerInterface;
+use LDL\Framework\Base\Contracts\Type\ToNumericInterface;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\ComparisonInterface;
 
 final class IterableHelper
 {
@@ -147,7 +148,7 @@ final class IterableHelper
                 $position
             );
 
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
 
         return $keys[$pos];

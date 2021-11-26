@@ -7,6 +7,8 @@
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Collection\Contracts\AppendInPositionInterface;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
+
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
 
@@ -101,7 +103,7 @@ trait AppendInPositionInterfaceTrait
                 $position
             );
 
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
 
         $this->setItems($result);
@@ -127,7 +129,7 @@ trait AppendInPositionInterfaceTrait
                 $position
             );
 
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
 
         $this->_append($item, $key);
@@ -167,7 +169,7 @@ trait AppendInPositionInterfaceTrait
     /**
      * Validates position argument
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @param int $position
      */
     private function _tAppendInPositionInterfaceTraitValidatePosition(int $position) : void
@@ -183,7 +185,7 @@ trait AppendInPositionInterfaceTrait
                 $position
             );
 
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
     }
     //</editor-fold>
