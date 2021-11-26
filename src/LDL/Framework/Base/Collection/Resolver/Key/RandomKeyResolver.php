@@ -2,6 +2,7 @@
 
 namespace LDL\Framework\Base\Collection\Resolver\Key;
 
+use LDL\Framework\Base\Exception\LogicException;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Resolver\Contracts\FullResolverInterface;
 
@@ -46,6 +47,6 @@ class RandomKeyResolver implements FullResolverInterface
             }
         }
 
-        throw new \LogicException("Could not resolve a suitable key for $key");
+        throw new LogicException("Could not resolve a suitable key for $key");
     }
 }

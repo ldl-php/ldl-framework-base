@@ -2,12 +2,13 @@
 
 namespace LDL\Framework\Base\Collection\Traits;
 
-use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Contracts\FilterByNamespaceInterface;
+use LDL\Framework\Helper\RegexHelper;
+use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Base\Exception\LogicException;
 use LDL\Framework\Base\Contracts\NamespaceInterface;
 use LDL\Framework\Helper\ClassRequirementHelperTrait;
-use LDL\Framework\Helper\IterableHelper;
-use LDL\Framework\Helper\RegexHelper;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByNamespaceInterface;
 
 /**
  * Trait FilterByNamespaceInterfaceTrait
@@ -32,7 +33,7 @@ trait FilterByNamespaceInterfaceTrait
 
         try {
             return $this->filterByNamespaceRegex((string) $mixed);
-        }catch(\LogicException $e) {
+        }catch(LogicException $e) {
             return $this->filterByNamespaces([$mixed]);
         }
     }

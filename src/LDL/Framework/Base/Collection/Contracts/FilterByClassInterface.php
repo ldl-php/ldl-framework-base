@@ -2,11 +2,12 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 interface FilterByClassInterface
 {
     /**
      * @param string $class
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return CollectionInterface
      */
     public function filterByClass(string $class) : CollectionInterface;
@@ -16,7 +17,7 @@ interface FilterByClassInterface
      * @param iterable $classes
      * @param bool $strict
      * @return CollectionInterface
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function filterByClasses(iterable $classes, bool $strict=true) : CollectionInterface;
 

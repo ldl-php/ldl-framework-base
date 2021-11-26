@@ -2,9 +2,10 @@
 
 namespace LDL\Framework\Base\Collection\Resolver\Key;
 
+use LDL\Framework\Base\Exception\LogicException;
+use LDL\Framework\Base\Contracts\HasKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Resolver\Contracts\FullResolverInterface;
-use LDL\Framework\Base\Contracts\HasKeyInterface;
 
 class HasObjectKeyResolver implements FullResolverInterface
 {
@@ -70,6 +71,6 @@ class HasObjectKeyResolver implements FullResolverInterface
             }
         }
 
-        throw new \LogicException("Could not resolve a suitable key for $key");
+        throw new LogicException("Could not resolve a suitable key for $key");
     }
 }

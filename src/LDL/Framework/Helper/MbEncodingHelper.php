@@ -2,6 +2,9 @@
 
 namespace LDL\Framework\Helper;
 
+use LDL\Framework\Base\Exception\RuntimeException;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
+
 final class MbEncodingHelper
 {
     /**
@@ -16,7 +19,7 @@ final class MbEncodingHelper
 
     /**
      * @param string $encoding
-     * @throws \RuntimeException if PHP mb extension is not present
+     * @throws RuntimeException if PHP mb extension is not present
      * @return bool
      */
     public static function isValid(string $encoding) : bool
@@ -26,13 +29,13 @@ final class MbEncodingHelper
 
     /**
      * @param string $encoding
-     * @throws \RuntimeException if PHP mb extension is not present
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException if PHP mb extension is not present
+     * @throws InvalidArgumentException
      */
     public static function validate(string $encoding) : void
     {
         if(!self::isValid($encoding)){
-            throw new \InvalidArgumentException("Invalid encoding specified: $encoding");
+            throw new InvalidArgumentException("Invalid encoding specified: $encoding");
         }
     }
 
@@ -46,7 +49,7 @@ final class MbEncodingHelper
         }
 
         if(!self::$hasMbString){
-            throw new \RuntimeException('PHP mb extension is not present in your php install!');
+            throw new RuntimeException('PHP mb extension is not present in your php install!');
         }
 
         if(null === self::$list){

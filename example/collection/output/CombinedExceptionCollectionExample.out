@@ -3,10 +3,10 @@ Append RunTimeException
 Append InvalidArgumentException
 Append Many: Exception, LogicException
 Check items in the collection
-Key: 0, Item: RuntimeException
-Key: 1, Item: InvalidArgumentException
+Key: 0, Item: LDL\Framework\Base\Exception\RuntimeException
+Key: 1, Item: LDL\Framework\Base\Exception\InvalidArgumentException
 Key: 2, Item: Exception
-Key: 3, Item: LogicException
+Key: 3, Item: LDL\Framework\Base\Exception\LogicException
 Try to add a string, exception must be thrown
 EXCEPTION: Item to be added is not an object
 Try to add an stdClass object item, exception must be thrown
@@ -17,13 +17,13 @@ EXCEPTION: Collection is locked, can not add elements
 Remove item with key 1
 Remove last item
 Check items in the collection
-Key: 0, Item: RuntimeException
+Key: 0, Item: LDL\Framework\Base\Exception\RuntimeException
 Key: 2, Item: Exception
 Lock remove
 Try to remove an item, exception must be thrown
 EXCEPTION: Collection is locked, can not remove elements
 Check items in the collection
-Key: 0, Item: RuntimeException
+Key: 0, Item: LDL\Framework\Base\Exception\RuntimeException
 Key: 2, Item: Exception
 Throw combined exception, catch it and show the combined message
 This is a RunTimeException

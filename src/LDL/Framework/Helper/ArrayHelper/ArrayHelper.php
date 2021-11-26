@@ -3,8 +3,9 @@
 namespace LDL\Framework\Helper\ArrayHelper;
 
 use LDL\Framework\Base\Constants;
-use LDL\Framework\Helper\ComparisonOperatorHelper;
 use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Base\Exception\RuntimeException;
+use LDL\Framework\Helper\ComparisonOperatorHelper;
 
 final class ArrayHelper
 {
@@ -145,7 +146,7 @@ final class ArrayHelper
      * @param string $order
      * @param string $operator
      * @throws Exception\InvalidKeyException
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function mustHaveKey(
         array $array,
@@ -161,6 +162,6 @@ final class ArrayHelper
         }
 
         $msg = sprintf("Key: %s does not exist", $key);
-        throw new \RuntimeException($msg);
+        throw new RuntimeException($msg);
     }
 }

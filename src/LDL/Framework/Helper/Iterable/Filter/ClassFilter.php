@@ -7,6 +7,8 @@
 namespace LDL\Framework\Helper\Iterable\Filter;
 
 use LDL\Framework\Helper\IterableHelper;
+use LDL\Framework\Base\Exception\LogicException;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 
 final class ClassFilter
 {
@@ -31,7 +33,7 @@ final class ClassFilter
          */
         $classes = IterableHelper::map($classes, static function ($class) {
             if (!is_string($class)) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     sprintf(
                         'Given item in class collection is not of type string, "%s" given',
                         gettype($class)
@@ -40,7 +42,7 @@ final class ClassFilter
             }
 
             if (!class_exists($class)) {
-                throw new \InvalidArgumentException("Class '$class' does not exists");
+                throw new InvalidArgumentException("Class '$class' does not exists");
             }
 
             return $class;
@@ -116,7 +118,7 @@ final class ClassFilter
     {
         if (!method_exists($class, $method)) {
             $msg = sprintf('Method: %s does not exists in class', $class);
-            throw new \LogicException($msg);
+            throw new LogicException($msg);
         }
 
         return array_map(static function ($item) use ($method, $params) {
@@ -134,7 +136,7 @@ final class ClassFilter
     {
         if (!method_exists($method, $class)) {
             $msg = sprintf('Method: %s does not exists in class', $class);
-            throw new \LogicException($msg);
+            throw new LogicException($msg);
         }
 
         return array_map(static function ($item) use ($method, $params) {

@@ -2,9 +2,10 @@
 
 namespace LDL\Framework\Base\Collection\Resolver\Key;
 
+use LDL\Framework\Helper\ClassHelper;
+use LDL\Framework\Base\Exception\LogicException;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Resolver\Contracts\FullResolverInterface;
-use LDL\Framework\Helper\ClassHelper;
 
 class ObjectToStringKeyResolver implements FullResolverInterface
 {
@@ -70,6 +71,6 @@ class ObjectToStringKeyResolver implements FullResolverInterface
             }
         }
 
-        throw new \LogicException("Could not resolve a suitable key for $key");
+        throw new LogicException("Could not resolve a suitable key for $key");
     }
 }

@@ -10,7 +10,7 @@ use LDL\Framework\Base\Collection\Contracts\SortInterface;
 use LDL\Framework\Base\Collection\Exception\SortException;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Base\Collection\Contracts\HasSortValueInterface;
-use LDL\Framework\Base\Collection\Exception\InvalidArgumentException;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 
 /**
  * Trait SortInterfaceTrait

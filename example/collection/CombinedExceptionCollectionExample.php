@@ -2,6 +2,9 @@
 
 require __DIR__.'/../../vendor/autoload.php';
 
+use LDL\Framework\Base\Exception\LogicException;
+use LDL\Framework\Base\Exception\RuntimeException;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 use LDL\Framework\Base\Exception\Combined\CombinedException;
 use LDL\Framework\Base\Collection\Exception\LockAppendException;
 use LDL\Framework\Base\Collection\Exception\LockRemoveException;
@@ -13,17 +16,17 @@ $collection = new CombinedException();
 
 echo "Append RunTimeException\n";
 
-$collection->append(new \RuntimeException("This is a RunTimeException"));
+$collection->append(new RuntimeException("This is a RunTimeException"));
 
 echo "Append InvalidArgumentException\n";
 
-$collection->append(new \InvalidArgumentException("This is an InvalidArgumentException"));
+$collection->append(new InvalidArgumentException("This is an InvalidArgumentException"));
 
 echo "Append Many: Exception, LogicException\n";
 
 $collection->appendMany([
     new \Exception("Generic Exception"),
-    new \LogicException("This is a LogicException")
+    new LogicException("This is a LogicException")
 ]);
 
 echo "Check items in the collection\n";
@@ -39,14 +42,14 @@ foreach($collection as $key => $value){
 try{
     echo "Try to add a string, exception must be thrown\n";
     $collection->append('string');
-}catch(\LogicException $e){
+}catch(InvalidArgumentException $e){
     echo "EXCEPTION: {$e->getMessage()}\n";
 }
 
 try{
     echo "Try to add an stdClass object item, exception must be thrown\n";
     $collection->append(new \stdClass());
-}catch(\LogicException $e){
+}catch(InvalidArgumentException $e){
     echo "EXCEPTION: {$e->getMessage()}\n";
 }
 

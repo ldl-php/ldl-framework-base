@@ -1,0 +1,33 @@
+
+Append following items to collection
+array (
+  0 => 100,
+  1 =>
+  (object) array(
+  ),
+  'int' => 500,
+  'class' =>
+  (object) array(
+  ),
+  2 =>
+  (object) array(
+  ),
+)
+
+Append a new item before key '2', with key 'new-class', 'new-class' must be shown before '2'
+array (
+  0 => 100,
+  1 =>
+  (object) array(
+  ),
+  'int' => 500,
+  'class' =>
+  (object) array(
+  ),
+  'new-class' =>
+  (object) array(
+  ),
+  2 =>
+  (object) array(
+  ),
+)

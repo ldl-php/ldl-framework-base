@@ -2,12 +2,13 @@
 
 require __DIR__.'/../../vendor/autoload.php';
 
-use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
-use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
-use LDL\Framework\Base\Collection\Contracts\AppendInPositionInterface;
-use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
+use LDL\Framework\Base\Exception\InvalidArgumentException;
+use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
+use LDL\Framework\Base\Collection\Contracts\AppendInPositionInterface;
 use LDL\Framework\Base\Collection\Traits\AppendInPositionInterfaceTrait;
 
 class AppendInPositionExample implements CollectionInterface, AppendableInterface, AppendInPositionInterface
@@ -66,14 +67,14 @@ echo "Try to pass an invalid negative position (-20)\n";
 
 try {
     $collection->appendInPosition('400', -20);
-}catch(\InvalidArgumentException $e){
+}catch(InvalidArgumentException $e){
     echo "OK: {$e->getMessage()}\n";
 }
 
 echo "Try to pass a non existing position\n";
 try{
     $collection->appendInPosition('500', 1000);
-}catch(\InvalidArgumentException $e){
+}catch(InvalidArgumentException $e){
     echo "OK: {$e->getMessage()}\n";
 }
 

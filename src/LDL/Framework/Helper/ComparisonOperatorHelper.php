@@ -3,12 +3,12 @@
 namespace LDL\Framework\Helper;
 
 use LDL\Framework\Base\Constants;
-
+use LDL\Framework\Base\Exception\InvalidArgumentException;
 final class ComparisonOperatorHelper
 {
     /**
      * @param string $operator
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function validate(string $operator) : void
     {
@@ -16,7 +16,7 @@ final class ComparisonOperatorHelper
             return;
         }
 
-        throw new \InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(sprintf(
             '"%s" is not a valid comparison operator. Valid comparison operators are: "%s"',
             $operator,
             implode(', ', Constants::getComparisonOperatorConstants())
@@ -36,7 +36,7 @@ final class ComparisonOperatorHelper
      * @param string $operator
      * @param string $order
      * @param mixed $between
-     * @throws \InvalidArgumentException if given $operator is invalid
+     * @throws InvalidArgumentException if given $operator is invalid
      * @return bool
      */
     public static function compare(
@@ -95,7 +95,7 @@ final class ComparisonOperatorHelper
             return $order === Constants::COMPARE_LTR ? $between <= $left && $between >= $right : $between <= $right && $between >= $left;
         }
 
-        throw new \InvalidArgumentException("Invalid operator: $operator");
+        throw new InvalidArgumentException("Invalid operator: $operator");
     }
 
     /**
