@@ -44,6 +44,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201278499056880 - Add $preserveKeys argument to IterableHelper::map (true by default)
 - feature/1201329585503220 - IterableHelper::toArray takes in account ToArrayInterface
 - feature/1200661351133652 - Separate sort interface and create SortInterfaceTrait
+- feature/1201431627285833 - Add SPL like exceptions which extend to LDLException
 
 ### Changed
 
