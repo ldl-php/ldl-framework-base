@@ -1,0 +1,37 @@
+Create new Collection class instance
+
+Append items:
+array (
+  5 => 2,
+  1 => 'a',
+  'three' => 'e',
+  2 => 1,
+  'four' => 5,
+  'class' =>
+  (object) array(
+  ),
+)
+
+Sort by key ascending:
+array (
+  'class' =>
+  (object) array(
+  ),
+  'four' => 5,
+  'three' => 'e',
+  1 => 'a',
+  2 => 1,
+  5 => 2,
+)
+
+Sort by key descending:
+array (
+  5 => 2,
+  2 => 1,
+  1 => 'a',
+  'three' => 'e',
+  'four' => 5,
+  'class' =>
+  (object) array(
+  ),
+)
