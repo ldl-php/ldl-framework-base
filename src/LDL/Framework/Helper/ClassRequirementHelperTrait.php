@@ -6,8 +6,8 @@ use LDL\Framework\Base\Exception\RuntimeException;
 
 trait ClassRequirementHelperTrait
 {
-    private $_tVerifyCollectionTraitHelperHasTraits = [];
-    private $_tVerifyCollectionTraitHelperHasInterfaces = [];
+    protected $_tVerifyCollectionTraitHelperHasTraits = [];
+    protected $_tVerifyCollectionTraitHelperHasInterfaces = [];
 
     /**
      * Thanks to Saif Eddin Gmati for the naming idea
