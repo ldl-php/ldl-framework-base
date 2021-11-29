@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Constants;
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
+use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Helper\ClassRequirementHelperTrait;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
-use LDL\Framework\Base\Exception\InvalidArgumentException;
 use LDL\Framework\Base\Collection\Contracts\SortByKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 
@@ -17,26 +19,30 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
  */
 trait SortByKeyInterfaceTrait
 {
+    use ClassRequirementHelperTrait;
+
     /**
      * Returns a new collection instance, sorted by key.
      *
      * @param string $sort
      * @param string $order
      * @return CollectionInterface
+     * @throws \LDL\Framework\Base\Exception\RuntimeException
      */
     public function ksort(string $sort = Constants::SORT_ASCENDING, string $order = Constants::COMPARE_LTR): CollectionInterface
     {
         $fn = static function ($a, $b) use ($sort, $order) {
-            if (ComparisonOperatorHelper::compare($a, $b, Constants::OPERATOR_EQ))
+            if (ComparisonOperatorHelper::compare($a, $b, Constants::OPERATOR_EQ)) {
                 return 0;
+            }
 
             $comparison = ComparisonOperatorHelper::compare($a, $b, Constants::OPERATOR_GT, $order);
 
-            if ($sort == Constants::SORT_ASCENDING) {
+            if (Constants::SORT_ASCENDING === $sort) {
                 return $comparison ? 1 : -1;
             }
 
-            if ($sort == Constants::SORT_DESCENDING) {
+            if (Constants::SORT_DESCENDING === $sort) {
                 return $comparison ? -1 : 1;
             }
         };
@@ -49,18 +55,21 @@ trait SortByKeyInterfaceTrait
      *
      * @param callable $fn
      * @return CollectionInterface
+     * @throws \LDL\Framework\Base\Exception\RuntimeException
+     * @throws LockingException
      */
     public function keySortByCallback(callable $fn): CollectionInterface
     {
-        $items = $this->items;
-
-        if ($this->_isLocked()) {
-            $items = \iterator_to_array($this, true);
+        if($this instanceof LockableObjectInterface && $this->isLocked()){
+            throw new LockingException('Can not sort collection by key, collection is locked!');
         }
 
+        $this->requireTraits([CollectionInterfaceTrait::class]);
+        $this->requireImplements([SortByKeyInterface::class]);
+        $items = $this->toArray(true);
         uksort($items, $fn);
-        $instance = $this->getEmptyInstance();
-        $instance->items = $items;
-        return $instance;
+        $this->setItems($items);
+
+        return $this;
     }
 }
