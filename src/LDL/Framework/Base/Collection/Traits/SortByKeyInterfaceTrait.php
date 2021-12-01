@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace LDL\Framework\Base\Collection\Traits;
 
 use LDL\Framework\Base\Constants;
-use LDL\Framework\Base\Contracts\LockableObjectInterface;
+use LDL\Framework\Helper\SortHelper;
 use LDL\Framework\Base\Exception\LockingException;
-use LDL\Framework\Helper\ClassRequirementHelperTrait;
-use LDL\Framework\Helper\ComparisonOperatorHelper;
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Contracts\SortByKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 
@@ -19,35 +18,19 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
  */
 trait SortByKeyInterfaceTrait
 {
-    use ClassRequirementHelperTrait;
-
     /**
      * Returns a new collection instance, sorted by key.
      *
      * @param string $sort
-     * @param string $order
      * @return CollectionInterface
-     * @throws \LDL\Framework\Base\Exception\RuntimeException
      */
-    public function ksort(string $sort = Constants::SORT_ASCENDING, string $order = Constants::COMPARE_LTR): CollectionInterface
+    public function ksort(string $sort = Constants::SORT_ASCENDING): CollectionInterface
     {
-        $fn = static function ($a, $b) use ($sort, $order) {
-            if (ComparisonOperatorHelper::compare($a, $b, Constants::OPERATOR_EQ)) {
-                return 0;
-            }
+        $items = SortHelper::ksort($sort, iterator_to_array($this, true));
 
-            $comparison = ComparisonOperatorHelper::compare($a, $b, Constants::OPERATOR_GT, $order);
+        $this->setItems($items);
 
-            if (Constants::SORT_ASCENDING === $sort) {
-                return $comparison ? 1 : -1;
-            }
-
-            if (Constants::SORT_DESCENDING === $sort) {
-                return $comparison ? -1 : 1;
-            }
-        };
-
-        return $this->keySortByCallback($fn);
+        return $this;
     }
 
     /**
@@ -55,19 +38,17 @@ trait SortByKeyInterfaceTrait
      *
      * @param callable $fn
      * @return CollectionInterface
-     * @throws \LDL\Framework\Base\Exception\RuntimeException
-     * @throws LockingException
      */
     public function keySortByCallback(callable $fn): CollectionInterface
     {
         if($this instanceof LockableObjectInterface && $this->isLocked()){
-            throw new LockingException('Can not sort collection by key, collection is locked!');
+            throw new LockingException('Can not sort collection by value, collection is locked!');
         }
 
         $this->requireTraits([CollectionInterfaceTrait::class]);
-        $this->requireImplements([SortByKeyInterface::class]);
-        $items = $this->toArray(true);
-        uksort($items, $fn);
+        $this->requireImplements([SortInterface::class]);
+
+        $items = SortHelper::keySortByCallback($fn, iterator_to_array($this, true));
         $this->setItems($items);
 
         return $this;

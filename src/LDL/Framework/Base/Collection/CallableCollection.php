@@ -6,13 +6,16 @@ use LDL\Framework\Base\Collection\Traits\AppendManyTrait;
 use LDL\Framework\Base\Exception\InvalidArgumentException;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Traits\SortByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\AppendableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockAppendInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemoveByKeyInterfaceTrait;
+use LDL\Framework\Base\Collection\Contracts\CallableCollectionSortedInterface;
+use LDL\Framework\Base\Collection\Traits\CallableCollectionSortedInterfaceTrait;
 
-class CallableCollection implements CallableCollectionInterface
+class CallableCollection implements CallableCollectionInterface, CallableCollectionSortedInterface
 {
     use AppendableInterfaceTrait {append as private _append;}
     use CollectionInterfaceTrait;
@@ -21,6 +24,8 @@ class CallableCollection implements CallableCollectionInterface
     use RemoveByKeyInterfaceTrait;
     use LockRemoveInterfaceTrait;
     use LockableObjectInterfaceTrait;
+    use SortByKeyInterfaceTrait;
+    use CallableCollectionSortedInterfaceTrait;
 
     public function __construct(iterable $items=null)
     {

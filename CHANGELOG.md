@@ -47,6 +47,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201431627285833 - Add SPL like exceptions which extend to LDLException
 - feature/1201422239594407 - Create AppendBeforeKey and AppendAfterKey trait and interface. Replace exceptions with LDL exceptions
 - feature/1201432324634001 - Separate ksort() into SortBykeyInterface and SortBykeyInterfaceTrait
+- feature/1201319260559916 - Add priority for CallableCollection with order and extract sorting functions into SortHelper class
 
 ### Changed
 
