@@ -9,11 +9,10 @@ interface SortInterface
     /**
      * Returns a new instance, sorted by value
      *
-     * @param string $order
-     * @param bool $sortByKey
+     * @param string $sort
      * @return CollectionInterface
      */
-    public function sort(string $sort, string $order): CollectionInterface;
+    public function sort(string $sort): CollectionInterface;
 
     /**
      * Returns a new instance, sorted by value through an anonymous comparison function

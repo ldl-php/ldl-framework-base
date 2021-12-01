@@ -1,0 +1,29 @@
+Sorting logic has been separately written in SortHelper, we can change the sort logic as per case. Since php sorting functions in PHP < 8.0 were unstable. The sorting order has been reversed from php 8. please check the rfc: https://wiki.php.net/rfc/stable_sorting
+
+Append callable actions in CallableCollection
+array (
+  0 =>
+  Closure::__set_state(array(
+  )),
+  1 =>
+  Closure::__set_state(array(
+  )),
+  'a' =>
+  Closure::__set_state(array(
+  )),
+  2 =>
+  Closure::__set_state(array(
+  )),
+)
+
+Execute callables in ascending order
+1st Callable
+2nd Callable
+3rd Callable
+4th Callable
+
+Execute callables in descending order
+4th Callable
+3rd Callable
+2nd Callable
+1st Callable

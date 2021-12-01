@@ -15,37 +15,33 @@ array (
 )
 
 Sort ascending:
-a
-b
-c
-d
-e
 1
 2
 3
 4
 5
+a
+b
+c
+d
+e
 
 Sort descending:
-5
-4
-3
-2
-1
 e
 d
 c
 b
 a
+5
+4
+3
+2
+1
 
 Create new Collection class instance
 
 Sort items with property in ascending:
 array (
-  4 =>
-  T2::__set_state(array(
-     'property' => 'a',
-  )),
   2 =>
   T1::__set_state(array(
      'property' => 6,
@@ -56,10 +52,18 @@ array (
      'property' => 56,
   )),
   3 => 1000,
+  4 =>
+  T2::__set_state(array(
+     'property' => 'a',
+  )),
 )
 
 Sort items with property in descending:
 array (
+  4 =>
+  T2::__set_state(array(
+     'property' => 'a',
+  )),
   3 => 1000,
   0 =>
   T::__set_state(array(
@@ -69,10 +73,6 @@ array (
   2 =>
   T1::__set_state(array(
      'property' => 6,
-  )),
-  4 =>
-  T2::__set_state(array(
-     'property' => 'a',
   )),
 )
 
