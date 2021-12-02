@@ -2,15 +2,15 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Base\Collection\Exception\LockReplaceException;
 
 interface LockReplaceInterface
 {
     /**
-     * Instead of doing if($this->isLockAppend()) { throw new LockingException(...); } in every call
+     * Instead of doing if($this->isLockAppend()) { throw new LockReplaceException(...); } in every call
      * just use this method for simplicity.
      *
-     * @throws LockingException
+     * @throws LockReplaceException
      */
     public function checkLockReplace() : void;
 

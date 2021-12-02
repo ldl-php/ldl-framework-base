@@ -2,15 +2,14 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Exception\LockingException;
-
+use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 interface LockRemoveInterface
 {
     /**
-     * Instead of doing if($this->isLockAppend()) { throw new LockingException(...); } in every call
+     * Instead of doing if($this->isLockAppend()) { throw new LockRemoveException(...); } in every call
      * just use this method for simplicity.
      *
-     * @throws LockingException
+     * @throws LockRemoveException
      */
     public function checkLockRemove() : void;
 

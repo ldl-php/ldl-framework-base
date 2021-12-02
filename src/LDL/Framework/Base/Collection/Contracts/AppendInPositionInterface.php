@@ -2,8 +2,8 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Exception\LockingException;
 use LDL\Framework\Base\Exception\InvalidArgumentException;
+use LDL\Framework\Base\Collection\Exception\LockAppendException;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
 interface AppendInPositionInterface
@@ -26,7 +26,7 @@ interface AppendInPositionInterface
      * @param string|int $key
      *
      * @throws InvalidArgumentException if the $position argument is invalid
-     * @throws LockingException
+     * @throws LockAppendException
      * @throws InvalidKeyException
      *
      * @return CollectionInterface
@@ -40,7 +40,7 @@ interface AppendInPositionInterface
      * @param int $position
      *
      * @throws InvalidArgumentException if the $position argument is invalid
-     * @throws LockingException
+     * @throws LockAppendException
      * @throws InvalidKeyException
      *
      * @return CollectionInterface
