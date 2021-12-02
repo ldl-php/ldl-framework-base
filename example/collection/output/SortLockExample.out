@@ -1,0 +1,35 @@
+Create collection
+
+Append items to be sorted in collection:
+array (
+  0 => 55,
+  1 => 'a',
+  2 => 10,
+  3 =>
+  ObjectWithSortValue::__set_state(array(
+     'property' => 1,
+  )),
+)
+
+Lock the collection with sort lock to prevent sorting
+
+Sorting a collection with sort lock (EXCEPTION must be thrown)
+OK Exception Collection is locked, cannot sort!
+
+Create collection
+
+Append items to be sorted in collection:
+array (
+  0 => 55,
+  1 => 'a',
+  2 => 10,
+  3 =>
+  ObjectWithSortValue::__set_state(array(
+     'property' => 1,
+  )),
+)
+
+Lock the collection with object lock to prevent sorting
+
+Sorting a collection with object lock (EXCEPTION must be thrown)
+OK Exception Cannot sort collection by value, collection is locked!

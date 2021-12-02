@@ -7,6 +7,7 @@ namespace LDL\Framework\Base\Collection\Traits;
 use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\SortHelper;
 use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Base\Contracts\LockSortInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Contracts\SortInterface;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
@@ -25,6 +26,14 @@ trait SortInterfaceTrait
      */
     public function sort(string $sort = Constants::SORT_ASCENDING): CollectionInterface
     {
+        if($this instanceof LockableObjectInterface && $this->isLocked()){
+            throw new LockingException('Cannot sort collection by value, collection is locked!');
+        }
+
+        if($this instanceof LockSortInterface && $this->isSortLocked()){
+            throw new LockingException('Collection is locked, cannot sort!');
+        }
+
         $items = SortHelper::sort($sort, iterator_to_array($this));
         
         $this->setItems($items);
@@ -41,7 +50,11 @@ trait SortInterfaceTrait
     public function sortByCallback(callable $fn): CollectionInterface
     {
         if($this instanceof LockableObjectInterface && $this->isLocked()){
-            throw new LockingException('Can not sort collection by value, collection is locked!');
+            throw new LockingException('Cannot sort collection by value, collection is locked!');
+        }
+
+        if($this instanceof LockSortInterface && $this->isSortLocked()){
+            throw new LockingException('Collection is locked, cannot sort!');
         }
 
         $this->requireTraits([CollectionInterfaceTrait::class]);
