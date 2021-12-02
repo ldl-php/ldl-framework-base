@@ -2,9 +2,9 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
+use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 use LDL\Framework\Base\Collection\Exception\RemoveException;
-use LDL\Framework\Base\Exception\LockingException;
 
 interface RemoveByKeyInterface
 {
@@ -14,7 +14,7 @@ interface RemoveByKeyInterface
      * @param string|int $key
      * @param string $operator
      * @param string $order
-     * @throws LockingException
+     * @throws LockRemoveException
      * @throws InvalidKeyException
      *
      * @return int Returns 0 if no elements have been removed, > 0 when elements have been removed
@@ -24,7 +24,7 @@ interface RemoveByKeyInterface
     /**
      * Remove last appended item
      *
-     * @throws LockingException
+     * @throws LockRemoveException
      * @throws RemoveException
      * @return CollectionInterface
      */

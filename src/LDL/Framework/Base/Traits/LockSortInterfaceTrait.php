@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Traits;
 
-use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Base\Collection\Exception\LockSortException;
 
 /**
  * Trait which implements LockSortInterfaceTrait
@@ -25,7 +25,7 @@ trait LockSortInterfaceTrait
     /**
      * Locks an object to prevent sort
      *
-     * @throws LockingException if the object is already locked
+     * @throws LockSortException if the object is already locked
      * 
      * @return mixed
      */
@@ -37,7 +37,7 @@ trait LockSortInterfaceTrait
                 __CLASS__
             );
 
-            throw new LockingException($msg);
+            throw new LockSortException($msg);
         }
 
         $this->_tSortLocked = true;

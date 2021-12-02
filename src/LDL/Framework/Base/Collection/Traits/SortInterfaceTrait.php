@@ -10,7 +10,9 @@ use LDL\Framework\Base\Exception\LockingException;
 use LDL\Framework\Base\Contracts\LockSortInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Collection\Contracts\SortInterface;
+use LDL\Framework\Base\Collection\Exception\LockSortException;
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+
 /**
  * Trait SortInterfaceTrait
  * @package LDL\Framework\Base\Collection\Traits
@@ -31,7 +33,7 @@ trait SortInterfaceTrait
         }
 
         if($this instanceof LockSortInterface && $this->isSortLocked()){
-            throw new LockingException('Collection is locked, cannot sort!');
+            throw new LockSortException('Collection is locked, cannot sort!');
         }
 
         $items = SortHelper::sort($sort, iterator_to_array($this));
@@ -54,7 +56,7 @@ trait SortInterfaceTrait
         }
 
         if($this instanceof LockSortInterface && $this->isSortLocked()){
-            throw new LockingException('Collection is locked, cannot sort!');
+            throw new LockSortException('Collection is locked, cannot sort!');
         }
 
         $this->requireTraits([CollectionInterfaceTrait::class]);

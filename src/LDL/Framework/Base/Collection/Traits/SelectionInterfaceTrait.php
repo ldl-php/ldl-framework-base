@@ -19,6 +19,7 @@ use LDL\Framework\Base\Collection\Contracts\RemoveByValueInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByValueInterface;
 use LDL\Framework\Base\Collection\Contracts\SelectionInterface;
 use LDL\Framework\Base\Collection\Contracts\SelectionLockingInterface;
+use LDL\Framework\Base\Collection\Exception\LockSelectionException;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
@@ -47,7 +48,7 @@ trait SelectionInterfaceTrait
 
         if($this->_tSelected->isLocked()){
             $msg = 'Selection of items has been locked, can not select more items in this collection';
-            throw new LockingException($msg);
+            throw new LockSelectionException($msg);
         }
 
         foreach($keys as $key){

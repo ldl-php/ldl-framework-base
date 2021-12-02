@@ -2,9 +2,10 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Collection\Exception\CollectionException;
-use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
 use LDL\Framework\Helper\ArrayHelper\ArrayHelper;
+use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
+use LDL\Framework\Base\Collection\Exception\CollectionException;
+use LDL\Framework\Base\Collection\Exception\LockAppendException;
 use LDL\Framework\Helper\ArrayHelper\Exception\InvalidKeyException;
 
 interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
@@ -95,7 +96,7 @@ interface CollectionInterface extends \Countable, \Iterator, ToArrayInterface
      *
      * @return CollectionInterface
      * @throws InvalidKeyException
-     * @throws \LDL\Framework\Base\Exception\LockingException
+     * @throws LockAppendException
      */
     public function map(
         callable $func,

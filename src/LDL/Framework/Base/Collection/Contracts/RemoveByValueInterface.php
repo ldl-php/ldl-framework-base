@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Collection\Contracts;
 
-use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Base\Collection\Exception\LockRemoveException;
 
 interface RemoveByValueInterface
 {
@@ -25,7 +25,7 @@ interface RemoveByValueInterface
      * @param $value
      * @param string $operator
      * @param string $order Comparison order (Constants::ORDER_LTR | Constants::ORDER_RTL)
-     * @throws LockingException
+     * @throws LockRemoveException
      * @return int Returns 0 if no elements have been removed, > 0 when elements have been removed
      */
     public function removeByValue($value, string $operator, string $order) : int;

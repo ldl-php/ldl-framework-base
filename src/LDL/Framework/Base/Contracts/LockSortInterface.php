@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Contracts;
 
-use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Base\Collection\Exception\LockSortException;
 
 interface LockSortInterface
 {
@@ -16,7 +16,7 @@ interface LockSortInterface
     /**
      * Locks an object to prevent sort
      *
-     * @throws LockingException if the object is already locked
+     * @throws LockSortException if the object is already locked
      * 
      * @return mixed
      */
