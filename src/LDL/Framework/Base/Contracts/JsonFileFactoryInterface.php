@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts;
 
 use LDL\Framework\Base\Exception\JsonFileFactoryException;
 
-interface JsonFileFactoryInterface
+interface JsonFileFactoryInterface extends FactoryInterface
 {
     /**
      * @param string $file

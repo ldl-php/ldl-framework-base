@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts;
 
 use LDL\Framework\Base\Exception\ObjectFactoryException;
 
-interface ObjectFactoryInterface
+interface ObjectFactoryInterface extends FactoryInterface
 {
     /**
      * @param object $obj

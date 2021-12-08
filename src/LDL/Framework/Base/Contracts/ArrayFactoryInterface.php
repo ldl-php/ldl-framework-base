@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts;
 
 use LDL\Framework\Base\Exception\ArrayFactoryException;
 
-interface ArrayFactoryInterface
+interface ArrayFactoryInterface extends FactoryInterface
 {
     /**
      * @param array $data
