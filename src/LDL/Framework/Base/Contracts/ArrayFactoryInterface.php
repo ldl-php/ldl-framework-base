@@ -9,7 +9,7 @@ interface ArrayFactoryInterface
     /**
      * @param array $data
      * @throws ArrayFactoryException
-     * @return ArrayFactoryInterface
+     * @return mixed
      */
-    public static function fromArray(array $data=[]) : ArrayFactoryInterface;
+    public static function fromArray(array $data=[]);
 }

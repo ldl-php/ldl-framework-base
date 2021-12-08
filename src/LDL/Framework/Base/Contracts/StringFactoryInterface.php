@@ -9,7 +9,7 @@ interface StringFactoryInterface
     /**
      * @param string $items
      * @throws StringFactoryException
-     * @return StringFactoryInterface
+     * @return mixed
      */
-    public static function fromString(string $items) : StringFactoryInterface;
+    public static function fromString(string $items);
 }

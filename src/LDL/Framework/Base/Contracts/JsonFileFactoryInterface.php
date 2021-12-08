@@ -9,7 +9,7 @@ interface JsonFileFactoryInterface
     /**
      * @param string $file
      * @throws JsonFileFactoryException
-     * @return JsonFileFactoryInterface
+     * @return mixed
      */
-    public static function fromJsonFile(string $file) : JsonFileFactoryInterface;
+    public static function fromJsonFile(string $file);
 }
