@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts;
 
 use LDL\Framework\Base\Exception\StringFactoryException;
 
-interface StringFactoryInterface
+interface StringFactoryInterface extends FactoryInterface
 {
     /**
      * @param string $items

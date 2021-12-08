@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts;
 
 use LDL\Framework\Base\Exception\DoubleFactoryException;
 
-interface DoubleFactoryInterface
+interface DoubleFactoryInterface extends FactoryInterface
 {
     /**
      * Remember: Floats are only an illusion in PHP, the float keyword is only kept due to "historical" reasons

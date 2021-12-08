@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts;
 
 use LDL\Framework\Base\Exception\JsonFactoryException;
 
-interface JsonFactoryInterface
+interface JsonFactoryInterface extends FactoryInterface
 {
     /**
      * @param string $json

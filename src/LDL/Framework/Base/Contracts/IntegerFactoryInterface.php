@@ -4,7 +4,7 @@ namespace LDL\Framework\Base\Contracts;
 
 use LDL\Framework\Base\Exception\IntegerFactoryException;
 
-interface IntegerFactoryInterface
+interface IntegerFactoryInterface extends FactoryInterface
 {
     /**
      * @param int $integer
