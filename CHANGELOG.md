@@ -50,6 +50,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201319260559916 - Add priority for CallableCollection with order and extract sorting functions into SortHelper class
 - feature/1201438240911776 - Create LockSortInterface and LockSortInterfaceTrait. Throw Locking Exception if sort-locked
 - feature/1201459659935193 - Separate LockAppendException LockRemoveException LockReplaceException LockSortException LockSelectionException which must extend to LockingException
+- feature/1201487027413413 - Add additional factory contracts (StringFactoryInterface, IntegerFactoryInterface, etc...)
 
 ### Changed
 

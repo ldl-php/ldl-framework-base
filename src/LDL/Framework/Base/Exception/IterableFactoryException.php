@@ -2,7 +2,7 @@
 
 namespace LDL\Framework\Base\Exception;
 
-class ArrayFactoryException extends LDLFactoryException
+class IterableFactoryException extends LDLFactoryException
 {
 
 }
