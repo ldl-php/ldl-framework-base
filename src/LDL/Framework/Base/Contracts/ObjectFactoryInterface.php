@@ -9,7 +9,7 @@ interface ObjectFactoryInterface
     /**
      * @param object $obj
      * @throws ObjectFactoryException
-     * @return ObjectFactoryInterface
+     * @return mixed
      */
-    public static function fromObject(object $obj) : ObjectFactoryInterface;
+    public static function fromObject(object $obj);
 }

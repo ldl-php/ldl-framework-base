@@ -11,7 +11,7 @@ interface DoubleFactoryInterface
      *
      * @param float $integer
      * @throws DoubleFactoryException
-     * @return DoubleFactoryInterface
+     * @return mixed
      */
-    public static function fromDouble(float $integer) : IntegerFactoryInterface;
+    public static function fromDouble(float $integer);
 }

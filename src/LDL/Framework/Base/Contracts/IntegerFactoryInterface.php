@@ -9,7 +9,7 @@ interface IntegerFactoryInterface
     /**
      * @param int $integer
      * @throws IntegerFactoryException
-     * @return IntegerFactoryInterface
+     * @return mixed
      */
-    public static function fromInteger(int $integer) : IntegerFactoryInterface;
+    public static function fromInteger(int $integer);
 }

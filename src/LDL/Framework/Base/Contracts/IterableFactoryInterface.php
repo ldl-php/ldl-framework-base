@@ -9,7 +9,7 @@ interface IterableFactoryInterface
     /**
      * @param iterable $items
      * @throws IterableFactoryException
-     * @return IterableFactoryInterface
+     * @return mixed
      */
-    public static function fromIterable(iterable $items) : IterableFactoryInterface;
+    public static function fromIterable(iterable $items);
 }
