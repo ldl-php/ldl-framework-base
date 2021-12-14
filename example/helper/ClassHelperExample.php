@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace MyNamespace;
+
 require __DIR__.'/../../vendor/autoload.php';
 
 use LDL\Framework\Base\Collection\Contracts\AppendableInterface;
@@ -18,6 +20,3 @@ class Test implements CollectionInterface, AppendableInterface
 
 echo "Get CallableCollection traits\n";
 var_dump(ClassHelper::getAllTraits(Test::class));
-
-$class = new Test();
-$class->append('lala');

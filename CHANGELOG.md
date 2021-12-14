@@ -52,6 +52,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201459659935193 - Separate Lock(Append/Remove/Replace/Sort/Selection)Exception so that they extend to LockingException
 - feature/1201487027413413 - Add additional factory contracts (StringFactoryInterface, IntegerFactoryInterface, etc...)
 - feature/1201487027413421 - Create FactoryInterface, every other factory must extend to this empty interface
+- feature/1201513506354914 - ReflectionHelper::getClassesInFile, get class/interface/trait names out of a PHP as an array
 
 ### Changed
 

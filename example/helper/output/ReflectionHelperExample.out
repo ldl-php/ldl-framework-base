@@ -1,0 +1,39 @@
+Call ReflectionHelper::fromFile(__FILE__)
+array(2) {
+  ["MyFirstNamespace"]=>
+  array(3) {
+    ["interface"]=>
+    array(1) {
+      [0]=>
+      string(35) "ReflectionHelperExampleInterfaceOne"
+    }
+    ["class"]=>
+    array(1) {
+      [0]=>
+      string(26) "ReflectionHelperExampleOne"
+    }
+    ["trait"]=>
+    array(1) {
+      [0]=>
+      string(10) "MyTraitOne"
+    }
+  }
+  ["MySecondNamespace"]=>
+  array(3) {
+    ["interface"]=>
+    array(1) {
+      [0]=>
+      string(35) "ReflectionHelperExampleInterfaceTwo"
+    }
+    ["class"]=>
+    array(1) {
+      [0]=>
+      string(26) "ReflectionHelperExampleTwo"
+    }
+    ["trait"]=>
+    array(1) {
+      [0]=>
+      string(10) "MyTraitTwo"
+    }
+  }
+}

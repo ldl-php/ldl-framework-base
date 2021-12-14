@@ -55,11 +55,12 @@ final class ClassHelper
      *
      * NOTE: Comparison is case sensitive by default
      *
-     * @param string $class, class name to be checked
-     * @param iterable $methods, collection of methods to be checked
+     * @param string $class , class name to be checked
+     * @param iterable $methods , collection of methods to be checked
      * @param bool $caseSensitive
      *
      * @return array
+     * @throws InvalidArgumentException
      */
     public static function hasMethods(
         string $class,
@@ -105,6 +106,7 @@ final class ClassHelper
      * @param bool $caseSensitive
      *
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public static function mustHaveMethods(string $class, iterable $methods, bool $caseSensitive=true) : void
     {
@@ -133,6 +135,7 @@ final class ClassHelper
      * @param bool $caseSensitive
      *
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public static function mustHaveMethod(string $class, string $method, bool $caseSensitive=true) : void
     {
@@ -185,6 +188,7 @@ final class ClassHelper
      * @param bool $caseSensitive
      *
      * @return string[]
+     * @throws InvalidArgumentException
      */
     public static function hasTraits(string $class, iterable $traits, bool $caseSensitive=true) : array
     {
@@ -218,6 +222,7 @@ final class ClassHelper
      * @param bool $caseSensitive
      *
      * @return bool
+     * @throws InvalidArgumentException
      */
     public static function hasTrait(string $class, string $trait, bool $caseSensitive=true) : bool
     {
@@ -232,6 +237,7 @@ final class ClassHelper
      * @param bool $caseSensitive
      *
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public static function mustHaveTraits(string $class, iterable $traits, bool $caseSensitive=true) : void
     {
@@ -261,6 +267,7 @@ final class ClassHelper
      * @see ClassHelper::mustHaveTraits
      *
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public static function mustHaveTrait(string $class, string $trait, bool $caseSensitive=true) : void
     {
@@ -311,6 +318,7 @@ final class ClassHelper
      * @param string $interface
      *
      * @return bool
+     * @throws InvalidArgumentException
      */
     public static function hasInterface(string $class, string $interface) : bool
     {
@@ -324,6 +332,7 @@ final class ClassHelper
      * @param string $class
      * @param iterable $interfaces
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public static function mustHaveInterfaces(string $class, iterable $interfaces) : void
     {
@@ -350,6 +359,7 @@ final class ClassHelper
      * @param string $class
      * @param string $interface
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public static function mustHaveInterface(string $class, string $interface) : void
     {
