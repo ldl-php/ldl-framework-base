@@ -29,30 +29,44 @@ final class ReflectionHelper
             throw new InvalidArgumentException("Could not open file $file for reading");
         }
 
-        $namespace = '';
         $i = 0;
         $return = [];
-
-        if('' === $namespace){
-            $namespace = '\\';
-        }
 
         $tokens = token_get_all($buffer);
 
         for (;$i<count($tokens);$i++) {
-            if ($tokens[$i][0] === T_NAMESPACE) {
+
+            if (\T_NAMESPACE === $tokens[$i][0]) {
+                $namespace = [];
                 for ($j=$i+1;$j<count($tokens); $j++) {
                     if ($tokens[$j][0] === T_STRING) {
-                        $namespace = $tokens[$j][1];
-                        $return[$namespace] = [
-                            'interface' => [],
-                            'class' => [],
-                            'trait' => []
-                        ];
-                    } else if ($tokens[$j] === '{' || $tokens[$j] === ';') {
+                        $namespace[]= $tokens[$j][1];
+                        continue;
+                    }
+
+                    if ($tokens[$j] === '{' || $tokens[$j] === ';') {
                         break;
                     }
                 }
+
+                $namespace = implode('\\', $namespace);
+                $namespace = '' === $namespace ? '\\' : $namespace;
+
+                $return[$namespace] = [
+                    'interface' => [],
+                    'class' => [],
+                    'trait' => []
+                ];
+
+            }
+
+            if(!isset($namespace)){
+                $namespace = '\\';
+                $return[$namespace] = [
+                    'interface' => [],
+                    'class' => [],
+                    'trait' => []
+                ];
             }
 
             if (\T_CLASS ===  $tokens[$i][0]) {

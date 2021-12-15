@@ -1,6 +1,20 @@
 Call ReflectionHelper::fromFile(__FILE__)
-array(2) {
-  ["MyFirstNamespace"]=>
+array(3) {
+  ["\"]=>
+  array(3) {
+    ["interface"]=>
+    array(0) {
+    }
+    ["class"]=>
+    array(1) {
+      [0]=>
+      string(13) "MyGlobalClass"
+    }
+    ["trait"]=>
+    array(0) {
+    }
+  }
+  ["My\First\Ns"]=>
   array(3) {
     ["interface"]=>
     array(1) {
@@ -18,7 +32,7 @@ array(2) {
       string(10) "MyTraitOne"
     }
   }
-  ["MySecondNamespace"]=>
+  ["My\Second\Ns"]=>
   array(3) {
     ["interface"]=>
     array(1) {
