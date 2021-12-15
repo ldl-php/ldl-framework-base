@@ -1,6 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace MyFirstNamespace;
+class MyGlobalClass{
+
+}
+
+namespace My\First\Ns;
 
 require __DIR__.'/../../vendor/autoload.php';
 
@@ -10,7 +14,7 @@ trait MyTraitOne{ }
 
 class ReflectionHelperExampleOne{ }
 
-namespace MySecondNamespace;
+namespace My\Second\Ns;
 
 use LDL\Framework\Helper\ReflectionHelper;
 
