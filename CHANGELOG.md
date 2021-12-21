@@ -84,3 +84,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fix/1201519546203844 - ReflectionHelper::fromFile does not correctly parses namespaces
 - fix/1201546068510508 - ReflectionHelper::fromFile adds empty trait/class/interfaces to returned array
 - fix/1201509919633564 - Fix bad merge
+- fix/1201546068510512 - ReflectionHelper::fromFile class parsing is incorrect
