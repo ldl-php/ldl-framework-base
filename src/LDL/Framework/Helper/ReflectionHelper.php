@@ -72,6 +72,7 @@ final class ReflectionHelper
                     $class = trim($tokens[$i + 2][1]);
 
                     if (
+                        '' !== $class &&
                         '{' === $tokens[$j] &&
                         !in_array($class, $return[$namespace]['class'], true)
                     ) {
