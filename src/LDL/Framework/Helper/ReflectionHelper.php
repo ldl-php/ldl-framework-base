@@ -29,30 +29,42 @@ final class ReflectionHelper
             throw new InvalidArgumentException("Could not open file $file for reading");
         }
 
-        $namespace = '';
         $i = 0;
         $return = [];
-
-        if ('' === $namespace) {
-            $namespace = '\\';
-        }
 
         $tokens = token_get_all($buffer);
 
         for (; $i < count($tokens); $i++) {
-            if (T_NAMESPACE === $tokens[$i][0]) {
+            if (\T_NAMESPACE === $tokens[$i][0]) {
+                $namespace = [];
                 for ($j = $i + 1; $j < count($tokens); $j++) {
                     if (T_STRING === $tokens[$j][0]) {
-                        $namespace = $tokens[$j][1];
-                        $return[$namespace] = [
-                            'interface' => [],
-                            'class' => [],
-                            'trait' => [],
-                        ];
-                    } elseif ('{' === $tokens[$j] || ';' === $tokens[$j]) {
+                        $namespace[] = $tokens[$j][1];
+                        continue;
+                    }
+
+                    if ('{' === $tokens[$j] || ';' === $tokens[$j]) {
                         break;
                     }
                 }
+
+                $namespace = implode('\\', $namespace);
+                $namespace = '' === $namespace ? '\\' : $namespace;
+
+                $return[$namespace] = [
+                    'interface' => [],
+                    'class' => [],
+                    'trait' => [],
+                ];
+            }
+
+            if (!isset($namespace)) {
+                $namespace = '\\';
+                $return[$namespace] = [
+                    'interface' => [],
+                    'class' => [],
+                    'trait' => [],
+                ];
             }
 
             if (\T_CLASS === $tokens[$i][0]) {
@@ -60,7 +72,6 @@ final class ReflectionHelper
                     $class = trim($tokens[$i + 2][1]);
 
                     if (
-                        '' !== $class &&
                         '{' === $tokens[$j] &&
                         !in_array($class, $return[$namespace]['class'], true)
                     ) {
@@ -76,7 +87,7 @@ final class ReflectionHelper
                     if (
                         '' !== $interface &&
                         '{' === $tokens[$j] &&
-                        !in_array($interface, $return[$namespace]['interface'], true)
+                        !in_array($tokens[$i + 2][1], $return[$namespace]['interface'], true)
                     ) {
                         $return[$namespace]['interface'][] = $interface;
                     }
@@ -85,14 +96,14 @@ final class ReflectionHelper
 
             if (\T_TRAIT === $tokens[$i][0]) {
                 for ($j = $i + 1; $j < count($tokens); $j++) {
-                    $trait = $tokens[$i + 2][1];
+                    $trait = trim($tokens[$i + 2][1]);
 
                     if (
                         '' !== $trait &&
                         '{' === $tokens[$j] &&
-                        !in_array($tokens[$i + 2][1], $return[$namespace]['trait'], true)
+                        !in_array($trait, $return[$namespace]['trait'], true)
                     ) {
-                        $return[$namespace]['trait'][] = $tokens[$i + 2][1];
+                        $return[$namespace]['trait'][] = $trait;
                     }
                 }
             }
