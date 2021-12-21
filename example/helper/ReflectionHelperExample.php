@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 class MyGlobalClass{
 
@@ -8,21 +10,33 @@ namespace My\First\Ns;
 
 require __DIR__.'/../../vendor/autoload.php';
 
-interface ReflectionHelperExampleInterfaceOne { }
+interface ReflectionHelperExampleInterfaceOne
+{
+}
 
-trait MyTraitOne{ }
+trait MyTraitOne
+{
+}
 
-class ReflectionHelperExampleOne{ }
+class ReflectionHelperExampleOne
+{
+}
 
 namespace My\Second\Ns;
 
 use LDL\Framework\Helper\ReflectionHelper;
 
-trait MyTraitTwo{ }
+trait MyTraitTwo
+{
+}
 
-class ReflectionHelperExampleTwo { }
+abstract class ReflectionHelperExampleTwo
+{
+}
 
-interface ReflectionHelperExampleInterfaceTwo { }
+interface ReflectionHelperExampleInterfaceTwo
+{
+}
 
 echo "Call ReflectionHelper::fromFile(__FILE__)\n";
 var_dump(ReflectionHelper::fromFile(__FILE__));
