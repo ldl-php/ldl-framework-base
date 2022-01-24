@@ -110,8 +110,12 @@ final class ReflectionHelper
             }
         }
 
-        foreach ($return as $namespace => $class) {
-            if (0 === count($return[$namespace])) {
+        foreach ($return as $namespace => $nsContents) {
+            $allEmpty = !(bool) array_filter($nsContents, static function ($content) {
+                return !empty($content);
+            });
+
+            if ($allEmpty) {
                 unset($return[$namespace]);
             }
         }
