@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1201750258469828 - Create DescribableInterface::getDescription
 - feature/1200650274639165 - Add ClassFilter and InterfaceFilter helpers
 - feature/1200385160035592 - Add filter recursive methods to class and interface collection traits
 - feature/1200260135645241 - Add more collection contracts and traits
