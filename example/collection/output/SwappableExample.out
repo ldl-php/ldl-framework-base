@@ -1,0 +1,12 @@
+Create Collection
+Append items:
+
+array (
+  'test' => 'a',
+  0 => 'b',
+)
+
+array (
+  0 => 'b',
+  'test' => 'a',
+)

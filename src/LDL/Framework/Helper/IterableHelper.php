@@ -358,4 +358,23 @@ final class IterableHelper
             return $val;
         });
     }
+
+
+    /**
+     * @param array $items
+     * @param int $from
+     * @param int $to
+     *
+     * @return array
+     */
+    public static function swap(iterable $items, int $from, int $to ): array
+    {
+        $items = self::toArray($items);
+
+        $splice1 = array_splice($items, $from, 1);
+
+        $splice2 = array_splice($items, 0, $to);
+
+        return array_merge($splice2, $splice1, $items);
+    }
 }
