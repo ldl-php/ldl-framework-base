@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
- * Trait which implements NamespaceInterface
+ * Trait which complies to NamespaceInterface.
+ *
  * @see \LDL\Framework\Base\Contracts\NamespaceInterface
  */
 
@@ -11,7 +14,8 @@ trait NamespaceInterfaceTrait
 {
     use NameableTrait;
     /**
-     * This is intentionally left uninitialized to force initialization when this trait is used in a class
+     * This is intentionally left uninitialized to force initialization when this trait is used in a class.
+     *
      * @var string
      */
     private $_tNamespace;
@@ -20,5 +24,4 @@ trait NamespaceInterfaceTrait
     {
         return $this->_tNamespace;
     }
-
 }
